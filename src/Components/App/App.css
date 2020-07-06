@@ -1,12 +1,36 @@
 .App {
   text-align: center;
 }
-
+.signin {
+  border: 3px solid blue;
+}
+.signin:hover {
+  border: 3px solid blue;
+}
+.signin:active {
+  background-color: maroon;
+  color: gold;
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-
+nav {
+  background-color: 505050;
+  color: white;
+}
+.blk {
+  background-color: black;
+  color: white;
+}
+.blk:hover {
+  color: gold;
+  font-weight: bolder;
+}
+.active {
+  background-color: maroon !important;
+  color: gold;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
