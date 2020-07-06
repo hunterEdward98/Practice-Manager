@@ -28,9 +28,10 @@ class SetManager extends React.Component {
         return (
             <div className='container'>
                 <form>
-                    <div className="form-group btn">
-                        <select className="form-control btn blk" id="exampleFormControlSelect1" defaultValue='SELECT SET'>
-                            <option>500</option>
+                    <div className="form-group btn my-5">
+                        <label for='exampleFormControlSelect1'>Select A Test Set</label>
+                        <select className="form-control btn blk" id="exampleFormControlSelect1" defaultValue='SELECT SET' label='SELECT A TEST SET'>
+                            <option>500 free</option>
                             <option>dirty dozen</option>
                             <option>johnsons joyful</option>
                             <option>4</option>
