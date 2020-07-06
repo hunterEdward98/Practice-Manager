@@ -5,7 +5,25 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 /**
  * Get all of the items on the shelf
  */
-
+router.get('/times/:athlete', (req, res) => {
+  const athlete = req.params.athlete
+  console.log(athlete)
+  const queryText = `
+  SELECT athletes.athlete_name, events.event_name, swim_time, times.date, times.id
+  FROM times
+  JOIN events on times.event_id=events.id
+  JOIN athletes on times.athlete_id = athletes.id
+  WHERE athletes.athlete_name ilike $1
+  ORDER BY times.date DESC
+  `
+  pool.query(queryText, [athlete]).then(result => {
+    console.log('query:', result.rows);
+    res.send(result.rows)
+  }).catch(error => {
+    console.log(error)
+    res.sendStatus(500);
+  })
+});
 router.get('/athletes', (req, res) => {
   const queryText = `
   SELECT * FROM athletes
