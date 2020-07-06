@@ -27,7 +27,17 @@ class SetManager extends React.Component {
     render() {
         return (
             <div className='container'>
-                <button className='btn blk'> Select Set</button>
+                <form>
+                    <div className="form-group btn">
+                        <select className="form-control btn blk" id="exampleFormControlSelect1" defaultValue='SELECT SET'>
+                            <option>500</option>
+                            <option>dirty dozen</option>
+                            <option>johnsons joyful</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </form>
                 <table className='table table-dark table-striped'>
                     <thead>
                         <tr>
