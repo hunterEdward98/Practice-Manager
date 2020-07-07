@@ -36,8 +36,15 @@ ORDER BY athletes.id, times.date DESC
 });
 router.post('/', (req, res) => {
 
-    const athlete = req.params.athlete
+    const body = req.body;
+    const athlete_id = body.id;
+    const event_id = body.event_id;
+    const date = moment();
+    const swim_time = body.time;
+    const improvement = body.improvement;
+    const user = req.user
     console.log(athlete)
+    console.log(date)
     const queryText = `
     INSERT INTO times
     VALUES
