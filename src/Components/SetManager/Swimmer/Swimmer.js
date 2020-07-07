@@ -27,10 +27,10 @@ class Swimmer extends React.Component {
         return (
             <tr>
                 <td>
+                    {this.props.name}
                 </td>
                 <td>
-                </td>
-                <td>
+                    {Math.floor(this.props.last / 60, 10) + ':' + (this.props.last % 60 < 10 ? '0' + this.props.last % 60 : this.props.last % 60)}
                 </td>
                 <td>
                 </td>
@@ -38,8 +38,8 @@ class Swimmer extends React.Component {
 
                     <form onSubmit={(event) => this.addTime(event)}>
                         <div className="form-group">
-                            <input required className='col-3' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} />:
-                            <input required className='col-6 my-1' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
+                            <input required className='col-12 col-md-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /> :
+                            <input required className='col-12 col-md-6 my-1' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
                             <button type='submit' className='btn btn-success'>Add Time</button>
                         </div>
                     </form>

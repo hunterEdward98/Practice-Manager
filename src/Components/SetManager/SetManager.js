@@ -1,13 +1,13 @@
 import React from 'react'
 import Swimmer from './Swimmer/Swimmer'
-import withRouter from 'react-router-dom'
-import { connect } from 'react-redux'
+import axios from 'axios'
 class SetManager extends React.Component {
     state = {
         submissionCount: 0,
         submissionTotal: 0,
         minutes: 0,
         seconds: 0,
+        athletes: []
     }
     handleChange = (event, value) => {
         this.setState({
@@ -24,12 +24,18 @@ class SetManager extends React.Component {
             seconds: 0,
         })
     }
+    componentDidMount() { this.get() }
+    get = () => {
+        axios.get(`/api/time/`).then(response => {
+            console.log(response.data); this.setState({ athletes: response.data })
+        })
+    }
     render() {
         return (
             <div className='container'>
                 <form>
                     <div className="form-group btn my-5">
-                        <label for='exampleFormControlSelect1'>Select A Test Set</label>
+                        <label>Select A Test Set</label>
                         <select className="form-control btn blk" id="exampleFormControlSelect1" defaultValue='SELECT SET' label='SELECT A TEST SET'>
                             <option>500 free</option>
                             <option>dirty dozen</option>
@@ -44,9 +50,6 @@ class SetManager extends React.Component {
                         <tr>
                             <th scope='col'>
                                 Swimmer Name
-                            </th>
-                            <th>
-                                Best Set Avg Time
                             </th>
                             <th>
                                 Last Set Avg Time
@@ -66,10 +69,8 @@ class SetManager extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        <Swimmer />
-                        <Swimmer />
-                        <Swimmer />
-                        <Swimmer />
+                        {this.state.athletes.map(x =>
+                            <Swimmer name={x.athlete_name} last={x.swim_time} />)}
                     </tbody>
                 </table>
             </div>
