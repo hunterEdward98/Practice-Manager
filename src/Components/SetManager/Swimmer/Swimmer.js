@@ -9,7 +9,6 @@ class Swimmer extends React.Component {
         time: {}
     }
     getRecent = () => {
-        console.log(this.props.set)
         axios.get(`/api/time/recent/${this.props.id}/${this.props.set}`).then(response => {
             this.setState({
                 time: response.data[0] || {}
