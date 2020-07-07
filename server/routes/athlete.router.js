@@ -16,6 +16,17 @@ router.get('/athletes', (req, res) => {
     res.sendStatus(500);
   })
 });
+router.get('/athletesActive', (req, res) => {
+  const queryText = `SELECT * FROM athletes where active=true`
+  pool.query(queryText).then(result => {
+    console.log('query for athletes:', result.rows);
+    res.send(result.rows)
+  }).catch(error => {
+    console.log(error)
+    res.sendStatus(500);
+  })
+});
+
 /**
  * Add an item for the logged in user to the shelf
  */
