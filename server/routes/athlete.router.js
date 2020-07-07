@@ -26,7 +26,17 @@ router.get('/athletesActive', (req, res) => {
     res.sendStatus(500);
   })
 });
-
+router.get('/athletesInLane/:lane', (req, res) => {
+  console.log(req.params.lane)
+  const queryText = `SELECT * FROM athletes where active=true AND lane_number=$1`
+  pool.query(queryText, [req.params.lane]).then(result => {
+    console.log('query for athletes:', result.rows);
+    res.send(result.rows)
+  }).catch(error => {
+    console.log(error)
+    res.sendStatus(500);
+  })
+});
 /**
  * Add an item for the logged in user to the shelf
  */

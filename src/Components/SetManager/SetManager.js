@@ -48,7 +48,11 @@ class SetManager extends React.Component {
                         </div>
                         <div className='col-12 col-md-6'>
                             <h2>Select A Lane</h2>
-                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => this.handleChange(event, 'lane')}>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
+                                axios.get(`/api/athlete/athletesInLane/${event.target.value}`).then(response => {
+                                    console.log(response.data); this.setState({ athletes: response.data })
+                                })
+                            }}>
                                 <option value={0} hidden >SELECT A LANE.</option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
