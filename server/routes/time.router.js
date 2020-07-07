@@ -34,4 +34,20 @@ ORDER BY athletes.id, times.date DESC
         res.sendStatus(500);
     })
 });
+router.post('/', (req, res) => {
+
+    const athlete = req.params.athlete
+    console.log(athlete)
+    const queryText = `
+    INSERT INTO times
+    VALUES
+    `
+    pool.query(queryText, [athlete]).then(result => {
+        console.log('query:', result.rows);
+        res.send(result.rows)
+    }).catch(error => {
+        console.log(error)
+        res.sendStatus(500);
+    })
+})
 module.exports = router;

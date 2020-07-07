@@ -3,17 +3,19 @@ import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
 class SetManager extends React.Component {
     state = {
-        submissionCount: 0,
-        submissionTotal: 0,
-        minutes: 0,
-        seconds: 0,
+        event: 0,
         athletes: []
     }
     handleChange = (event, value) => {
+        console.log(event.target.value, value)
         this.setState({
             ...this.state,
             [value]: event.target.value
         })
+
+    }
+    getEvent = () => {
+
     }
     addTime = (event) => {
         event.preventDefault();
@@ -37,7 +39,7 @@ class SetManager extends React.Component {
                     <div className="row my-5">
                         <div className="col-12 col-md-6">
                             <h2>Select A Test Set</h2>
-                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => console.log(event.target.value)}>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => this.handleChange(event, 'event')}>
                                 <option hidden>SELECT A SET</option>
                                 <option value={1}>500 free</option>
                                 <option value={2}>dirty dozen</option>
@@ -46,7 +48,7 @@ class SetManager extends React.Component {
                         </div>
                         <div className='col-12 col-md-6'>
                             <h2>Select A Lane</h2>
-                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => console.log(event.target.value)}>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => this.handleChange(event, 'lane')}>
                                 <option value={0} hidden >SELECT A LANE.</option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>

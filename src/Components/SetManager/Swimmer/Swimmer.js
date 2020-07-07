@@ -26,15 +26,15 @@ class Swimmer extends React.Component {
         event.preventDefault();
         this.setState({
             submissionCount: this.state.submissionCount + 1,
-            submissionTotal: Math.floor((Number(this.state.submissionTotal) + (Number(this.state.minutes) * 60) + Number(this.state.seconds)) / (this.state.submissionCount + 1)),
+            submissionTotal: Math.floor((Number(this.state.submissionTotal) + (Number(this.state.minutes) * 60) + Number(this.state.seconds))),
             minutes: '',
             seconds: '',
         })
     }
     addSet = () => {
-        const improvement = this.state.time.swim_time - this.state.submissionTotal
+        const improvement = (this.state.time.swim_time) - Math.floor(this.state.submissionTotal / this.state.submissionCount)
         console.log(improvement)
-        // axios.post('', this.state)
+        axios.post('/api/time', { id: this.props.id, event_id: 2, })
     }
     render() {
         return (
@@ -65,9 +65,9 @@ class Swimmer extends React.Component {
                     {this.state.submissionCount}
                 </td>
                 <td>
-                    {Math.floor(this.state.submissionTotal / 60)}:{this.state.submissionTotal % 60 > 10 ? this.state.submissionTotal % 60 : '0' + this.state.submissionTotal % 60}
+                    {Math.floor((this.state.submissionTotal / this.state.submissionCount) / 60) || 0}:{this.state.submissionCount > 0 ? (this.state.submissionTotal % 60 > 10 ? Math.floor(this.state.submissionTotal / this.state.submissionCount) % 60 : '0' + Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60)) : '0'}
                 </td>
-                {this.state.submissionCount > 0 && <td><button className='btn blk' onClick={this.addSet}>Submit Set</button></td>}
+                {this.state.submissionCount > 0 && <td><button className='btn blk' type='submit' onClick={this.addSet}>Submit Set</button></td>}
             </tr>
         )
     }
