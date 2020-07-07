@@ -14,7 +14,12 @@ class Swimmer extends React.Component {
             this.setState({
                 time: response.data[0] || {}
             })
+        }).catch(error => {
+            console.log(error)
         })
+    }
+    componentDidMount() {
+        this.getRecent()
     }
     componentWillReceiveProps() {
         this.getRecent()

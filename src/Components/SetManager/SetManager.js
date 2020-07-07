@@ -13,30 +13,27 @@ class SetManager extends React.Component {
             [value]: event.target.value
         })
     }
-    addTime = (event) => {
-        event.preventDefault();
-        this.setState({
-            submissionCount: this.state.submissionCount + 1,
-            submissionTotal: Number(this.state.submissionTotal) + Number(Number(this.state.minutes) * 60) + Number(this.state.seconds),
-            minutes: 0,
-            seconds: 0,
-        })
-    }
     componentDidMount() { this.get() }
     getLane = () => {
+        console.log('getting lane from state')
         axios.get(`/api/athlete/athletesInLane/${this.state.lane}`).then(response => {
-            console.log(response.data); this.setState({ athletes: response.data })
+            this.setState({ athletes: response.data })
         })
     }
-    getLane = (value) => {
+    getLaneByNum = (value) => {
+        console.log('getting lane from given val')
         axios.get(`/api/athlete/athletesInLane/${value}`).then(response => {
-            console.log(response.data); this.setState({ athletes: response.data })
+            this.setState({ athletes: response.data })
         })
     }
     get = () => {
-        axios.get(`/api/athlete/athletesActive`).then(response => {
-            console.log(response.data); this.setState({ athletes: response.data })
-        })
+        if (this.state.lane === 0) {
+            console.log('getting all athletes')
+            axios.get(`/api/athlete/athletesActive`).then(response => {
+                this.setState({ athletes: response.data })
+            }).catch(error => console.log(error))
+        }
+        else { this.getLane() }
     }
     render() {
         return (
@@ -47,7 +44,7 @@ class SetManager extends React.Component {
                             <h2>Select A Test Set</h2>
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                 this.handleChange(event, 'event');
-                                this.state.lane === 0 ? this.get() : this.getLane()
+                                this.get()
                             }}>
                                 <option hidden>SELECT A SET</option>
                                 <option value={1}>500 free</option>
@@ -59,7 +56,7 @@ class SetManager extends React.Component {
                             <h2>Select A Lane</h2>
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                 this.handleChange(event, 'lane')
-                                this.getLane(event.target.value)
+                                this.getLaneByNum(event.target.value)
                             }}>
                                 <option value={0} hidden >SELECT A LANE.</option>
                                 <option value={1}>1</option>
@@ -104,7 +101,6 @@ class SetManager extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {console.log(this.state.event)}
                         {this.state.athletes.map(x => <Swimmer key={x.id} name={x.athlete_name} id={x.id} set={this.state.event} />)}
                     </tbody>
                 </table>
