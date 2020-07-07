@@ -26,7 +26,7 @@ class SetManager extends React.Component {
     }
     componentDidMount() { this.get() }
     get = () => {
-        axios.get(`/api/time/`).then(response => {
+        axios.get(`/api/athlete/athletesActive`).then(response => {
             console.log(response.data); this.setState({ athletes: response.data })
         })
     }
