@@ -8,19 +8,22 @@ class Swimmer extends React.Component {
         seconds: '',
         time: {}
     }
-    componentDidMount() {
-        axios.get(`/api/time/recent/${this.props.id}`).then(response => {
+    getRecent = () => {
+        console.log(this.props.set)
+        axios.get(`/api/time/recent/${this.props.id}/${this.props.set}`).then(response => {
             this.setState({
                 time: response.data[0] || {}
             })
         })
     }
+    componentWillReceiveProps() {
+        this.getRecent()
+    }
     handleChange = (event, value) => {
-        const improvement =
-            this.setState({
-                ...this.state,
-                [value]: event.target.value
-            })
+        this.setState({
+            ...this.state,
+            [value]: event.target.value
+        })
     }
     addTime = (event) => {
         event.preventDefault();
@@ -34,7 +37,19 @@ class Swimmer extends React.Component {
     addSet = () => {
         const improvement = (this.state.time.swim_time) - Math.floor(this.state.submissionTotal / this.state.submissionCount)
         console.log(improvement)
-        axios.post('/api/time', { id: this.props.id, event_id: 2, })
+        let body = {
+            improvement,
+            id: this.props.id,
+            time: Math.floor(this.state.submissionTotal / this.state.submissionCount),
+            event: this.props.set
+        }
+        axios.post('/api/time', body).then(response => {
+            this.setState({
+                submissionCount: 0,
+                submissionTotal: 0
+            })
+            this.getRecent()
+        })
     }
     render() {
         return (
@@ -47,27 +62,34 @@ class Swimmer extends React.Component {
                 </td>
                 <td>
                     {/* Colored based on whether the swimmer's last time was an improvement */}
+                    {isNaN(this.state.time.improvement) && <>N/A</>}
                     {this.state.time.improvement > 0 && <div className='btn-success'>{this.state.time.improvement}</div>}
                     {this.state.time.improvement === 0 && <div className='btn-warning'>{this.state.time.improvement}</div>}
                     {this.state.time.improvement < 0 && <div className='btn-danger'>{this.state.time.improvement}</div>}
                 </td>
-                <td>
+                {this.props.set != 0 &&
+                    <td>
 
-                    <form onSubmit={(event) => this.addTime(event)}>
-                        <div className="form-group">
-                            <input required className='col-12 col-md-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /> :
+                        <form onSubmit={(event) => this.addTime(event)}>
+                            <div className="form-group">
+                                <input required className='col-12 col-md-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /> :
                             <input required className='col-12 col-md-6 my-1' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
-                            <button type='submit' className='btn btn-success'>Add Time</button>
-                        </div>
-                    </form>
-                </td>
-                <td>
-                    {this.state.submissionCount}
-                </td>
-                <td>
-                    {Math.floor((this.state.submissionTotal / this.state.submissionCount) / 60) || 0}:{this.state.submissionCount > 0 ? (this.state.submissionTotal % 60 > 10 ? Math.floor(this.state.submissionTotal / this.state.submissionCount) % 60 : '0' + Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60)) : '0'}
-                </td>
-                {this.state.submissionCount > 0 && <td><button className='btn blk' type='submit' onClick={this.addSet}>Submit Set</button></td>}
+                                <button type='submit' className='btn btn-success'>Add Time</button>
+                            </div>
+                        </form>
+                    </td>
+                }
+                {this.props.set != 0 &&
+                    <td>
+                        {this.state.submissionCount}
+                    </td>
+                }
+                {this.props.set != 0 &&
+                    <td>
+                        {Math.floor((this.state.submissionTotal / this.state.submissionCount) / 60) || 0}:{this.state.submissionCount > 0 ? (Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60) >= 10 ? Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60) : '0' + Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60)) : '0'}
+                    </td>
+                }
+                {this.state.submissionCount > 0 && <td><button className='btn blk' onClick={this.addSet}>Submit Set</button></td>}
             </tr>
         )
     }

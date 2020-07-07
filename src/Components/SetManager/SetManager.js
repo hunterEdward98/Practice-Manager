@@ -3,19 +3,15 @@ import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
 class SetManager extends React.Component {
     state = {
+        lane: 0,
         event: 0,
         athletes: []
     }
     handleChange = (event, value) => {
-        console.log(event.target.value, value)
         this.setState({
             ...this.state,
             [value]: event.target.value
         })
-
-    }
-    getEvent = () => {
-
     }
     addTime = (event) => {
         event.preventDefault();
@@ -27,6 +23,16 @@ class SetManager extends React.Component {
         })
     }
     componentDidMount() { this.get() }
+    getLane = () => {
+        axios.get(`/api/athlete/athletesInLane/${this.state.lane}`).then(response => {
+            console.log(response.data); this.setState({ athletes: response.data })
+        })
+    }
+    getLane = (value) => {
+        axios.get(`/api/athlete/athletesInLane/${value}`).then(response => {
+            console.log(response.data); this.setState({ athletes: response.data })
+        })
+    }
     get = () => {
         axios.get(`/api/athlete/athletesActive`).then(response => {
             console.log(response.data); this.setState({ athletes: response.data })
@@ -39,7 +45,10 @@ class SetManager extends React.Component {
                     <div className="row my-5">
                         <div className="col-12 col-md-6">
                             <h2>Select A Test Set</h2>
-                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => this.handleChange(event, 'event')}>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
+                                this.handleChange(event, 'event');
+                                this.state.lane === 0 ? this.get() : this.getLane()
+                            }}>
                                 <option hidden>SELECT A SET</option>
                                 <option value={1}>500 free</option>
                                 <option value={2}>dirty dozen</option>
@@ -49,9 +58,8 @@ class SetManager extends React.Component {
                         <div className='col-12 col-md-6'>
                             <h2>Select A Lane</h2>
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
-                                axios.get(`/api/athlete/athletesInLane/${event.target.value}`).then(response => {
-                                    console.log(response.data); this.setState({ athletes: response.data })
-                                })
+                                this.handleChange(event, 'lane')
+                                this.getLane(event.target.value)
                             }}>
                                 <option value={0} hidden >SELECT A LANE.</option>
                                 <option value={1}>1</option>
@@ -78,19 +86,26 @@ class SetManager extends React.Component {
                             <th>
                                 Last Set Improvement
                             </th>
-                            <th>
-                                ADD TIME TO CURRENT SET
+                            {this.state.event != 0 &&
+                                <th>
+                                    ADD TIME TO CURRENT SET
                             </th>
-                            <th>
-                                CURRENT SET COUNT
+                            }
+                            {this.state.event != 0 &&
+                                <th>
+                                    CURRENT SET COUNT
                             </th>
-                            <th>
-                                CURRENT SET AVERAGE
+                            }
+                            {this.state.event != 0 &&
+                                <th>
+                                    CURRENT SET AVERAGE
                             </th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.athletes.map(x => <Swimmer key={x.id} name={x.athlete_name} id={x.id} set={this.state.setID} />)}
+                        {console.log(this.state.event)}
+                        {this.state.athletes.map(x => <Swimmer key={x.id} name={x.athlete_name} id={x.id} set={this.state.event} />)}
                     </tbody>
                 </table>
             </div>
