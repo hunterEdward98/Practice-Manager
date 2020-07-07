@@ -34,15 +34,30 @@ class SetManager extends React.Component {
         return (
             <div className='container'>
                 <form>
-                    <div className="form-group btn my-5">
-                        <label>Select A Test Set</label>
-                        <select className="form-control btn blk" id="exampleFormControlSelect1" defaultValue='SELECT SET' label='SELECT A TEST SET'>
-                            <option>500 free</option>
-                            <option>dirty dozen</option>
-                            <option>johnsons joyful</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+                    <div className="row my-5">
+                        <div className="col-12 col-md-6">
+                            <label>Select A Test Set</label>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => console.log(event.target.value)}>
+                                <option hidden>SELECT A SET</option>
+                                <option value={1}>500 free</option>
+                                <option value={2}>dirty dozen</option>
+                                <option value={3}>johnsons joyful</option>
+                            </select>
+                        </div>
+                        <div className='col-12 col-md-6'>
+                            <label>Select A Lane</label>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" >
+                                <option value={0} hidden >SELECT A LANE.</option>
+                                <option value={1}>1</option>
+                                <option value={2}>2</option>
+                                <option value={3}>3</option>
+                                <option value={4}>4</option>
+                                <option value={5}>5</option>
+                                <option value={6}>6</option>
+                                <option value={7}>7</option>
+                                <option value={8}>8</option>
+                            </select>
+                        </div>
                     </div>
                 </form>
                 <table className='table table-dark table-striped'>
@@ -69,8 +84,7 @@ class SetManager extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.athletes.map(x =>
-                            <Swimmer name={x.athlete_name} last={x.swim_time} />)}
+                        {this.state.athletes.map(x => <Swimmer name={x.athlete_name} last={x.swim_time} />)}
                     </tbody>
                 </table>
             </div>

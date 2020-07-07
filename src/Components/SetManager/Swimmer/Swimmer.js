@@ -33,6 +33,7 @@ class Swimmer extends React.Component {
                     {Math.floor(this.props.last / 60, 10) + ':' + (this.props.last % 60 < 10 ? '0' + this.props.last % 60 : this.props.last % 60)}
                 </td>
                 <td>
+                    {this.props.improvement}
                 </td>
                 <td>
 
