@@ -9,7 +9,6 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 router.get('/athletes', (req, res) => {
   const queryText = `SELECT * FROM athletes`
   pool.query(queryText).then(result => {
-    console.log('query for athletes:', result.rows);
     res.send(result.rows)
   }).catch(error => {
     console.log(error)
@@ -19,7 +18,6 @@ router.get('/athletes', (req, res) => {
 router.get('/athletesActive', (req, res) => {
   const queryText = `SELECT * FROM athletes where active=true`
   pool.query(queryText).then(result => {
-    console.log('query for athletes:', result.rows);
     res.send(result.rows)
   }).catch(error => {
     console.log(error)
@@ -27,10 +25,8 @@ router.get('/athletesActive', (req, res) => {
   })
 });
 router.get('/athletesInLane/:lane', (req, res) => {
-  console.log(req.params.lane)
   const queryText = `SELECT * FROM athletes where active=true AND lane_number=$1`
   pool.query(queryText, [req.params.lane]).then(result => {
-    console.log('query for athletes:', result.rows);
     res.send(result.rows)
   }).catch(error => {
     console.log(error)
