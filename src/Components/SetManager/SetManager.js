@@ -84,7 +84,7 @@ class SetManager extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.athletes.map(x => <Swimmer name={x.athlete_name} last={x.swim_time} />)}
+                        {this.state.athletes.map(x => <Swimmer name={x.athlete_name} last={x.swim_time} improvement={x.improvement} />)}
                     </tbody>
                 </table>
             </div>
