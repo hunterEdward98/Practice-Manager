@@ -4,8 +4,8 @@ class Swimmer extends React.Component {
     state = {
         submissionCount: 0,
         submissionTotal: 0,
-        minutes: 0,
-        seconds: 0,
+        minutes: '',
+        seconds: '',
         time: {}
     }
     componentDidMount() {
@@ -16,19 +16,25 @@ class Swimmer extends React.Component {
         })
     }
     handleChange = (event, value) => {
-        this.setState({
-            ...this.state,
-            [value]: event.target.value
-        })
+        const improvement =
+            this.setState({
+                ...this.state,
+                [value]: event.target.value
+            })
     }
     addTime = (event) => {
         event.preventDefault();
         this.setState({
             submissionCount: this.state.submissionCount + 1,
-            submissionTotal: Number(this.state.submissionTotal) + Number(Number(this.state.minutes) * 60) + Number(this.state.seconds),
-            minutes: 0,
-            seconds: 0,
+            submissionTotal: Math.floor((Number(this.state.submissionTotal) + (Number(this.state.minutes) * 60) + Number(this.state.seconds)) / (this.state.submissionCount + 1)),
+            minutes: '',
+            seconds: '',
         })
+    }
+    addSet = () => {
+        const improvement = this.state.time.swim_time - this.state.submissionTotal
+        console.log(improvement)
+        // axios.post('', this.state)
     }
     render() {
         return (
@@ -37,7 +43,7 @@ class Swimmer extends React.Component {
                     {this.props.name}
                 </td>
                 <td>
-                    {Math.floor(this.props.last / 60, 10) + ':' + (this.props.last % 60 < 10 ? '0' + this.props.last % 60 : this.props.last % 60)}
+                    {this.state.time.swim_time ? Math.floor(this.state.time.swim_time / 60, 10) + ':' + (this.state.time.swim_time % 60 < 10 ? '0' + this.state.time.swim_time % 60 : this.state.time.swim_time % 60) : 0}
                 </td>
                 <td>
                     {/* Colored based on whether the swimmer's last time was an improvement */}
@@ -59,9 +65,9 @@ class Swimmer extends React.Component {
                     {this.state.submissionCount}
                 </td>
                 <td>
-                    {Math.floor((this.state.submissionTotal / this.state.submissionCount) * 10) / 10 || 0}
+                    {Math.floor(this.state.submissionTotal / 60)}:{this.state.submissionTotal % 60 > 10 ? this.state.submissionTotal % 60 : '0' + this.state.submissionTotal % 60}
                 </td>
-                {this.state.submissionCount > 0 && <td><button>Submit Set</button></td>}
+                {this.state.submissionCount > 0 && <td><button className='btn blk' onClick={this.addSet}>Submit Set</button></td>}
             </tr>
         )
     }

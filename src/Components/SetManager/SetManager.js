@@ -36,7 +36,7 @@ class SetManager extends React.Component {
                 <form>
                     <div className="row my-5">
                         <div className="col-12 col-md-6">
-                            <label>Select A Test Set</label>
+                            <h2>Select A Test Set</h2>
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => console.log(event.target.value)}>
                                 <option hidden>SELECT A SET</option>
                                 <option value={1}>500 free</option>
@@ -45,8 +45,8 @@ class SetManager extends React.Component {
                             </select>
                         </div>
                         <div className='col-12 col-md-6'>
-                            <label>Select A Lane</label>
-                            <select className="form-control btn blk" id="exampleFormControlSelect1" >
+                            <h2>Select A Lane</h2>
+                            <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => console.log(event.target.value)}>
                                 <option value={0} hidden >SELECT A LANE.</option>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
@@ -84,7 +84,7 @@ class SetManager extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.athletes.map(x => <Swimmer key={x.id} name={x.athlete_name} id={x.id} />)}
+                        {this.state.athletes.map(x => <Swimmer key={x.id} name={x.athlete_name} id={x.id} set={this.state.setID} />)}
                     </tbody>
                 </table>
             </div>
