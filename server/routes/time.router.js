@@ -2,17 +2,19 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
-router.get('/', (req, res) => {
+router.get('/recent/:id', (req, res) => {
+    console.log(req.params.id)
     const query1 = `
-    SELECT DISTINCT ON (athletes.athlete_name) *
-FROM times
+    SELECT * FROM times
 INNER JOIN athletes ON athletes.id=times.athlete_id
-INNER JOIN events ON events.id=times.event_id
-WHERE event_id=1
-ORDER BY athletes.athlete_name, times.date DESC`;
-    pool.query(query1).then(result => {
+WHERE athlete_id=$1
+ORDER by date desc LIMIT 1`;
+    pool.query(query1, [req.params.id]).then(result => {
         console.log(result.rows)
         res.send(result.rows)
+    }).catch(error => {
+        console.log(error)
+        res.sendStatus(500)
     })
 });
 router.get('/event/:athlete', (req, res) => {
