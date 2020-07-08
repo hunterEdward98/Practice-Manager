@@ -31,6 +31,20 @@ ORDER BY athletes.id, times.date DESC
         res.sendStatus(500);
     })
 });
+router.get('/athlete/:id', (req, res) => {
+    const athlete = req.params.id
+    const queryText = `
+    SELECT times.id, times.*, events.event_name FROM times
+    LEFT JOIN events ON events.id = times.event_id
+WHERE athlete_id = $1
+    `
+    pool.query(queryText, [athlete]).then(result => {
+        res.send(result.rows)
+    }).catch(error => {
+        console.log(error)
+        res.sendStatus(500);
+    })
+});
 router.post('/', (req, res) => {
     const body = req.body;
     const athlete_id = body.id;
@@ -46,6 +60,19 @@ router.post('/', (req, res) => {
      `
     pool.query(queryText, [athlete_id, event_id, date, swim_time, 1, improvement || 0]).then(result => {
         res.sendStatus(201)
+    }).catch(error => {
+        console.log(error)
+        res.sendStatus(500);
+    })
+})
+router.delete('/:id', (req, res) => {
+    console.log(req.params.id)
+    // const user = req.user  /*LATER*/
+    const queryText = `
+    DELETE FROM times WHERE id=$1
+     `
+    pool.query(queryText, [req.params.id]).then(result => {
+        res.sendStatus(203)
     }).catch(error => {
         console.log(error)
         res.sendStatus(500);

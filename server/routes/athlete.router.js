@@ -6,7 +6,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
  * Get all of the items on the shelf
  */
 
-router.get('/athletes', (req, res) => {
+router.get('/', (req, res) => {
   const queryText = `SELECT * FROM athletes`
   pool.query(queryText).then(result => {
     res.send(result.rows)
