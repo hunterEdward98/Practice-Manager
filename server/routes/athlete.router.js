@@ -37,11 +37,13 @@ router.get('/athletesInLane/:lane', (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', rejectUnauthenticated, (req, res) => {
-  master
+  if (preq.user.auth_level < 2) {
+    res.sendStatus(403)
+  }
   const desc = req.body.description;
   const img = req.body.image_url
   const usr = req.user.id
-  let queryText = 'INSERT INTO item (description, image_url, user_id) VALUES($1,$2,$3)'
+  let queryText = 'INSERT INTO athletes (description, image_url, user_id) VALUES($1,$2,$3)'
   pool.query(queryText, [desc, img, usr]).then(result => {
     res.sendStatus(202);
   }).catch(error => {
@@ -56,7 +58,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  */
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3) { res.sendStatus(403) }
-  let queryText = 'DELETE FROM times WHERE id=$1'
+  let queryText = 'DELETE FROM athletes WHERE id=$1'
   pool.query(queryText, [req.params.id]).then(result => {
     res.sendStatus(203)
   }).catch(error => {
@@ -67,8 +69,21 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 /**
  * Update an item if it's something the logged in user added
  */
-router.put('/:id', (req, res) => {
-
+router.put('/', rejectUnauthenticated, (req, res) => {
+  const body = req.body;
+  const active = body.active;
+  const id = body.id;
+  const lane = body.lane;
+  const year = body.year;
+  console.log(body)
+  if (req.user.auth_level < 3) { res.sendStatus(403) }
+  let queryText = 'UPDATE athletes SET active=$1, year=$2 , lane_number=$3 where id=$4 RETURNING *'
+  pool.query(queryText, [active, year, lane, id]).then(result => {
+    console.log('query successful', result.rows)
+    res.sendStatus(203)
+  }).catch(error => {
+    res.sendStatus(500)
+  })
 });
 
 
