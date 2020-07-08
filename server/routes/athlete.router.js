@@ -33,6 +33,16 @@ router.get('/athletesInLane/:lane', (req, res) => {
     res.sendStatus(500);
   })
 });
+router.get('/byId/:id', (req, res) => {
+  console.log(req.params.id)
+  const queryText = `SELECT * FROM athletes where id=$1`
+  pool.query(queryText, [req.params.id]).then(result => {
+    res.send(result.rows)
+  }).catch(error => {
+    console.log(error)
+    res.sendStatus(500);
+  })
+});
 /**
  * Add an item for the logged in user to the shelf
  */
@@ -67,7 +77,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 });
 
 /**
- * Update an item if it's something the logged in user added
+ * Update an item if the auth_level is 3 or higher
  */
 router.put('/', rejectUnauthenticated, (req, res) => {
   const body = req.body;
@@ -77,7 +87,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   const year = body.year;
   console.log(body)
   if (req.user.auth_level < 3) { res.sendStatus(403) }
-  let queryText = 'UPDATE athletes SET active=$1, year=$2 , lane_number=$3 where id=$4 RETURNING *'
+  let queryText = 'UPDATE athletes SET active=$1, year=$2 , lane_number=$3 where id=$4'
   pool.query(queryText, [active, year, lane, id]).then(result => {
     console.log('query successful', result.rows)
     res.sendStatus(203)

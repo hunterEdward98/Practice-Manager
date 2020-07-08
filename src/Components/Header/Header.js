@@ -1,5 +1,4 @@
 import React from 'react'
-import swal from 'sweetalert'
 import { NavLink } from 'react-router-dom'
 class Header extends React.Component {
     render() {

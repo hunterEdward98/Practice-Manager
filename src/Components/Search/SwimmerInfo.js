@@ -1,28 +1,41 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Axios from 'axios'
 class SwimmerInfo extends React.Component {
     state = {
         editMode: false,
         active: true,
         year: 0,
         lane: 0,
+        id: 0
+    }
+    getSwimmerInfo = (id) => {
+        console.log('swimmer id:', id)
+        Axios.get(`/api/athlete/byId/${id}`).then(response => {
+            this.setState({
+                active: response.data[0].active,
+                year: response.data[0].year,
+                lane: response.data[0].lane_number
+            })
+        }).catch(error => {
+            console.log(error)
+        })
+    }
+    deleteTime = (targetID, athId) => {
+        this.props.dispatch({ type: 'DELETE_TIME', payload: { targetID, athId } })
     }
     componentWillReceiveProps() {
-        this.setState({
-            active: this.props.data.active,
-            year: this.props.data.year,
-            lane: this.props.data.lane_number,
-        })
+        this.getSwimmerInfo(this.props.id)
     }
     saveEdits() {
         const obj = {
             active: this.state.active,
             year: this.state.year,
             lane: this.state.lane,
-            id: this.props.data.id
+            id: this.props.id
         }
-        console.log(obj)
         this.props.dispatch({ type: 'EDIT_ATHLETE', payload: obj })
+        this.getSwimmerInfo(this.props.id)
     }
     handleChange = (event, value) => {
         this.setState({
@@ -36,9 +49,8 @@ class SwimmerInfo extends React.Component {
             <tbody>
                 {this.props.data !== '' &&
                     <tr>
-                        {console.log(this.props.data)}
                         <td>
-                            {this.state.editMode == false ?
+                            {this.state.editMode === false ?
                                 String(this.state.active) :
                                 <select value={this.state.active} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                     this.handleChange(event, 'active');
@@ -49,7 +61,7 @@ class SwimmerInfo extends React.Component {
                             }
                         </td>
                         <td>
-                            {this.state.editMode == false ?
+                            {this.state.editMode === false ?
                                 String(this.state.year) :
                                 <select value={this.state.year} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                     this.handleChange(event, 'year');
@@ -64,7 +76,7 @@ class SwimmerInfo extends React.Component {
                             }
                         </td>
                         <td>
-                            {this.state.editMode == false ?
+                            {this.state.editMode === false ?
                                 String(this.state.lane) :
                                 <select value={this.state.lane} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                     this.handleChange(event, 'lane');
@@ -81,7 +93,9 @@ class SwimmerInfo extends React.Component {
                             }
                         </td>
                         {
-                            this.props.user.auth_level >= 3 && <th>{this.state.editMode == false ? <button className='btn btn-warning' onClick={() => this.setState({ editMode: true })} > Edit</button> : <button className='btn btn-info' onClick={() => { this.saveEdits(); this.handleChange({ target: { value: false } }, 'editMode') }} > Save</button>}</th>}
+                            this.props.user.auth_level >= 3 && <th>{this.state.editMode === false ?
+                                <button className='btn btn-warning' onClick={() => this.setState({ editMode: true })} > Edit</button> :
+                                <button className='btn btn-info' onClick={() => { this.saveEdits(); this.handleChange({ target: { value: false } }, 'editMode') }} > Save</button>}</th>}
                         {
                             this.props.user.auth_level >= 3 && <th><button className='btn btn-danger'>Delete</button></th>
                         }
