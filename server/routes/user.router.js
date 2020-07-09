@@ -9,18 +9,22 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3) {
     res.sendStatus(403)
   }
-  let queryText = 'SELECT * FROM "users"'
+  let queryText = 'SELECT * FROM "users" ORDER BY id'
   pool.query(queryText).then(result => res.send(result.rows)).catch(() => res.send(500))
 })
 router.put('/', rejectUnauthenticated, (req, res) => {
-  const body = req.body
-  console.log(body)
-  if (req.user.auth_level < 3) {
+  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth) {
     res.sendStatus(403)
   }
-  let queryText = 'UPDATE users SET name=$1, auth_level=$2 WHERE id=$3'
-  pool.query(queryText, []).then(result => res.send(result.rows)).catch(() => res.send(500))
-})
+  else {
+    const body = req.body
+    console.log(body)
+    let queryText = 'UPDATE users SET name=$1, auth_level=$2 WHERE id=$3'
+    pool.query(queryText, [body.user, body.auth, body.id])
+      .then(() => res.sendStatus(203))
+      .catch((error) => res.sendStatus(500));
+  }
+});
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
   // Send back user object from the session (previously queried from the database)

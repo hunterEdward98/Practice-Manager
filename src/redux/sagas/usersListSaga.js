@@ -4,7 +4,9 @@ import { put, takeLatest } from 'redux-saga/effects';
 // worker Saga: will be fired on "FETCH_USER" actions
 function* EditUser(action) {
     try {
+        console.log('about to edit')
         yield axios.put('/api/user', action.payload)
+        console.log('about to edit')
         yield put({ type: 'FETCH_ALL_USERS' })
 
     } catch (error) {

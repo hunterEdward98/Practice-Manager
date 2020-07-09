@@ -24,7 +24,11 @@ class User extends React.Component {
         })
     }
     submitChanges = () => {
-        const obj = {}
+        const obj = {
+            auth: this.state.auth,
+            user: this.state.user,
+            id: this.props.data.id
+        }
         this.props.dispatch({ type: 'EDIT_USER', payload: obj })
     }
     render() {
@@ -58,7 +62,10 @@ class User extends React.Component {
                             <button className='btn btn-warning' onClick={() => this.setState({ editMode: true })}>
                                 Edit
                         </button> :
-                            <button className='btn btn-info' onClick={() => this.setState({ editMode: false })}>
+                            <button className='btn btn-info' onClick={() => {
+                                this.submitChanges()
+                                this.setState({ editMode: false })
+                            }}>
                                 Save
                         </button>}</td>
                     : <td colSpan={2}> CANNOT EDIT THIS USER</td>
