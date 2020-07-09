@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import errors from './errorsReducer';
 import loginMode from './loginModeReducer';
+import event from './eventReducer'
 import user from './userReducer';
 import time from './timeReducer';
 import athlete from './athleteReducer'
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
   user, // will have an id and username if someone is logged in
   athlete,
-  time
+  time,
+  event
 });
 
 export default rootReducer;

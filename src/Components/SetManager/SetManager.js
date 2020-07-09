@@ -1,6 +1,7 @@
 import React from 'react'
 import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
+import { connect } from 'react-redux'
 class SetManager extends React.Component {
     state = {
         lane: 0,
@@ -27,6 +28,7 @@ class SetManager extends React.Component {
         })
     }
     get = () => {
+        this.props.dispatch({ type: 'FETCH_EVENTS' })
         if (this.state.lane === 0) {
             console.log('getting all athletes')
             axios.get(`/api/athlete/athletesActive`).then(response => {
@@ -47,9 +49,8 @@ class SetManager extends React.Component {
                                 this.get()
                             }}>
                                 <option hidden>SELECT A SET</option>
-                                <option value={1}>500 free</option>
-                                <option value={2}>dirty dozen</option>
-                                <option value={3}>johnsons joyful</option>
+                                {console.log(this.props.event)}
+                                {this.props.event.map((x) => <option value={x.id}>{x.event_name}</option>)}
                             </select>
                         </div>
                         <div className='col-12 col-md-6'>
@@ -108,4 +109,14 @@ class SetManager extends React.Component {
         )
     }
 }
-export default SetManager
+
+const mapStateToProps = (state) => {
+    return {
+        event: state.event,
+        time: state.time,
+        ourObj: state.ourObj,
+        user: state.user,
+        swimmer: state.athlete
+    }
+}
+export default connect(mapStateToProps)(SetManager)

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import Select from 'react-select';
 import SwimmerInfo from './SwimmerInfo';
+import Time from './Time'
 
 // This is one of our simplest components
 // It doesn't have local state, so it can be a function component.
@@ -20,11 +21,11 @@ class Search extends React.Component {
     getTimesForSwimmer(event) {
         this.props.dispatch({ type: 'FETCH_TIMES', payload: event })
     }
-    getAthletes = () => {
-        this.props.dispatch({ type: 'FETCH_ATHLETES', })
-    }
     componentDidMount() {
-        this.getAthletes();
+        this.props.dispatch({ type: 'FETCH_ATHLETES' })
+    }
+    componentWillUnmount() {
+        this.props.dispatch({ type: 'FETCH_TIMES', payload: 0 })
     }
     setAthlete(event) {
         console.log('setting state to:', event)
@@ -35,11 +36,14 @@ class Search extends React.Component {
     editTime() {
         return true;
     }
+    deleteTime = (id, athId) => {
+        this.props.dispatch({ type: 'DELETE_TIME', payload: { id, athId } })
+    }
     render() {
         return (
             <div className='container '>
                 <div className='row d-flex justify-content-left'>
-                    <Select placeholder='SELECT SWIMMER...' className='col-12 col-lg-3' defaultValue={0} options={this.props.swimmer ? this.props.swimmer.map((x, i) => { return ({ label: x.athlete_name, value: x.id, key: x.id }) }) : {}} onChange={(event) => { this.setAthlete(event.value) }}>
+                    <Select placeholder='SELECT SWIMMER...' className='col-12 col-lg-3' defaultValue={0} options={this.props.swimmer ? this.props.swimmer.map((x, i) => { return ({ label: x.athlete_name, value: x.id, key: x.id, data: x.athlete_id }) }) : {}} onChange={(event) => { this.setAthlete(event.value); this.getTimesForSwimmer(event.value, event.data) }}>
                     </Select> </div><div className='row d-flex justify-content-center'>
                     <table className='table table-dark col-12 col-lg-11'>
                         <thead>
@@ -70,14 +74,9 @@ class Search extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
+                            {console.log(this.props.time)}
                             {this.props.time.map(x =>
-                                <tr>
-                                    <th scope='col'>{x.event_name}</th>
-                                    <th scope='col'>{x.swim_time}</th>
-                                    <th scope='col'>{moment(x.date).format('MMMM Do YYYY LTS')}</th>
-                                    {this.props.user.auth_level >= 3 && <th><button className='btn btn-warning' onClick={() => this.editTime(x)}> Edit </button></th>}
-                                    {this.props.user.auth_level >= 3 && <th><button className='btn btn-danger' onClick={() => this.deleteTime(x.id, x.athlete_id)}>Delete</button></th>}
-                                </tr>)}
+                                <Time eventName={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.state.swimmerid} />)}
                         </tbody>
                     </table>
                 </div >

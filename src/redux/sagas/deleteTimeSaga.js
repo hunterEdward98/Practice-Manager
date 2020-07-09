@@ -4,9 +4,9 @@ import axios from 'axios';
 // worker Saga: will be fired on "LOGOUT" actions
 function* emptyShelf(action) {
   try {
-    console.log(action.payload)
-    yield axios.delete(`/api/time/${action.payload.targetID}`);
-    console.log('made it to 9')
+    console.log('delete request sent with data:', action.payload.id)
+    yield axios.delete(`/api/time/${action.payload.id}`);
+    console.log('successful delete, fetching with data: ', action.payload.athId)
     yield put({ type: 'FETCH_TIMES', payload: action.payload.athId });
 
     // now that the session has ended on the server

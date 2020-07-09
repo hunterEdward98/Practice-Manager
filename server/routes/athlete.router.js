@@ -34,7 +34,6 @@ router.get('/athletesInLane/:lane', (req, res) => {
   })
 });
 router.get('/byId/:id', (req, res) => {
-  console.log(req.params.id)
   const queryText = `SELECT * FROM athletes where id=$1`
   pool.query(queryText, [req.params.id]).then(result => {
     res.send(result.rows)
@@ -80,48 +79,17 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
  * Update an item if the auth_level is 3 or higher
  */
 router.put('/', rejectUnauthenticated, (req, res) => {
+  if (req.user.auth_level < 3) { res.sendStatus(403) }
   const body = req.body;
   const active = body.active;
   const id = body.id;
   const lane = body.lane;
   const year = body.year;
-  console.log(body)
-  if (req.user.auth_level < 3) { res.sendStatus(403) }
   let queryText = 'UPDATE athletes SET active=$1, year=$2 , lane_number=$3 where id=$4'
   pool.query(queryText, [active, year, lane, id]).then(result => {
-    console.log('query successful', result.rows)
     res.sendStatus(203)
   }).catch(error => {
     res.sendStatus(500)
   })
 });
-
-
-/**
- * Return all users along with the total number of items 
- * they have added to the shelf
- */
-router.get('/count', (req, res) => {
-
-});
-
-
-/**
- * Return a specific item by id
- */
-router.get('/:id', (req, res) => {
-
-});
-
-
-
-
-/**
- * Delete an item if it's something the logged in user added
- */
-
-
-
-
-
 module.exports = router;

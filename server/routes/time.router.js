@@ -19,15 +19,16 @@ ORDER by date desc LIMIT 1`;
 router.get('/event/:athlete', (req, res) => {
     const athlete = req.params.athlete
     const queryText = `
-    SELECT DISTINCT ON (times.event_id) *
-FROM athletes
+    SELECT DISTINCT  *
+FROM times
 INNER JOIN times ON athletes.id=times.athlete_id
 ORDER BY athletes.id, times.date DESC
     `
     pool.query(queryText, [athlete]).then(result => {
+        console.log(result.rows)
         res.send(result.rows)
     }).catch(error => {
-        console.log(error)
+        console.log('ERROR:', error)
         res.sendStatus(500);
     })
 });
@@ -45,7 +46,35 @@ WHERE athlete_id = $1
         res.sendStatus(500);
     })
 });
-router.post('/', (req, res) => {
+router.put('/', rejectUnauthenticated, (req, res) => {
+    if (req.user.auth_level < 3) {
+        console.log(403)
+        res.sendStatus(403);
+    }
+    const body = req.body;
+    const time_id = body.id;
+    const event_id = Number(body.event);
+    const swim_time = body.time;
+    const impChange = body.improvementChange
+    console.log(body)
+    // const user = req.user  /*LATER*/
+    const queryText = `
+    UPDATE times
+    SET swim_time=$1, event_id=$2, improvement=improvement+$3
+    WHERE id = $4
+     `
+    pool.query(queryText, [swim_time, event_id, impChange, time_id]).then(result => {
+        res.sendStatus(201)
+    }).catch(error => {
+        console.log(error)
+        res.sendStatus(500);
+    })
+})
+router.post('/', rejectUnauthenticated, (req, res) => {
+    if (req.user.auth_level < 2) {
+        console.log(403)
+        res.sendStatus(403);
+    }
     const body = req.body;
     const athlete_id = body.id;
     const event_id = body.event;
@@ -65,8 +94,11 @@ router.post('/', (req, res) => {
         res.sendStatus(500);
     })
 })
-router.delete('/:id', (req, res) => {
-    console.log(req.params.id)
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    if (req.user.auth_level < 3) {
+        console.log(403)
+        res.sendStatus(403);
+    }
     // const user = req.user  /*LATER*/
     const queryText = `
     DELETE FROM times WHERE id=$1

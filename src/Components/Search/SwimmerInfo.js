@@ -9,10 +9,10 @@ class SwimmerInfo extends React.Component {
         lane: 0,
         id: 0
     }
-    getSwimmerInfo = (id) => {
-        console.log('swimmer id:', id)
-        Axios.get(`/api/athlete/byId/${id}`).then(response => {
+    getSwimmerInfo = () => {
+        Axios.get(`/api/athlete/byId/${this.props.id}`).then(response => {
             this.setState({
+                id: response.data[0].id,
                 active: response.data[0].active,
                 year: response.data[0].year,
                 lane: response.data[0].lane_number
@@ -21,11 +21,16 @@ class SwimmerInfo extends React.Component {
             console.log(error)
         })
     }
-    deleteTime = (targetID, athId) => {
-        this.props.dispatch({ type: 'DELETE_TIME', payload: { targetID, athId } })
-    }
     componentWillReceiveProps() {
-        this.getSwimmerInfo(this.props.id)
+        const timer = setTimeout(() => {
+            this.getSwimmerInfo()
+        }, 1);
+    }
+    handleChange = (event, value) => {
+        this.setState({
+            ...this.state,
+            [value]: event.target.value
+        })
     }
     saveEdits() {
         const obj = {
@@ -35,19 +40,11 @@ class SwimmerInfo extends React.Component {
             id: this.props.id
         }
         this.props.dispatch({ type: 'EDIT_ATHLETE', payload: obj })
-        this.getSwimmerInfo(this.props.id)
-    }
-    handleChange = (event, value) => {
-        this.setState({
-            ...this.state,
-            [value]: event.target.value
-        })
-
     }
     render() {
         return (
             <tbody>
-                {this.props.data !== '' &&
+                {(this.props.data !== '' && this.props.id !== 0) &&
                     <tr>
                         <td>
                             {this.state.editMode === false ?
