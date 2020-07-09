@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import Axios from 'axios'
 class SwimmerInfo extends React.Component {
@@ -8,6 +9,9 @@ class SwimmerInfo extends React.Component {
         year: 0,
         lane: 0,
         id: 0
+    }
+    componentWillUnmount() {
+        this.props.dispatch({ type: 'FETCH_TIMES', payload: 0 })
     }
     getSwimmerInfo = () => {
         Axios.get(`/api/athlete/byId/${this.props.id}`).then(response => {
@@ -20,6 +24,11 @@ class SwimmerInfo extends React.Component {
         }).catch(error => {
             console.log(error)
         })
+    }
+    deleteSwimmer = () => {
+        Axios.delete(`/api/athlete/${this.props.id}`)
+        this.props.dispatch({ type: 'FETCH_ATHLETES' })
+        window.location.reload(false);
     }
     componentWillReceiveProps() {
         const timer = setTimeout(() => {
@@ -94,7 +103,7 @@ class SwimmerInfo extends React.Component {
                                 <button className='btn btn-warning' onClick={() => this.setState({ editMode: true })} > Edit</button> :
                                 <button className='btn btn-info' onClick={() => { this.saveEdits(); this.handleChange({ target: { value: false } }, 'editMode') }} > Save</button>}</th>}
                         {
-                            this.props.user.auth_level >= 3 && <th><button className='btn btn-danger'>Delete</button></th>
+                            this.props.user.auth_level >= 3 && <th><button className='btn btn-danger' onClick={() => this.deleteSwimmer()}>Delete</button></th>
                         }
                     </tr>
                 }
@@ -113,4 +122,4 @@ const mapStateToProps = (state) => {
         swimmer: state.athlete
     }
 }
-export default connect(mapStateToProps)(SwimmerInfo)
+export default withRouter(connect(mapStateToProps)(SwimmerInfo))

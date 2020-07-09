@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios'
 import { connect } from 'react-redux';
 import moment from 'moment';
 import Select from 'react-select';
@@ -41,8 +42,9 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <div className='container '>
-                <div className='row d-flex justify-content-left'>
+            <div className='container mt-5 '>
+                <h2>SELECT A SWIMMER</h2>
+                <div className='row justify-content-center'>
                     <Select placeholder='SELECT SWIMMER...' className='col-12 col-lg-3' defaultValue={0} options={this.props.swimmer ? this.props.swimmer.map((x, i) => { return ({ label: x.athlete_name, value: x.id, key: x.id, data: x.athlete_id }) }) : {}} onChange={(event) => { this.setAthlete(event.value); this.getTimesForSwimmer(event.value, event.data) }}>
                     </Select> </div><div className='row d-flex justify-content-center'>
                     <table className='table table-dark col-12 col-lg-11'>
