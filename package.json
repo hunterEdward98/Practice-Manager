@@ -31,7 +31,7 @@
     "tailwindcss": "^1.4.6"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "react-scripts build && node server/server.js",
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
