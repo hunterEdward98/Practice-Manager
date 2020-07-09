@@ -13,7 +13,7 @@ class AdminTools extends React.Component {
                     <thead><tr><th>userName</th><th>auth_level</th></tr></thead>
                     {this.props.users[0] &&
                         <tbody>{this.props.users.map(x => <User data={x} />)}</tbody>
-                    }9
+                    }
                     {console.log(this.props.users)}
                 </table></div>
         )
