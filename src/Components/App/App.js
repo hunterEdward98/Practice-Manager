@@ -6,6 +6,8 @@ import SetManager from '../SetManager/SetManager'
 import Search from '../Search/Search'
 import LoginPage from '../LoginPage/LoginPage'
 import { connect } from 'react-redux'
+import RejectUnauthorized from '../AdminTools/RejectUnauthorized';
+import AdminTools from '../AdminTools/AdminTools';
 class App extends React.Component {
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' })
@@ -19,11 +21,16 @@ class App extends React.Component {
           <Route path='/'></Route>
           <Route path='/set-manager'><SetManager></SetManager></Route>
           <Route path='/swimmer-search'><Search /></Route>
-          <Route path='/super-admin'></Route>
+          <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
           <Route path='/sign-in'><LoginPage /></Route>
         </div>
       </Router>
     );
   }
 }
-export default connect()(App);
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps)(App);

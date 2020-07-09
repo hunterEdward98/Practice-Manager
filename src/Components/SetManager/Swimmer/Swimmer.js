@@ -22,8 +22,7 @@ class Swimmer extends React.Component {
         this.getRecent()
     }
     componentWillReceiveProps() {
-
-        const timer = setTimeout(() => {
+        setTimeout(() => {
             this.getRecent()
         }, 1);
     }
@@ -81,7 +80,6 @@ class Swimmer extends React.Component {
                 }
                 {(this.props.user.auth_level >= 2 && this.props.set != 0) &&
                     <td>
-
                         <form onSubmit={(event) => this.addTime(event)}>
                             <div className="form-group">
                                 <input required className='col-12 col-md-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /> :

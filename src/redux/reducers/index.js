@@ -5,6 +5,7 @@ import event from './eventReducer'
 import user from './userReducer';
 import time from './timeReducer';
 import athlete from './athleteReducer'
+import users from './usersListReducer'
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   user, // will have an id and username if someone is logged in
   athlete,
   time,
-  event
+  event,
+  users
 });
 
 export default rootReducer;

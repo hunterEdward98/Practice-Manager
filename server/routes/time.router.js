@@ -20,9 +20,9 @@ router.get('/event/:athlete', (req, res) => {
     const athlete = req.params.athlete
     const queryText = `
     SELECT DISTINCT  *
-FROM times
-INNER JOIN times ON athletes.id=times.athlete_id
-ORDER BY athletes.id, times.date DESC
+    FROM times
+    INNER JOIN times ON athletes.id=times.athlete_id
+    ORDER BY athletes.id, times.date DESC
     `
     pool.query(queryText, [athlete]).then(result => {
         console.log(result.rows)

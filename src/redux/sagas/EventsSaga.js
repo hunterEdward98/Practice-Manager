@@ -16,8 +16,8 @@ function* getEvents() {
     }
 }
 
-function* getShelfSaga() {
+function* EventsSaga() {
     yield takeLatest('FETCH_EVENTS', getEvents);
 }
 
-export default getShelfSaga;
+export default EventsSaga;

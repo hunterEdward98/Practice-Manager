@@ -2,12 +2,10 @@ import { all } from 'redux-saga/effects';
 import loginSaga from './loginSaga';
 import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
-import deleteTimeSaga from './deleteTimeSaga';
-import getTimesSaga from './getTimesSaga';
-import getAthleteSaga from './getAthleteSaga'
-import editAthleteSaga from './editAthleteSaga'
-import getEventsSage from './getEventsSaga'
-import editTimeSaga from './editTimeSaga'
+import usersListSaga from './usersListSaga'
+import TimesSaga from './TimesSaga';
+import AthleteSaga from './AthleteSaga'
+import EventsSaga from './EventsSaga'
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -20,11 +18,9 @@ export default function* rootSaga() {
     loginSaga(),
     registrationSaga(),
     userSaga(),
-    getAthleteSaga(),
-    editAthleteSaga(),
-    getEventsSage(),
-    deleteTimeSaga(),
-    editTimeSaga(),
-    getTimesSaga()
+    AthleteSaga(),
+    EventsSaga(),
+    TimesSaga(),
+    usersListSaga()
   ]);
 }

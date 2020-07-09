@@ -2,6 +2,15 @@ import { put, takeLatest } from 'redux-saga/effects';
 import moment from 'moment'
 import axios from 'axios';
 
+function* editAthlete(action) {
+    try {
+        yield axios.put(`/api/athlete/`, action.payload);
+        console.log(action.payload, `successful edit, moving to fetch`, moment().format('h:m:s.SSS'))
+        yield put({ type: 'FETCH_ATHLETES' });
+    } catch (error) {
+        console.log('Error with athlete edit:', error);
+    }
+}
 // worker Saga: will be fired on "LOGOUT" actions
 function* fetchAthletes(action) {
     try {
@@ -15,8 +24,9 @@ function* fetchAthletes(action) {
         console.log('Error with athletes:', error);
     }
 }
-function* loginSaga() {
+function* AthleteSaga() {
     yield takeLatest('FETCH_ATHLETES', fetchAthletes);
+    yield takeLatest('EDIT_ATHLETE', editAthlete);
 }
 
-export default loginSaga;
+export default AthleteSaga;
