@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import User from './User'
+import { Route, NavLink } from 'react-router-dom'
+import Users from './Users/Users'
 class AdminTools extends React.Component {
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_ALL_USERS' })
@@ -8,14 +9,18 @@ class AdminTools extends React.Component {
     render() {
         return (
             <div className='container my-5'>
-                <h2>Users</h2>
-                <table className='table table-dark mb-5'>
-                    <thead><tr><th>userName</th><th>auth_level</th></tr></thead>
-                    {this.props.users[0] &&
-                        <tbody>{this.props.users.map(x => <User data={x} />)}</tbody>
-                    }
-                    {console.log(this.props.users)}
-                </table></div>
+                <div className='container'>
+                    <div className='container'>
+                        <NavLink exact to='/super-admin/users' className='col-12 col-sm-4 h2 btn signin'>Users</NavLink>
+                        <NavLink exact to='/super-admin/swimmers' className='col-12 col-sm-4 h2 btn signin'>Add Swimmers</NavLink>
+                        <NavLink exact to='/super-admin/sets' className='col-12 col-sm-4 h2 btn signin'>Add Sets</NavLink>
+                    </div>
+                </div>
+                <Route path='/super-admin/users'><Users /></Route>
+                <Route path='/super-admin/swimmers'></Route>
+                <Route path='/super-admin/sets'><Users /></Route>
+
+            </div>
         )
     }
 }

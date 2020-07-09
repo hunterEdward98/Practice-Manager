@@ -41,18 +41,24 @@ class User extends React.Component {
                         <input value={this.state.user} onChange={(event) => this.handleChange(event, 'user')} /></td>
                 }
                 {this.state.editMode === false ?
-                    <td>{this.props.data.auth_level}</td> :
+                    <td>
+                        {this.props.data.auth_level === 1 && <p>athlete</p>}
+                        {this.props.data.auth_level === 2 && <p>manager</p>}
+                        {this.props.data.auth_level === 3 && <p>coach</p>}
+                        {this.props.data.auth_level === 4 && <p>head coach</p>}
+                        {this.props.data.auth_level === 5 && <p>administrator</p>}
+                    </td> :
                     <td>
                         <select className="form-control btn blk" id="exampleFormControlSelect1" value={this.state.auth} onChange={(event) => {
                             this.handleChange(event, 'auth')
                         }}>
-                            <option value={1}>1</option>
-                            <option value={2}>2</option>
+                            <option value={1}>athlete</option>
+                            <option value={2}>manager</option>
                             {this.props.user.auth_level >= 4 &&
-                                <option value={3}>3</option>
+                                <option value={3}>coach</option>
                             }
                             {this.props.user.auth_level >= 5 &&
-                                <option value={4}>4</option>
+                                <option value={4}>head coach</option>
                             }
                         </select>
                     </td>

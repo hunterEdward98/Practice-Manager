@@ -10,4 +10,16 @@ router.get('/', (req, res) => {
         res.sendStatus(500)
     })
 })
+router.post('/', rejectUnauthenticated, (req, res) => {
+    if (req.user.auth_level < 3) {
+        res.sendStatus(403)
+    }
+    const body = req.body
+    const queryText = 'SELECT * FROM events'
+    pool.query(queryText).then(result => {
+        res.send(result.rows)
+    }).catch(error => {
+        res.sendStatus(500)
+    })
+})
 module.exports = router;
