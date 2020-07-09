@@ -78,23 +78,29 @@ class SetManager extends React.Component {
                             <th scope='col'>
                                 Swimmer Name
                             </th>
-                            <th>
-                                Last Set Avg Time
+
+                            {(this.state.event != 0) &&
+                                <th>
+                                    Last Set Avg Time
                             </th>
-                            <th>
-                                Last Set Improvement
+                            }
+
+                            {(this.state.event != 0) &&
+                                <th>
+                                    Last Set Improvement
                             </th>
-                            {this.state.event != 0 &&
+                            }
+                            {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
                                 <th>
                                     ADD TIME TO CURRENT SET
                             </th>
                             }
-                            {this.state.event != 0 &&
+                            {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
                                 <th>
                                     CURRENT SET COUNT
                             </th>
                             }
-                            {this.state.event != 0 &&
+                            {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
                                 <th>
                                     CURRENT SET AVERAGE
                             </th>

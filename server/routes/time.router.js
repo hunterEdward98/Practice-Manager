@@ -38,6 +38,7 @@ router.get('/athlete/:id', (req, res) => {
     SELECT times.id, times.*, events.event_name FROM times
     LEFT JOIN events ON events.id = times.event_id
 WHERE athlete_id = $1
+ORDER BY times.date DESC
     `
     pool.query(queryText, [athlete]).then(result => {
         res.send(result.rows)

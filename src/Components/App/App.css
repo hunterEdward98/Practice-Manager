@@ -5,7 +5,18 @@
   border: 3px solid blue;
 }
 .signin:hover {
-  border: 3px solid blue;
+  border: 3px solid violet;
+}
+.signin:active {
+  background-color: maroon;
+  color: gold;
+}
+.signout {
+  border: 3px solid red;
+}
+.signout:hover {
+  border: 3px solid Maroon;
+  color: maroon;
 }
 .signin:active {
   background-color: maroon;
