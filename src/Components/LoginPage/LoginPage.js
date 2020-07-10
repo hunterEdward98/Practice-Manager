@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import { withRouter, NavLink } from 'react-router-dom'
 import { connect } from 'react-redux';
+
 
 class LoginPage extends Component {
   state = {
@@ -33,7 +34,7 @@ class LoginPage extends Component {
 
   render() {
     return (
-      <div>
+      <div className='container justify-content-center'>
         {this.props.errors.loginMessage && (
           <h2
             className="alert"
@@ -66,13 +67,18 @@ class LoginPage extends Component {
               />
             </label>
           </div>
-          <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
-            />
+          <div className='container'>
+            <div className='row justify-content-center'>
+              <div className=' col-6 col-md-3'>
+                <input
+                  className="log-in btn signin col-7"
+                  type="submit"
+                  name="submit"
+                  value="Log In"
+                />
+                <NavLink to='/register' className='btn blk col-7'>Register</NavLink>
+              </div>
+            </div>
           </div>
         </form>
       </div>
