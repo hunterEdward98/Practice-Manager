@@ -81,10 +81,10 @@ class Swimmer extends React.Component {
                 {(this.props.user.auth_level >= 2 && this.props.set != 0) &&
                     <td>
                         <form onSubmit={(event) => this.addTime(event)}>
-                            <div className="form-group">
+                            <div className="form-group col-12 justify-content-center row">
                                 <input required className='col-12 col-md-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /> :
-                            <input required className='col-12 col-md-6 my-1' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
-                                <button type='submit' className='btn btn-success'>Add Time</button>
+                            <input required className='col-12 col-md-4' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
+                                <button type='submit' className='btn btn-success col-8 col-md-5'>Add Time</button>
                             </div>
                         </form>
                     </td>

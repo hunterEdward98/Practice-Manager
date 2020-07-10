@@ -74,34 +74,34 @@ class SetManager extends React.Component {
                 </form>
                 <table className='table table-dark table-striped'>
                     <thead>
-                        <tr>
-                            <th scope='col'>
+                        <tr className='justify-content-center'>
+                            <th scope='col' className='text-center'>
                                 Swimmer Name
                             </th>
 
                             {(this.state.event != 0) &&
-                                <th>
+                                <th className='text-center'>
                                     Last Set Avg Time
                             </th>
                             }
 
                             {(this.state.event != 0) &&
-                                <th>
+                                <th className='text-center'>
                                     Last Set Improvement
                             </th>
                             }
                             {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
-                                <th>
+                                <th className='text-center'>
                                     ADD TIME TO CURRENT SET
                             </th>
                             }
                             {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
-                                <th>
+                                <th className='text-center'>
                                     CURRENT SET COUNT
                             </th>
                             }
                             {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
-                                <th>
+                                <th className='text-center'>
                                     CURRENT SET AVERAGE
                             </th>
                             }
