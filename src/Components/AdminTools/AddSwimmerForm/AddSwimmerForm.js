@@ -13,6 +13,11 @@ class User extends React.Component {
     submitNewSwimmer = (event) => {
         event.preventDefault()
         this.props.dispatch({ type: 'ADD_ATHLETE', payload: { name: this.state.name, lane: this.state.lane, year: this.state.year } })
+        this.setState({
+            name: '',
+            lane: 1,
+            year: ''
+        })
     }
     handleChange = (event, value) => {
         this.setState({
