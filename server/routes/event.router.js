@@ -10,6 +10,18 @@ router.get('/', (req, res) => {
         res.sendStatus(500)
     })
 })
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    if (req.user.auth_level < 3) {
+        res.sendStatus(403)
+    }
+    const queryText = 'DELETE FROM events WHERE id=$1'
+    pool.query(queryText, [req.params.id]).then(result => {
+        console.log('successfull delete')
+        res.send(result.rows)
+    }).catch(error => {
+        res.sendStatus(500)
+    })
+})
 router.post('/', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
         res.sendStatus(403)
