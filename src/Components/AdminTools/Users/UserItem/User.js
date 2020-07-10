@@ -15,7 +15,13 @@ class User extends React.Component {
             user: this.props.data.name
         })
     }
-
+    deleteUser = () => {
+        const obj = {
+            auth: this.state.auth,
+            id: this.props.data.id
+        }
+        this.props.dispatch({ type: 'DELETE_USER', payload: obj })
+    }
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
@@ -78,7 +84,7 @@ class User extends React.Component {
                 }
                 <td>
                     {(this.props.user.auth_level > this.state.auth) &&
-                        <button className='btn btn-danger'>
+                        <button className='btn btn-danger' onClick={() => this.deleteUser()}>
                             Delete
                     </button>
                     }

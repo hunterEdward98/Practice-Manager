@@ -23,14 +23,17 @@ router.put('/', rejectUnauthenticated, (req, res) => {
     .then(() => res.sendStatus(201))
     .catch((error) => res.sendStatus(500));
 });
-router.delete('/:id', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3) {
+router.delete('/:id/:auth', rejectUnauthenticated, (req, res) => {
+  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level) {
     res.sendStatus(403)
   }
-  let queryText = 'DELETE FROM users WHERE id=$1'
-  pool.query(queryText, [req.params.id])
-    .then(() => res.sendStatus(203))
-    .catch((error) => res.sendStatus(500));
+  else {
+    let queryText = 'DELETE FROM users WHERE id=$1'
+    console.log(req.params.id)
+    pool.query(queryText, [req.params.id])
+      .then(() => res.sendStatus(203))
+      .catch((error) => res.sendStatus(500));
+  }
 })
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
