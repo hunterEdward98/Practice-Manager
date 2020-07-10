@@ -1,8 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink, Link } from 'react-router-dom'
-class Header extends React.Component {
-    state = { loggedIn: false }
+import swal from 'sweetalert'
+import Axios from 'axios'
+class Footer extends React.Component {
+    state = {
+        reqFeatureData: '',
+        bugData: ''
+    }
+    submitBug = () => {
+        swal(`Submitting bug:${this.state.bugData}`)
+        Axios.post('/api/email/bug', { data: this.state.bugData })
+        this.setState({
+            bugData: ''
+        })
+    }
+    submitFeature = () => {
+        swal(`Submitting feature request: ${this.state.reqFeatureData}`)
+        Axios.post('/api/email/feature', { data: this.state.reqFeatureData })
+        this.setState({
+            reqFeatureData: ''
+        })
+    }
     componentWillReceiveProps() {
         this.setState({
             user: this.props.user
@@ -10,24 +29,27 @@ class Header extends React.Component {
     }
     render() {
         return (
-            <footer className='footer blk mt-5'>
+            <footer className='footer blk mt-5 container'>
                 <div className='row justify-content-center'>
                     <div className='h3 col-6'>
                         Report A Bug
-                        <input className='p form-control' placeholder='Please provide your name' />
-                        <textarea className='p form-control' placeholder='Please Provide a description of the bug' />
-                        <button className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button>
+                        <textarea className='p form-control' placeholder='Please Provide a description of the bug' onChange={(event) => this.setState({ bugData: event.target.value })} value={this.state.bugData} />
+                        {this.props.user.auth_level ? <button onClick={() => this.submitBug()} className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button> : <Link to='/sign-in'><button className='btn signin'>Sign In <span className='glyphicon glyphicon-cog'> </span></button></Link>}
                     </div>
                     <div className='h3 col-6'>
                         Request A Feature
-                        <input className='p form-control' placeholder='Title' />
-                        <textarea className='p form-control' placeholder={`Please Provide a description of the feature you'd like to see`} />
-                        <button className='btn btn-secondary'>Send Request <span className='glyphicon glyphicon-cog'> </span></button>
+                        <textarea className='p form-control' placeholder={`Please Provide a description of the feature you'd like to see`} onChange={(event) => this.setState({ reqFeatureData: event.target.value })} value={this.state.reqFeatureData} />
+                        {this.props.user.auth_level ? <button onClick={() => this.submitFeature()} className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button> : <Link to='/sign-in'><button className='btn signin'>Sign In <span className='glyphicon glyphicon-cog'> </span></button></Link>}
                     </div>
-                    <div className='col-6 h3 text-left'>CONTACT ME:
-                    <div className='col-12 h5 mt-1 row'><div className='col-10'><u><i>Email:</i></u> Hunter.Scheel@outlook.com</div></div>
-                        <div className='col-12 h5 mt-1'><u><i><a href='https://www.linkedin.com/in/hunter-e-scheel'>LinkedIn:</a></i></u></div>
-                        <div className='col-12 h5 mt-1'><u><i><a href='https://hunteredward98.github.io'>Website</a></i></u></div></div>
+                    <div className='col-12 h3 row'>
+                        <div className='col-12'>CONTACT ME:</div>
+                        <div className='h5 col-6'>
+                            <a href='https://www.linkedin.com/in/hunter-e-scheel'> LinkedIn </a>
+                        </div>
+                        <div className='h5 col-6'>
+                            <a href='https://hunteredward98.github.io'>Website</a>
+                        </div>
+                    </div>
                 </div>
             </footer >
         )
@@ -38,4 +60,4 @@ const mapStateToProps = (state) => {
         user: state.user
     }
 }
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps)(Footer)

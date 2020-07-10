@@ -13,6 +13,7 @@ const userRouter = require('./routes/user.router');
 const athleteRouter = require('./routes/athlete.router');
 const eventRouter = require('./routes/event.router');
 const timeRouter = require('./routes/time.router');
+const emailRouter = require('./routes/email.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -26,6 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
+app.use('/api/email', emailRouter);
 app.use('/api/user', userRouter);
 app.use('/api/athlete', athleteRouter);
 app.use('/api/event', eventRouter);

@@ -20,12 +20,17 @@ class App extends React.Component {
         <div className="App">
           <Header className="App-header">
           </Header>
-          <Route exact path='/'><Redirect /></Route>
-          <Route exact path='/home'></Route>
-          <Route exact path='/set-manager'><SetManager></SetManager></Route>
-          <Route exact path='/swimmer-search'><Search /></Route>
-          <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
           <Route exact path='/sign-in'><LoginPage /></Route>
+          {this.props.user.auth_level ?
+            <div>
+              <Route exact path='/'><Redirect /></Route>
+              <Route exact path='/home'></Route>
+              <Route exact path='/set-manager'><SetManager></SetManager></Route>
+              <Route exact path='/swimmer-search'><Search /></Route>
+              <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
+            </div>
+            : <RejectUnauthorized />
+          }
           <footer>
             <Footer /></footer>
         </div>

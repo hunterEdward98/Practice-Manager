@@ -1,5 +1,6 @@
-const express = require('express');
+
 const pool = require('../modules/pool');
+const express = require('express');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 /**
