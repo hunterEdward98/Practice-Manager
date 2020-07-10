@@ -18,11 +18,11 @@ class App extends React.Component {
         <div className="App">
           <Header className="App-header">
           </Header>
-          <Route path='/'></Route>
-          <Route path='/set-manager'><SetManager></SetManager></Route>
-          <Route path='/swimmer-search'><Search /></Route>
-          <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
-          <Route path='/sign-in'><LoginPage /></Route>
+          <Route exact path='/#/'></Route>
+          <Route exact path='/#/set-manager'><SetManager></SetManager></Route>
+          <Route path='/#/swimmer-search'><Search /></Route>
+          <Route path='/#/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
+          <Route path='/#/sign-in'><LoginPage /></Route>
         </div>
       </Router>
     );
