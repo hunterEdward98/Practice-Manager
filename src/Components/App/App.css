@@ -64,6 +64,11 @@ nav {
     animation: App-logo-spin infinite 20s linear;
   }
 }
+input[type="number"] {
+  background-color: black;
+  color: gold;
+  -moz-appearance: textfield;
+}
 
 .App-header {
   background-color: #282c34;

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Route, NavLink, } from 'react-router-dom'
 import Users from './Users/Users'
 import AddSwimmerForm from './AddSwimmerForm/AddSwimmerForm'
+import AddEvent from './AddEvent/AddEvent'
 class AdminTools extends React.Component {
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_ALL_USERS' })
@@ -19,7 +20,7 @@ class AdminTools extends React.Component {
                 </div>
                 <Route path='/super-admin/users'><Users /></Route>
                 <Route path='/super-admin/swimmers'><AddSwimmerForm /></Route>
-                <Route path='/super-admin/sets'><h2>NO FUNCTIONALITY YET</h2></Route>
+                <Route path='/super-admin/sets'><AddEvent /></Route>
             </div>
         )
     }
