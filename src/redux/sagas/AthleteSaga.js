@@ -1,7 +1,15 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import moment from 'moment'
 import axios from 'axios';
-
+function* addAthlete(action) {
+    try {
+        yield axios.post(`/api/athlete/`, action.payload);
+        console.log(action.payload, `successful post, moving to fetch`, moment().format('h:m:s.SSS'))
+        yield put({ type: 'FETCH_ATHLETES' });
+    } catch (error) {
+        console.log('Error with athlete edit:', error);
+    }
+}
 function* editAthlete(action) {
     try {
         yield axios.put(`/api/athlete/`, action.payload);
@@ -27,6 +35,7 @@ function* fetchAthletes(action) {
 function* AthleteSaga() {
     yield takeLatest('FETCH_ATHLETES', fetchAthletes);
     yield takeLatest('EDIT_ATHLETE', editAthlete);
+    yield takeLatest('ADD_ATHLETE', addAthlete);
 }
 
 export default AthleteSaga;

@@ -46,13 +46,14 @@ router.get('/byId/:id', (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', rejectUnauthenticated, (req, res) => {
-  if (preq.user.auth_level < 2) {
+  if (req.user.auth_level < 2) {
     res.sendStatus(403)
   }
-  const desc = req.body.description;
-  const img = req.body.image_url
-  const usr = req.user.id
-  let queryText = 'INSERT INTO athletes (description, image_url, user_id) VALUES($1,$2,$3)'
+  const desc = req.body.name;
+  const img = req.body.lane
+  const usr = req.body.year
+  console.log(req.body)
+  let queryText = 'INSERT INTO athletes (athlete_name, lane_number, year) VALUES($1,$2,$3)'
   pool.query(queryText, [desc, img, usr]).then(result => {
     res.sendStatus(202);
   }).catch(error => {

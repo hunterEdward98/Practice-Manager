@@ -13,7 +13,7 @@
 }
 .signin:active {
   background-color: maroon;
-  color: gold;
+  color: white;
 }
 .signout {
   border: 3px solid red;
@@ -34,17 +34,30 @@ nav {
   background-color: 505050;
   color: white;
 }
+.adminNav {
+  background-color: rgb(26, 0, 0);
+  color: gold;
+}
+.adminNav:hover {
+  background-color: rgb(26, 0, 0);
+  color: goldenrod;
+}
+.adminNav:active {
+  background-color: red(26, 0, 0);
+  color: gold;
+}
 .blk {
   background-color: black;
-  color: white;
+  color: gold;
 }
 .blk:hover {
   color: gold;
+  background-color: black;
   font-weight: bolder;
 }
 .active {
   background-color: maroon !important;
-  color: gold;
+  color: gold !important;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {

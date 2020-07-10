@@ -1,6 +1,5 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Axios from 'axios'
 class User extends React.Component {
     state = {
         editMode: false,
@@ -38,7 +37,7 @@ class User extends React.Component {
                     <td>{this.props.data.name}</td>
                     :
                     <td>
-                        <input value={this.state.user} onChange={(event) => this.handleChange(event, 'user')} /></td>
+                        <input value={this.state.user} className='form-control blk' onChange={(event) => this.handleChange(event, 'user')} /></td>
                 }
                 {this.state.editMode === false ?
                     <td>
@@ -74,7 +73,8 @@ class User extends React.Component {
                             }}>
                                 Save
                         </button>}</td>
-                    : <td colSpan={2}> CANNOT EDIT THIS USER</td>
+                    : <td colSpan={2}>
+                        <span class="glyphicon glyphicon-lock" ></span></td>
                 }
                 <td>
                     {(this.props.user.auth_level > this.state.auth) &&

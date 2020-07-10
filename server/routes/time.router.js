@@ -79,16 +79,16 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     const body = req.body;
     const athlete_id = body.id;
     const event_id = body.event;
-    const date = moment().format('MM-DD-YYYY LTS')
+    const date = moment(new Date()).format('MM-DD-YYYY LTS')
+    console.log(date)
     const swim_time = body.time;
     const improvement = body.improvement || 0;
-
     // const user = req.user  /*LATER*/
     const queryText = `
-    INSERT INTO times(athlete_id, event_id, date, swim_time, added_by, improvement)
+    INSERT INTO times(athlete_id, event_id, "date", swim_time, added_by, improvement)
     VALUES($1,$2,$3,$4,$5,$6)
      `
-    pool.query(queryText, [athlete_id, event_id, date, swim_time, 1, improvement || 0]).then(result => {
+    pool.query(queryText, [athlete_id, event_id, date, swim_time, req.user.id, improvement || 0]).then(result => {
         res.sendStatus(201)
     }).catch(error => {
         console.log(error)

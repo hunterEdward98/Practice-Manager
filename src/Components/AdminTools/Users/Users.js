@@ -8,8 +8,17 @@ class AdminTools extends React.Component {
     render() {
         return (
             <div className='container my-5'>
+                <h2>
+                    {this.props.user.auth_level == 3 && <h3> YOU ARE SIGNED IN AS A: Coach</h3>}
+                    {this.props.user.auth_level == 4 && <h3> YOU ARE SIGNED IN AS A: Head Coach</h3>}
+                    {this.props.user.auth_level == 5 && <h3> YOU ARE SIGNED IN AS AN: Administrator</h3>}
+                </h2>
                 <table className='table table-dark mb-5'>
-                    <thead><tr><th>user name</th><th>authorization level</th></tr></thead>
+                    <thead><tr><th className='text-center'>User Name</th>
+                        <th className='text-center'>Authorization</th>
+                        <th className='text-center'>Edit</th>
+                        <th className='text-center'>Delete</th>
+                    </tr></thead>
                     {this.props.users[0] &&
                         <tbody>{this.props.users.map(x => <User data={x} />)}</tbody>
                     }
@@ -20,6 +29,7 @@ class AdminTools extends React.Component {
 }
 const mapStateToProps = (state) => {
     return {
+        user: state.user,
         users: state.users
     }
 }
