@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { HashRouter as Router, Route, withRouter } from 'react-router-dom'
 import Header from '../Header/Header'
+import Footer from '../Footer/Footer'
 import SetManager from '../SetManager/SetManager'
 import Search from '../Search/Search'
 import LoginPage from '../LoginPage/LoginPage'
@@ -25,6 +26,8 @@ class App extends React.Component {
           <Route exact path='/swimmer-search'><Search /></Route>
           <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
           <Route exact path='/sign-in'><LoginPage /></Route>
+          <footer>
+            <Footer /></footer>
         </div>
       </Router>
     );

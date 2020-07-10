@@ -69,7 +69,11 @@ input[type="number"] {
   color: gold;
   -moz-appearance: textfield;
 }
-
+textarea {
+  background-color: black;
+  color: gold;
+  -moz-appearance: textfield;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -84,7 +88,19 @@ input[type="number"] {
 .App-link {
   color: #61dafb;
 }
-
+.form-control {
+  background-color: black;
+  color: gold;
+  -moz-appearance: textfield;
+}
+.form-control:active {
+  background-color: black !important;
+  color: gold !important;
+}
+.form-control:focus {
+  background-color: black !important;
+  color: gold !important;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
