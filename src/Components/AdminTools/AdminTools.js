@@ -17,8 +17,8 @@ class AdminTools extends React.Component {
                         <NavLink exact to='/super-admin/sets' className='col-12 col-sm-4 h2 btn adminNav'>Add Sets</NavLink>
                     </div>
                 </div>
-                <Route exact path='/super-admin/users'><Users /></Route>
-                <Route exact path='/super-admin/swimmers'><AddSwimmerForm /></Route>
+                <Route path='/super-admin/users'><Users /></Route>
+                <Route path='/super-admin/swimmers'><AddSwimmerForm /></Route>
                 <Route path='/super-admin/sets'><h2>NO FUNCTIONALITY YET</h2></Route>
             </div>
         )
