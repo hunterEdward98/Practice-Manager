@@ -1,24 +1,43 @@
 import React from 'react'
 import { connect } from 'react-redux'
-class User extends React.Component {
+import swal from 'sweetalert'
+class addSwimmerForm extends React.Component {
+    //track the variables in the input fields
     state = {
-        editMode: false,
-        users: [],
-        data: {},
-        user: '',
         name: '',
         lane: '1',
         year: ''
     }
+    // when the user clicks the submit butt, they will confirm, then the input will be cleared and the new swimmer will be submitted
     submitNewSwimmer = (event) => {
-        event.preventDefault()
-        this.props.dispatch({ type: 'ADD_ATHLETE', payload: { name: this.state.name, lane: this.state.lane, year: this.state.year } })
-        this.setState({
-            name: '',
-            lane: 1,
-            year: ''
+        swal({
+            title: "Are you sure you want to add this swimmer?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
         })
+            .then((willSave) => {
+                if (willSave) {
+                    event.preventDefault()
+                    this.props.dispatch({ type: 'ADD_ATHLETE', payload: { name: this.state.name, lane: this.state.lane, year: this.state.year } })
+                    this.setState({
+                        name: '',
+                        lane: 1,
+                        year: ''
+                    })
+                    swal("Your swimmer has been saved!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.setState({
+                        auth: this.props.data.auth_level,
+                        user: this.props.data.user,
+                    })
+                    swal("Your swimmer was NOT saved!");
+                }
+            });
     }
+    //save changes to local state
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
@@ -36,6 +55,7 @@ class User extends React.Component {
                 <div className='col-12 col-md-4'>
                     <small>Enter the Lane Number</small>
                     <select className='form-control blk col-12' type="number" value={this.state.lane} onChange={(event) => this.handleChange(event, 'lane')}>
+                        {/* select from an 8 lane dropdown. default is 1 */}
                         <option selected="selected" disabled="disabled">Select a Lane</option>
                         <option value={1}>1</option>
                         <option value={2}>2</option>
@@ -57,9 +77,11 @@ class User extends React.Component {
         )
     }
 }
+// get user from redux
 const mapStateToProps = (state) => {
     return {
         user: state.user
     }
 }
-export default connect(mapStateToProps)(User)
+//connect to redux, get props
+export default connect(mapStateToProps)(addSwimmerForm)
