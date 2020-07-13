@@ -24,7 +24,6 @@ class App extends React.Component {
           <Route exact path='/sign-in'><LoginPage /></Route>
           <Route exact path='/register'><Registration /></Route>
           <Route exact path='/'><Redirect /></Route>
-          <Route exact path='/home'></Route>
           {this.props.user.auth_level ?
             <div>
               <Route exact path='/set-manager'><SetManager></SetManager></Route>

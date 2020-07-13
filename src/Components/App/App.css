@@ -56,8 +56,11 @@ nav {
   font-weight: bolder;
 }
 .active {
-  background-color: maroon !important;
-  color: gold !important;
+  border-right: 3px maroon !important;
+  border-left: 3px maroon !important;
+  border-top: 3px maroon !important;
+  color: maroon !important;
+  background-color: white !important;
 }
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
