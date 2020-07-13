@@ -1,18 +1,41 @@
 import React from 'react'
 import swal from 'sweetalert'
 import { connect } from 'react-redux'
-class User extends React.Component {
+class AddEvent extends React.Component {
+    // only need to track the event name
     state = {
-        user: '',
         name: '',
     }
+
+    //when the component mounts, we want to get all events, and put them in a table
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_EVENTS' })
     }
+
+    //when the user clicks delete on an event, they should confirm, then it will delete
     deleteEvent = (id) => {
-        this.props.dispatch({ type: 'DELETE_EVENT', payload: id })
+        swal({
+            title: `Please confirm that you want to delete this event`,
+            text: "Once added, you cannot edit the event name!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Your Event has been deleted!", {
+                        icon: "success",
+                    });
+                    this.props.dispatch({ type: 'DELETE_EVENT', payload: id })
+                } else {
+                    swal("Event NOT deleted!");
+                }
+            });
     }
-    submitNewSwimmer = (event) => {
+
+    //preventDefault prevents the page from refreshing, but also prevents the form elements from emptying.
+    //when the user clicks the submit button with the correct data filled in, they should confirm, and it will submit
+    submitNewEvent = (event) => {
         event.preventDefault()
         swal({
             title: `Confirm event name ${this.state.name}?`,
@@ -35,16 +58,20 @@ class User extends React.Component {
                 }
             });
     }
+
+    //when an input field changes, we need to track that in local state.
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
             [value]: event.target.value
         })
     }
+
     render() {
         return (
             <div className='container'>
-                <form className='my-4 justify-content-center row' onSubmit={(event) => this.submitNewSwimmer(event)}>
+                {/* form should automatically check for empty/invalid form elements, given the element is required */}
+                <form className='my-4 justify-content-center row' onSubmit={(event) => this.submitNewEvent(event)}>
                     <div className='row'>
                         <small className='col-12'>Enter The Event Name</small>
                         <input required placeholder='Event Name' className='form-control blk col-9' value={this.state.name} onChange={(event) => this.handleChange(event, 'name')}></input>
@@ -62,10 +89,11 @@ class User extends React.Component {
         )
     }
 }
+//get events from redux
 const mapStateToProps = (state) => {
     return {
-        user: state.user,
         event: state.event,
     }
 }
-export default connect(mapStateToProps)(User)
+//connect to redux, get props.
+export default connect(mapStateToProps)(AddEvent)
