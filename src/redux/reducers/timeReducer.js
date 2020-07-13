@@ -1,3 +1,4 @@
+//set times to action payload
 const timeReducer = (state = [], action) => {
   switch (action.type) {
     case 'SET_TIMES':

@@ -17,10 +17,10 @@ const rootReducer = combineReducers({
   errors, // contains registrationMessage and loginMessage
   loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
   user, // will have an id and username if someone is logged in
-  athlete,
-  time,
-  event,
-  users
+  athlete,//contains our athletes list
+  time,//contains our times list
+  event,//contains our events list
+  users//contains our users list
 });
 
 export default rootReducer;

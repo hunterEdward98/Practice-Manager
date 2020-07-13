@@ -1,3 +1,4 @@
+//set athlete list to action payload
 const athleteReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_ATHLETES':

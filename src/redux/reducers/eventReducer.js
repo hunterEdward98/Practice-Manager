@@ -1,3 +1,4 @@
+// set event list to action payload
 const eventReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_EVENTS':

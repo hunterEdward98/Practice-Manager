@@ -1,4 +1,4 @@
-
+//set users list to action payload
 const usersListReducer = (state = {}, action) => {
     switch (action.type) {
         case 'SET_USERS':
