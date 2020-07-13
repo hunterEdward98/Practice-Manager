@@ -16,7 +16,7 @@ class AddEvent extends React.Component {
     deleteEvent = (id) => {
         swal({
             title: `Please confirm that you want to delete this event`,
-            text: "Once added, you cannot edit the event name!",
+            text: "Once deleted, you cannot recover the event!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
