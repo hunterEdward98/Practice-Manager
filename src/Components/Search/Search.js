@@ -12,39 +12,37 @@ import Time from './Time'
 // or even care what the redux state is, so it doesn't need 'connect()'
 
 class Search extends React.Component {
-
+    // store input field edits
     state = {
-        // ourObj: [],
         description: '',
         image_url: '',
         swimmerid: 0
     }
+    //fetch the times for a specific swimmer. default: 0
     getTimesForSwimmer(event) {
         this.props.dispatch({ type: 'FETCH_TIMES', payload: event })
     }
+    //get all athletes when the component mounts
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_ATHLETES' })
     }
+    //clear times when component unmounts
     componentWillUnmount() {
         this.props.dispatch({ type: 'FETCH_TIMES', payload: 0 })
     }
+    //set the athlete to the selected value
     setAthlete(event) {
         console.log('setting state to:', event)
         this.setState({
             swimmerid: event
         })
     }
-    editTime() {
-        return true;
-    }
-    deleteTime = (id, athId) => {
-        this.props.dispatch({ type: 'DELETE_TIME', payload: { id, athId } })
-    }
     render() {
         return (
             <div className='container mt-5 '>
                 <h2>SELECT A SWIMMER</h2>
                 <div className='row justify-content-center'>
+                    {/* A searchbar reducing dropdown menu, listing all athletes */}
                     <Select placeholder='SELECT SWIMMER...' className='col-12 col-lg-3' defaultValue={0} options={this.props.swimmer ? this.props.swimmer.map((x, i) => { return ({ label: x.athlete_name, value: x.id, key: x.id, data: x.athlete_id }) }) : {}} onChange={(event) => { this.setAthlete(event.value); this.getTimesForSwimmer(event.value, event.data) }}>
                     </Select> </div><div className='row d-flex justify-content-center'>
                     <table className='table table-dark col-12 col-lg-11'>
@@ -60,6 +58,7 @@ class Search extends React.Component {
                                 {this.props.user.auth_level >= 3 && <th>Delete</th>}
                             </tr>
                         </thead>
+                        {/* the tbody will be out SwimmerInfo object, which will be a table row where the user can edit swimmer info, or delete the swimmer*/}
                         <SwimmerInfo id={this.state.swimmerid} />
                     </table>
                     <table className='table table-dark col-12 col-lg-11'>
@@ -76,7 +75,7 @@ class Search extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {console.log(this.props.time)}
+                            {/* the tbody will be our Time object, which will be a table row where the user can edit or delete the time*/}
                             {this.props.time.map(x =>
                                 <Time eventName={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.state.swimmerid} />)}
                         </tbody>
@@ -88,14 +87,13 @@ class Search extends React.Component {
 
 }
 
-
+//get time, user, swimmer from redux
 const mapStateToProps = (state) => {
     return {
         time: state.time,
-        ourObj: state.ourObj,
         user: state.user,
         swimmer: state.athlete
     }
 }
-
+//connect to redux, get props
 export default connect(mapStateToProps)(Search);
