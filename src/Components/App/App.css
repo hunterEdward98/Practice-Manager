@@ -1,60 +1,91 @@
+/* default app class CSS */
 .App {
   text-align: center;
 }
+/* class for our sign in button(s) */
 .signin {
   border: 3px solid black;
   background-color: red;
   color: gold;
 }
+
+/* class for when we hover over the sign in button */
 .signin:hover {
   background-color: firebrick;
   border: 3px solid indigo;
   color: gold;
 }
+
+/* class for clicking sign in button */
 .signin:active {
   background-color: maroon;
   color: white;
 }
+
+/* class for sign out button(s) */
 .signout {
   border: 3px solid red;
 }
+
+/* hover on sign out... */
 .signout:hover {
   border: 3px solid Maroon;
   color: maroon;
 }
+
+/* click on sign out... */
 .signin:active {
   background-color: maroon;
   color: gold;
 }
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+
+/* class for our navigation in the header */
 nav {
   background-color: 505050;
   color: white;
 }
+
+/* class for our sub-navigation menu */
 .adminNav {
   background-color: rgb(26, 0, 0);
   color: gold;
 }
+/* hover for adminNav */
 .adminNav:hover {
   background-color: rgb(26, 0, 0);
   color: goldenrod;
 }
+/* click on adminNav*/
 .adminNav:active {
   background-color: red(26, 0, 0);
   color: gold;
 }
+
+/* class for each tab item in a nav menu */
+.tab {
+  border-top-left-radius: 3%;
+  border-top-right-radius: 3%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+/* a black themed button class */
 .blk {
   background-color: black;
   color: gold;
 }
+
+/* hover on blk */
 .blk:hover {
   color: gold;
   background-color: black;
   font-weight: bolder;
 }
+
+/* we want our active tabs to appear as tabs, like in a folder or cabinet. 
+the top, right, and left will have borders, but the bottom will not
+so it will appear to be connected to the page. 
+the background will be the same as the page background */
 .active {
   border-right: 3px solid maroon !important;
   border-left: 3px solid maroon !important;
@@ -62,53 +93,35 @@ nav {
   color: maroon !important;
   background-color: white !important;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+
+/* for number inputs, we want them to look like normal inputs, so without the arrows. we also want them to match the blk class */
 input[type="number"] {
   background-color: black;
   color: gold;
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
+
+/* for text fields, we need to edit them to match the blk class as well */
 textarea {
   background-color: black;
   color: gold;
-  -moz-appearance: textfield;
-}
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
-}
+/* form controls should also match the blk class, and look like regular text input fields */
 .form-control {
   background-color: black;
   color: gold;
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
+
+/*we need form-control to KEEP the blk class layout when active.*/
 .form-control:active {
   background-color: black !important;
   color: gold !important;
 }
+
+/*we need form-control to KEEP the blk class layout when focused.*/
 .form-control:focus {
   background-color: black !important;
   color: gold !important;
-}
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

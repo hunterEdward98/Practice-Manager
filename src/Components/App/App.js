@@ -25,12 +25,15 @@ class App extends React.Component {
           <Route exact path='/register'><Registration /></Route>
           <Route exact path='/'><Redirect /></Route>
           {this.props.user.auth_level ?
+            // we only want to allow these routes if the user is signed in, and has an authorization above 0.
             <div>
               <Route exact path='/set-manager'><SetManager></SetManager></Route>
               <Route exact path='/swimmer-search'><Search /></Route>
               <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
             </div>
-            : <RejectUnauthorized />
+            :
+            //we still want to tell the user to sign in, or get approval if they aren't authorized.
+            <RejectUnauthorized />
           }
           <footer>
             <Footer /></footer>
@@ -39,6 +42,7 @@ class App extends React.Component {
     );
   }
 }
+//grab the user from global state
 const mapStateToProps = (state) => {
   return {
     user: state.user

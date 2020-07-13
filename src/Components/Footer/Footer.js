@@ -34,12 +34,12 @@ class Footer extends React.Component {
                     <div className='h3 col-6'>
                         Report A Bug
                         <textarea className='p form-control' placeholder='Please Provide a description of the bug' onChange={(event) => this.setState({ bugData: event.target.value })} value={this.state.bugData} />
-                        {this.props.user.auth_level ? <button onClick={() => this.submitBug()} className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button> : <Link to='/sign-in'><button className='btn signin'>Sign In <span className='glyphicon glyphicon-cog'> </span></button></Link>}
+                        {this.props.user.name ? <button onClick={() => this.submitBug()} className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button> : <Link to='/sign-in'><button className='btn signin'>Sign In <span className='glyphicon glyphicon-cog'> </span></button></Link>}
                     </div>
                     <div className='h3 col-6'>
                         Request A Feature
                         <textarea className='p form-control' placeholder={`Please Provide a description of the feature you'd like to see`} onChange={(event) => this.setState({ reqFeatureData: event.target.value })} value={this.state.reqFeatureData} />
-                        {this.props.user.auth_level ? <button onClick={() => this.submitFeature()} className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button> : <Link to='/sign-in'><button className='btn signin'>Sign In <span className='glyphicon glyphicon-cog'> </span></button></Link>}
+                        {this.props.user.name ? <button onClick={() => this.submitFeature()} className='btn btn-secondary'>Send Bug Report <span className='glyphicon glyphicon-cog'> </span></button> : <Link to='/sign-in'><button className='btn signin'>Sign In <span className='glyphicon glyphicon-cog'> </span></button></Link>}
                     </div>
                     <div className='col-12 h3 row'>
                         <div className='col-12'>CONTACT ME:</div>

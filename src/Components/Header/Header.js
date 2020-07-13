@@ -15,17 +15,17 @@ class Header extends React.Component {
                     <div className='h1 col-9 col-md-10 text-left'>
                         Practice Manager
                     </div>
-                    {this.props.user.auth_level ?
+                    {this.props.user.name ?
                         <div className='col-3 col-md-2'><button className='col-12 btn signout' onClick={() => { this.props.dispatch({ type: 'LOGOUT' }); this.setState({ loggedIn: false }) }}>Sign Out</button> </div> :
                         <Link to='/sign-in' className='col-3 col-md-2'><button className='col-12 btn signin' onClick={() => this.setState({ loggedIn: true })}>Sign In</button></Link>}
                     {this.props.user.auth_level >= 3 ?
                         <nav className='col-12'>
-                            <NavLink to='/set-manager' className='btn blk col-12 col-md-4'>Test Set Manager</NavLink>
-                            <NavLink to='/swimmer-search' className='btn blk col-12 col-md-4'>Swimmers</NavLink >
-                            <NavLink to='/super-admin' className='btn blk col-12 col-md-4'>Admin Tools</NavLink></nav> :
+                            <NavLink to='/set-manager' className=' blk col-12 tab col-sm-4'>Test Set Manager</NavLink>
+                            <NavLink to='/swimmer-search' className=' blk col-12 tab col-sm-4'>Swimmers</NavLink >
+                            <NavLink to='/super-admin' className=' blk col-12 tab col-sm-4'>Admin Tools</NavLink></nav> :
                         <nav className='col-12'>
-                            <NavLink to='/set-manager' className='btn col-12 blk col-sm-6'>Test Set Manager</NavLink>
-                            <NavLink to='/swimmer-search' className='btn blk col-12 col-sm-6'>Swimmers</NavLink ></nav>}
+                            <NavLink to='/set-manager' className=' col-12 blk tab col-sm-6'>Test Set Manager</NavLink>
+                            <NavLink to='/swimmer-search' className=' blk col-12 tab col-sm-6'>Swimmers</NavLink ></nav>}
                 </div>
             </div>
         </div >
