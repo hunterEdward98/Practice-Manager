@@ -7,6 +7,7 @@ class RegisterPage extends Component {
         password: '',
     };
 
+    //I have no idea what most of this stuff does. I'll look into it when my project is done
     registerUser = (event) => {
         event.preventDefault();
 

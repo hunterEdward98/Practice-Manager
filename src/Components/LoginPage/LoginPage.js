@@ -9,10 +9,12 @@ class LoginPage extends Component {
     password: '',
   };
 
+  //prevent refresh on form submission. dispatch to 'LOGIN' with the username and password
   login = (event) => {
     event.preventDefault();
 
     if (this.state.username && this.state.password) {
+      //if inputs are filled out, send login request
       this.props.dispatch({
         type: 'LOGIN',
         payload: {
@@ -20,18 +22,20 @@ class LoginPage extends Component {
           password: this.state.password,
         },
       });
-      this.props.history.push('')
+      this.props.history.push('set-manager')
     } else {
+      //if inputs are invalid, handle login error
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
     }
   } // end login
 
+  //save changes to local state
   handleInputChangeFor = propertyName => (event) => {
     this.setState({
       [propertyName]: event.target.value,
     });
   }
-
+  //I have no idea what most of this stuff does. I'll look into it when my project is done
   render() {
     return (
       <div className='container justify-content-center'>
@@ -76,7 +80,10 @@ class LoginPage extends Component {
                   name="submit"
                   value="Log In"
                 />
+                <div className='mt-5'>
+                  Don't have an account?
                 <NavLink to='/register' className='btn blk col-7'>Register</NavLink>
+                </div>
               </div>
             </div>
           </div>
