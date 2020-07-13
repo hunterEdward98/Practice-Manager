@@ -3,11 +3,13 @@ import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
 import { connect } from 'react-redux'
 class SetManager extends React.Component {
+    //edits for submission
     state = {
         lane: 0,
         event: 0,
         athletes: []
     }
+    //save edits to local state
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
@@ -15,28 +17,33 @@ class SetManager extends React.Component {
         })
     }
     componentDidMount() { this.get() }
+
+    //get athletes in local state's 'lane'
     getLane = () => {
-        console.log('getting lane from state')
         axios.get(`/api/athlete/athletesInLane/${this.state.lane}`).then(response => {
             this.setState({ athletes: response.data })
         })
     }
+
+    //get athletes in selected 'lane'
     getLaneByNum = (value) => {
-        console.log('getting lane from given val')
         axios.get(`/api/athlete/athletesInLane/${value}`).then(response => {
             this.setState({ athletes: response.data })
         })
     }
+
+    //get events and athletes in lane. if lane is 0(default), get all athletes
     get = () => {
         this.props.dispatch({ type: 'FETCH_EVENTS' })
         if (this.state.lane === 0) {
-            console.log('getting all athletes')
             axios.get(`/api/athlete/athletesActive`).then(response => {
                 this.setState({ athletes: response.data })
             }).catch(error => console.log(error))
         }
         else { this.getLane() }
     }
+
+
     render() {
         return (
             <div className='container'>
@@ -44,6 +51,7 @@ class SetManager extends React.Component {
                     <div className="row my-5">
                         <div className="col-12 col-md-6">
                             <h2>Select A Test Set</h2>
+                            {/* dropdown of all events */}
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                 this.handleChange(event, 'event');
                                 this.get()
@@ -54,7 +62,8 @@ class SetManager extends React.Component {
                             </select>
                         </div>
                         <div className='col-12 col-md-6'>
-                            <h2>Select A Lane</h2>
+                            <h2>Select A Lane (Optional)</h2>
+                            {/* dropdown of all lanes (optional) */}
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                 this.handleChange(event, 'lane')
                                 this.getLaneByNum(event.target.value)
@@ -73,6 +82,12 @@ class SetManager extends React.Component {
                     </div>
                 </form>
                 <table className='table table-dark table-striped'>
+                    {/* 
+                    if selected set is null, 
+                        only display swimmer name column. 
+                    add a column for prev time and prev improvement
+                    if auth_level is 2 or higher
+                        add columns for adding times*/}
                     <thead>
                         <tr className='justify-content-center'>
                             <th scope='col' className='text-center'>
@@ -108,6 +123,7 @@ class SetManager extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
+                        {/* turn each athlete in the array into a Swimmer object, and pass in props */}
                         {this.state.athletes.map(x => <Swimmer key={x.id} name={x.athlete_name} id={x.id} set={this.state.event} />)}
                     </tbody>
                 </table>
