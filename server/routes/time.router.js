@@ -3,6 +3,7 @@ const pool = require('../modules/pool');
 const moment = require('moment')
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+//get most recent time from athlete in event
 router.get('/recent/:id/:eventId', (req, res) => {
     const query1 = `
     SELECT * FROM times
@@ -16,6 +17,8 @@ ORDER by date desc LIMIT 1`;
         res.sendStatus(500)
     })
 });
+
+//get all times from athlete
 router.get('/event/:athlete', (req, res) => {
     const athlete = req.params.athlete
     const queryText = `
@@ -32,6 +35,8 @@ router.get('/event/:athlete', (req, res) => {
         res.sendStatus(500);
     })
 });
+
+//LOOKS LIKE A DUPE. CHECK IT OUT LATER
 router.get('/athlete/:id', (req, res) => {
     const athlete = req.params.id
     const queryText = `
@@ -47,6 +52,7 @@ ORDER BY times.date DESC
         res.sendStatus(500);
     })
 });
+//edit time, use body
 router.put('/', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
         console.log(403)
@@ -71,6 +77,8 @@ router.put('/', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
     })
 })
+
+//add time using body
 router.post('/', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 2) {
         console.log(403)
@@ -95,6 +103,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500);
     })
 })
+//delete time
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
         console.log(403)

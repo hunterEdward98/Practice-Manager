@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+//get all events, order by name
 router.get('/', (req, res) => {
     const queryText = 'SELECT * FROM events ORDER BY event_name'
     pool.query(queryText).then(result => {
@@ -10,6 +11,7 @@ router.get('/', (req, res) => {
         res.sendStatus(500)
     })
 })
+//delete event
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
         res.sendStatus(403)
@@ -28,6 +30,7 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
         res.sendStatus(500)
     });
 })
+//add event using body
 router.post('/', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
         res.sendStatus(403)

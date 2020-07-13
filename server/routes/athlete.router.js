@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 /**
- * Get all of the items on the shelf
+ * Get all of the athletes
  */
 
 router.get('/', (req, res) => {
@@ -16,6 +16,8 @@ router.get('/', (req, res) => {
     res.sendStatus(500);
   })
 });
+
+// Get the active athletes
 router.get('/athletesActive', (req, res) => {
   const queryText = `SELECT * FROM athletes where active=true`
   pool.query(queryText).then(result => {
@@ -25,6 +27,7 @@ router.get('/athletesActive', (req, res) => {
     res.sendStatus(500);
   })
 });
+//get the athletes that are active, from the specified lane
 router.get('/athletesInLane/:lane', (req, res) => {
   const queryText = `SELECT * FROM athletes where active=true AND lane_number=$1`
   pool.query(queryText, [req.params.lane]).then(result => {
@@ -34,6 +37,7 @@ router.get('/athletesInLane/:lane', (req, res) => {
     res.sendStatus(500);
   })
 });
+//get athlete by id
 router.get('/byId/:id', (req, res) => {
   const queryText = `SELECT * FROM athletes where id=$1`
   pool.query(queryText, [req.params.id]).then(result => {

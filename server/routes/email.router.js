@@ -3,6 +3,7 @@ require('dotenv').config()
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const express = require('express');
 const router = express.Router();
+//send a bug report to my email
 router.post('/bug', rejectUnauthenticated, (req, res) => {
     nodemailer.sendEmail({
         auth: {
@@ -17,6 +18,7 @@ router.post('/bug', rejectUnauthenticated, (req, res) => {
         onSuccess: (i) => console.log(i)
     })
 });
+//send a feature request to my email
 router.post('/feature', rejectUnauthenticated, (req, res) => {
     nodemailer.sendEmail({
         auth: {

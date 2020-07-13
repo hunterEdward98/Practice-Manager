@@ -5,24 +5,33 @@ const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
 
 const router = express.Router();
+//get all users
 router.get('/all', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3) {
     res.sendStatus(403)
   }
-  let queryText = 'SELECT * FROM "users" ORDER BY id'
-  pool.query(queryText).then(result => res.send(result.rows)).catch(() => res.send(500))
+  else {
+    let queryText = 'SELECT * FROM "users" ORDER BY id'
+    pool.query(queryText).then(result => res.send(result.rows)).catch(() => res.send(500))
+  }
 })
+
+//edit user after authorization check
 router.put('/', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth || req.user.auth_level < req.body.old_auth) {
     res.sendStatus(403)
   }
-  const body = req.body
-  console.log(body)
-  let queryText = 'UPDATE users SET name=$1, auth_level=$2 WHERE id=$3'
-  pool.query(queryText, [body.user, body.auth, body.id])
-    .then(() => res.sendStatus(201))
-    .catch((error) => res.sendStatus(500));
+  else {
+    const body = req.body
+    console.log(body)
+    let queryText = 'UPDATE users SET name=$1, auth_level=$2 WHERE id=$3'
+    pool.query(queryText, [body.user, body.auth, body.id])
+      .then(() => res.sendStatus(201))
+      .catch((error) => res.sendStatus(500));
+  }
 });
+
+//delete user after authorization check.
 router.delete('/:id/:auth', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level) {
     res.sendStatus(403)
