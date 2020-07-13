@@ -4,28 +4,16 @@ import axios from 'axios';
 // worker Saga: will be fired on "LOGOUT" actions
 function* deleteEvent(action) {
     try {
-        console.log('DELETING WHERE ID = ', action.payload)
         yield axios.delete(`/api/event/${action.payload}`);
-        console.log('DELETED WHERE ID=', action.payload)
         yield put({ type: 'FETCH_EVENTS' });
-
-        // now that the session has ended on the server
-        // remove the client-side user object to let
-        // the client-side code know the user is logged out
     } catch (error) {
         console.log('Error with user logout:', error);
     }
 }
 function* addEvents(action) {
     try {
-        console.log('POSTING DATA:', action.payload)
         yield axios.post(`/api/event`, action.payload);
-        console.log('POSTED DATA:', action.payload)
         yield put({ type: 'FETCH_EVENTS' });
-
-        // now that the session has ended on the server
-        // remove the client-side user object to let
-        // the client-side code know the user is logged out
     } catch (error) {
         console.log('Error with user logout:', error);
     }
@@ -34,12 +22,7 @@ function* addEvents(action) {
 function* getEvents() {
     try {
         const events = yield axios.get(`/api/event`);
-        console.log('items', events);
         yield put({ type: 'SET_EVENTS', payload: events.data });
-
-        // now that the session has ended on the server
-        // remove the client-side user object to let
-        // the client-side code know the user is logged out
     } catch (error) {
         console.log('Error with user logout:', error);
     }
