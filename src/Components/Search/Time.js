@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Axios from 'axios'
+import swal from 'sweetalert'
 class Time extends React.Component {
     state = {
         editMode: false,
@@ -9,18 +9,21 @@ class Time extends React.Component {
         swimTime: 0,
         date: ''
     }
+    //when component mounts: set local state to props, and fetch all events
     componentDidMount() {
-        console.log('props:', this.props)
         this.setState({
             event: this.props.eventName,
             eventId: this.props.eventId,
             swimTime: this.props.swimTime,
             date: this.props.date
         })
+
         this.props.dispatch({ type: 'FETCH_EVENTS' })
     }
+
+    //needed a setTimeout, CHANGE LATER
     componentWillReceiveProps() {
-        const timer = setTimeout(() => {
+        setTimeout(() => {
             this.setState({
                 event: this.props.eventName,
                 eventId: this.props.eventId,
@@ -29,33 +32,77 @@ class Time extends React.Component {
             })
         }, 1);
     }
+    //delete a time from the swimmer's history after confirming
     deleteTime = () => {
-        this.props.dispatch({ type: 'DELETE_TIME', payload: { id: this.props.id, athId: this.props.athId } })
+        swal({
+            title: "Are you sure you want to delete this time?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willSave) => {
+                if (willSave) {
+                    this.props.dispatch({ type: 'DELETE_TIME', payload: { id: this.props.id, athId: this.props.athId } })
+                    swal("Your time has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.setState({
+                        auth: this.props.data.auth_level,
+                        user: this.props.data.user,
+                    })
+                    swal("Your time was NOT deleted!");
+                }
+            });
     }
+    //save changes to local state
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
             [value]: event.target.value
         })
     }
+    //send changes to server, after confirmation
     saveEdits() {
-        const improvementChange = this.props.swimTime - this.state.swimTime
-        const obj = {
-            improvementChange,
-            event: this.state.eventId,
-            time: this.state.swimTime,
-            id: this.props.id,
-            athId: this.props.athId
-        }
-        console.log('sending:', obj)
-        this.props.dispatch({ type: 'EDIT_TIME', payload: obj })
+        swal({
+            title: "Are you sure you want to edit this time?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willSave) => {
+                if (willSave) {
+                    const improvementChange = this.props.swimTime - this.state.swimTime
+                    const obj = {
+                        improvementChange,
+                        event: this.state.eventId,
+                        time: this.state.swimTime,
+                        id: this.props.id,
+                        athId: this.props.athId
+                    }
+                    console.log('sending:', obj)
+                    this.props.dispatch({ type: 'EDIT_TIME', payload: obj })
+                    swal("Your time has been edited!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.setState({
+                        auth: this.props.data.auth_level,
+                        user: this.props.data.user,
+                    })
+                    swal("Your time was NOT edited!");
+                }
+            });
     }
+
     render() {
         return (
             <tr>
                 <td>
                     {this.state.editMode === false ?
+                        //if in edit mode, print the event name
                         String(this.state.event) :
+                        //if not in edit mode, display a dropdown of all event names
                         <select value={this.state.eventId} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                             this.handleChange(event, 'eventId');
                             console.log(event)
@@ -68,7 +115,9 @@ class Time extends React.Component {
                 </td>
                 <td>
                     {this.state.editMode === false ?
+                        //if not in edit mode, display the swim's time
                         String(this.state.swimTime) :
+                        //if in edit mode, display an input field for a number
                         <input value={this.state.swimTime} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                             this.handleChange(event, 'swimTime');
                         }}>
@@ -79,27 +128,33 @@ class Time extends React.Component {
                     {String(this.state.date)}
                 </td>
                 {
-                    this.props.user.auth_level >= 3 && <th>{this.state.editMode === false ?
+                    this.props.user.auth_level >= 3 &&
+                    //if the user has an auth_level of 3 or above, display this column. otherwise, no
+                    <th>{this.state.editMode === false ?
+                        //if not in edit mode, display an edit button
                         <button className='btn btn-warning' onClick={() => this.setState({ editMode: true })} > Edit</button> :
+                        //if in edit mode, display a save button
                         <button className='btn btn-info' onClick={() => { this.saveEdits(); this.handleChange({ target: { value: false } }, 'editMode') }} > Save</button>}</th>}
 
                 {
-                    this.props.user.auth_level >= 3 && <th><button className='btn btn-danger' onClick={() => this.deleteTime()}>Delete</button></th>
+                    this.props.user.auth_level >= 3 &&
+                    //if the user has an auth_level of 3 or above, display this column. otherwise, no
+                    <th><button className='btn btn-danger' onClick={() => this.deleteTime()}>Delete</button></th>
                 }
-            </tr>
+            </tr >
         )
 
     }
 }
 
-
+//get events, times, user, and swimmer from redux
 const mapStateToProps = (state) => {
     return {
         event: state.event,
         time: state.time,
-        ourObj: state.ourObj,
         user: state.user,
         swimmer: state.athlete
     }
 }
+//connect to redux, get props
 export default connect(mapStateToProps)(Time)
