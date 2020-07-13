@@ -56,9 +56,9 @@ nav {
   font-weight: bolder;
 }
 .active {
-  border-right: 3px maroon !important;
-  border-left: 3px maroon !important;
-  border-top: 3px maroon !important;
+  border-right: 3px solid maroon !important;
+  border-left: 3px solid maroon !important;
+  border-top: 3px solid maroon !important;
   color: maroon !important;
   background-color: white !important;
 }
