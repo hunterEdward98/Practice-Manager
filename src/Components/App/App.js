@@ -12,6 +12,7 @@ import RejectUnauthorized from '../AdminTools/RejectUnauthorized';
 import AdminTools from '../AdminTools/AdminTools';
 import Redirect from './Redirect';
 class App extends React.Component {
+  // when the component mounts, we need to check if the user is signed in from the cookies
   componentDidMount() {
     this.props.dispatch({ type: 'FETCH_USER' })
   }
@@ -42,10 +43,13 @@ class App extends React.Component {
     );
   }
 }
+
 //grab the user from global state
 const mapStateToProps = (state) => {
   return {
     user: state.user
   }
 }
+
+//connect to redux, grab some props.
 export default connect(mapStateToProps)(App);
