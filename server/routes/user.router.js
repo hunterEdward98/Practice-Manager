@@ -13,7 +13,7 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
   pool.query(queryText).then(result => res.send(result.rows)).catch(() => res.send(500))
 })
 router.put('/', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth) {
+  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth || req.user.auth_level < req.body.old_auth) {
     res.sendStatus(403)
   }
   const body = req.body
