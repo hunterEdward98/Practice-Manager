@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { Table } from 'evergreen-ui'
 class Swimmer extends React.Component {
     //track edits here
     state = {
@@ -24,11 +25,9 @@ class Swimmer extends React.Component {
     componentDidMount() {
         this.getRecent()
     }
-    //need a setTimeout, EDIT LATER
-    componentWillReceiveProps() {
-        setTimeout(() => {
-            this.getRecent()
-        }, 1);
+    //whenever the component updates, we get the thing
+    componentDidUpdate() {
+        this.getRecent()
     }
     //save edits to local state
     handleChange = (event, value) => {
@@ -91,11 +90,11 @@ class Swimmer extends React.Component {
                     // if auth_level is 2 or higher, and we have a set selected, allow the user to add a time
                     <td>
                         <form onSubmit={(event) => this.addTime(event)}>
-                            <div className="form-group col-12 justify-content-center row">
-                                <input required className='col-12 col-md-4 form-control' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /> :
-                            <input required className='col-12 col-md-4 form-control' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
-                                <button type='submit' className='btn btn-success col-8 col-md-5'>Add Time</button>
+                            <div className='justify-content-center row'>
+                                <input required className='form-control col-6 col-sm-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /><div className='col-12 col-sm-1 text-center'>:</div>
+                                <input required className='form-control col-6 col-sm-4' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
                             </div>
+                            <button type='submit' className='btn btn-success'>Add Time</button>
                         </form>
                     </td>
                 }
@@ -114,7 +113,9 @@ class Swimmer extends React.Component {
                 }
                 {this.state.submissionCount > 0 &&
                     //if the submission count is above 0, display a 'submit set' button
-                    <td><button className='btn blk' onClick={this.addSet}>Submit Set</button></td>}
+                    <td>
+                        <button className='btn blk' onClick={this.addSet}>Submit Set</button>
+                    </td>}
             </tr>
         )
     }

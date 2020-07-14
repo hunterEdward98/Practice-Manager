@@ -14,6 +14,7 @@ const athleteRouter = require('./routes/athlete.router');
 const eventRouter = require('./routes/event.router');
 const timeRouter = require('./routes/time.router');
 const emailRouter = require('./routes/email.router')
+const orgReducer = require('./routes/org.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -27,6 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
+app.use('/api/org', orgReducer)
 app.use('/api/email', emailRouter);
 app.use('/api/user', userRouter);
 app.use('/api/athlete', athleteRouter);

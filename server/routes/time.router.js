@@ -7,7 +7,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 router.get('/recent/:id/:eventId', (req, res) => {
     const query1 = `
     SELECT * FROM times
-INNER JOIN athletes ON athletes.id=times.athlete_id
+INNER JOIN athlete ON athlete.id=times.athlete_id
 WHERE athlete_id=$1 AND event_id=$2
 ORDER by date desc LIMIT 1`;
     pool.query(query1, [req.params.id, req.params.eventId]).then(result => {
@@ -24,8 +24,8 @@ router.get('/event/:athlete', (req, res) => {
     const queryText = `
     SELECT DISTINCT  *
     FROM times
-    INNER JOIN times ON athletes.id=times.athlete_id
-    ORDER BY athletes.id, times.date DESC
+    INNER JOIN times ON athlete.id=times.athlete_id
+    ORDER BY athlete.id, times.date DESC
     `
     pool.query(queryText, [athlete]).then(result => {
         console.log(result.rows)
@@ -40,8 +40,8 @@ router.get('/event/:athlete', (req, res) => {
 router.get('/athlete/:id', (req, res) => {
     const athlete = req.params.id
     const queryText = `
-    SELECT times.id, times.*, events.event_name FROM times
-    LEFT JOIN events ON events.id = times.event_id
+    SELECT times.id, times.*, event.name as event_name FROM times
+    LEFT JOIN event ON event.id = times.event_id
 WHERE athlete_id = $1
 ORDER BY times.date DESC
     `

@@ -12,7 +12,7 @@ class Time extends React.Component {
     //when component mounts: set local state to props, and fetch all events
     componentDidMount() {
         this.setState({
-            event: this.props.eventName,
+            event: this.props.name,
             eventId: this.props.eventId,
             swimTime: this.props.swimTime,
             date: this.props.date
@@ -25,7 +25,7 @@ class Time extends React.Component {
     componentWillReceiveProps() {
         setTimeout(() => {
             this.setState({
-                event: this.props.eventName,
+                event: this.props.name,
                 eventId: this.props.eventId,
                 swimTime: this.props.swimTime,
                 date: this.props.date
@@ -47,10 +47,6 @@ class Time extends React.Component {
                         icon: "success",
                     });
                 } else {
-                    this.setState({
-                        auth: this.props.data.auth_level,
-                        user: this.props.data.user,
-                    })
                     swal("Your time was NOT deleted!");
                 }
             });
@@ -86,10 +82,6 @@ class Time extends React.Component {
                         icon: "success",
                     });
                 } else {
-                    this.setState({
-                        auth: this.props.data.auth_level,
-                        user: this.props.data.user,
-                    })
                     swal("Your time was NOT edited!");
                 }
             });
@@ -101,7 +93,7 @@ class Time extends React.Component {
                 <td>
                     {this.state.editMode === false ?
                         //if in edit mode, print the event name
-                        String(this.state.event) :
+                        String(this.props.name) || '' :
                         //if not in edit mode, display a dropdown of all event names
                         <select value={this.state.eventId} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                             this.handleChange(event, 'eventId');
@@ -109,14 +101,14 @@ class Time extends React.Component {
                         }}>
                             <option hidden>SELECT A SET</option>
                             {console.log(this.props.event)}
-                            {this.props.event.map((x) => <option value={x.id}>{x.event_name}</option>)}
+                            {this.props.event.map((x) => <option value={x.id}>{x.name}</option>)}
                         </select>
                     }
                 </td>
                 <td>
                     {this.state.editMode === false ?
                         //if not in edit mode, display the swim's time
-                        String(this.state.swimTime) :
+                        String(this.props.swimTime) || '' :
                         //if in edit mode, display an input field for a number
                         <input value={this.state.swimTime} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                             this.handleChange(event, 'swimTime');
@@ -125,7 +117,7 @@ class Time extends React.Component {
                     }
                 </td>
                 <td>
-                    {String(this.state.date)}
+                    {String(this.props.date) || ''}
                 </td>
                 {
                     this.props.user.auth_level >= 3 &&

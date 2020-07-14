@@ -33,7 +33,8 @@ class User extends React.Component {
                 if (willDelete) {
                     const obj = {
                         auth: this.props.data.auth_level,
-                        id: this.props.data.id
+                        id: this.props.data.id,
+                        org_id: this.props.data.org_id
                     }
                     this.props.dispatch({ type: 'DELETE_USER', payload: obj })
                     swal("Your user has been deleted!", {
@@ -67,7 +68,8 @@ class User extends React.Component {
                         old_auth: this.props.auth_level,
                         auth: this.state.auth,
                         user: this.state.user,
-                        id: this.props.data.id
+                        id: this.props.data.id,
+                        org_id: this.props.data.org_id
                     }
                     this.props.dispatch({ type: 'EDIT_USER', payload: obj })
                     swal("Your user has been saved!", {

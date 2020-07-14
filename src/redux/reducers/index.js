@@ -5,6 +5,7 @@ import event from './eventReducer'
 import user from './userReducer';
 import time from './timeReducer';
 import athlete from './athleteReducer'
+import orgs from './orgReducer'
 import users from './usersListReducer'
 
 // rootReducer is the primary reducer for our entire project
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
   athlete,//contains our athletes list
   time,//contains our times list
   event,//contains our events list
-  users//contains our users list
+  users,//contains our users list
+  orgs
 });
 
 export default rootReducer;

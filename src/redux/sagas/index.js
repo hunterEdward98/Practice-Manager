@@ -6,6 +6,7 @@ import usersListSaga from './usersListSaga'
 import TimesSaga from './TimesSaga';
 import AthleteSaga from './AthleteSaga'
 import EventsSaga from './EventsSaga'
+import OrgSaga from './OrgSaga'
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
 // This is imported in index.js as rootSaga
@@ -21,6 +22,7 @@ export default function* rootSaga() {
     AthleteSaga(),
     EventsSaga(),
     TimesSaga(),
-    usersListSaga()
+    usersListSaga(),
+    OrgSaga()
   ]);
 }

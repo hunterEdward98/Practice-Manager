@@ -8,7 +8,9 @@
   background-color: red;
   color: gold;
 }
-
+.body {
+  height: 60vh;
+}
 /* class for when we hover over the sign in button */
 .signin:hover {
   background-color: firebrick;
