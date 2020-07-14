@@ -14,8 +14,6 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
     console.log(req.user.org_id)
     let queryText = 'SELECT * FROM "user" where org_id=$1'
     pool.query(queryText, [req.user.org_id]).then(result => {
-
-      console.log(result.rows)
       res.send(result.rows)
     }).catch(() => res.send(500))
   }
@@ -37,13 +35,12 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 });
 
 //delete user after authorization check.
-router.delete('/:id/:auth', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level || req.user.org_id != req.body.org_id) {
+router.delete('/:id/:auth/:org_id', rejectUnauthenticated, (req, res) => {
+  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level || req.user.org_id != req.params.org_id) {
     res.sendStatus(403)
   }
   else {
     let queryText = 'DELETE FROM "user" WHERE id=$1'
-    console.log(req.params.id)
     pool.query(queryText, [req.params.id])
       .then(() => res.sendStatus(203))
       .catch((error) => res.sendStatus(500));

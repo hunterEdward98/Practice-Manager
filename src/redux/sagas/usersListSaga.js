@@ -4,7 +4,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 //delete selected user
 function* deleteUser(action) {
     try {
-        yield axios.delete(`/api/user/${action.payload.id}/${action.payload.auth}`)
+        yield axios.delete(`/api/user/${action.payload.id}/${action.payload.auth}/${action.payload.org_id}`)
         yield put({ type: 'FETCH_ALL_USERS' })
     } catch (error) {
         console.log(error)
