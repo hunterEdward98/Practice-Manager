@@ -11,8 +11,13 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
     res.sendStatus(403)
   }
   else {
-    let queryText = 'SELECT * FROM user where org_id=$1 ORDER BY id'
-    pool.query(queryText, [req.user.org_id]).then(result => res.send(result.rows)).catch(() => res.send(500))
+    console.log(req.user.org_id)
+    let queryText = 'SELECT * FROM "user" where org_id=$1'
+    pool.query(queryText, [req.user.org_id]).then(result => {
+
+      console.log(result.rows)
+      res.send(result.rows)
+    }).catch(() => res.send(500))
   }
 })
 
@@ -24,7 +29,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   else {
     const body = req.body
     console.log(body)
-    let queryText = 'UPDATE user SET name=$1, auth_level=$2 WHERE id=$3'
+    let queryText = 'UPDATE "user" SET name=$1, auth_level=$2 WHERE id=$3'
     pool.query(queryText, [body.user, body.auth, body.id])
       .then(() => res.sendStatus(201))
       .catch((error) => res.sendStatus(500));
@@ -37,9 +42,9 @@ router.delete('/:id/:auth', rejectUnauthenticated, (req, res) => {
     res.sendStatus(403)
   }
   else {
-    let queryText = 'DELETE FROM user WHERE id=$1'
+    let queryText = 'DELETE FROM "user" WHERE id=$1'
     console.log(req.params.id)
-    pool.query(queryText, [req.params.id, req.user.org_id])
+    pool.query(queryText, [req.params.id])
       .then(() => res.sendStatus(203))
       .catch((error) => res.sendStatus(500));
   }

@@ -4,8 +4,8 @@ const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 //get all events, order by name
 router.get('/', (req, res) => {
-    const queryText = 'SELECT * FROM events ORDER BY event_name'
-    pool.query(queryText).then(result => {
+    const queryText = 'SELECT * FROM events WHERE org_id=$1 ORDER BY event_name'
+    pool.query(queryText, [req.user.org_id]).then(result => {
         res.send(result.rows)
     }).catch(error => {
         res.sendStatus(500)
@@ -37,8 +37,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     }
     const name = req.body.name
     console.log(name)
-    const queryText = 'INSERT INTO events(event_name) values ($1)'
-    pool.query(queryText, [name]).then(result => {
+    const queryText = 'INSERT INTO events(event_name, org_id) values ($1, $2)'
+    pool.query(queryText, [name, req.user.org_id]).then(result => {
         res.send(result.rows)
     }).catch(error => {
         res.sendStatus(500)
