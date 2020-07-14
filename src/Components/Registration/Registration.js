@@ -19,7 +19,7 @@ class RegisterPage extends Component {
                 payload: {
                     username: this.state.username,
                     password: this.state.password,
-                    org: this.state.org_id
+                    org_id: this.state.org_id
                 },
             });
         } else {
@@ -68,7 +68,7 @@ class RegisterPage extends Component {
                             />
                         </label>
                     </div>
-                    <select required value={this.state.org_id} onChange={this.handleInputChangeFor('org_id')}>
+                    <select required value={this.state.org_id} onChange={event => this.setState({ org_id: event.target.value })}>
                         {this.props.orgs ? this.props.orgs.map(x => <option value={x.id}>{x.name}</option>) : <option>NO ORGANIZATIONS FOUND. PLEASE CONTACT SITE OWNER</option>}
                     </select>
                     <div>

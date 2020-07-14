@@ -11,7 +11,7 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
     res.sendStatus(403)
   }
   else {
-    let queryText = 'SELECT * FROM "users" where org_id=$1 ORDER BY id'
+    let queryText = 'SELECT * FROM user where org_id=$1 ORDER BY id'
     pool.query(queryText, [req.user.org_id]).then(result => res.send(result.rows)).catch(() => res.send(500))
   }
 })
@@ -24,7 +24,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   else {
     const body = req.body
     console.log(body)
-    let queryText = 'UPDATE users SET name=$1, auth_level=$2 WHERE id=$3'
+    let queryText = 'UPDATE user SET name=$1, auth_level=$2 WHERE id=$3'
     pool.query(queryText, [body.user, body.auth, body.id])
       .then(() => res.sendStatus(201))
       .catch((error) => res.sendStatus(500));
@@ -56,11 +56,14 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const org_id = req.body.org_id
-  const queryText = 'INSERT INTO users (name, pass_hash, auth_level, org_id) VALUES ($1, $2, $3, $4) RETURNING id';
+  const org_id = Number(req.body.org_id)
+  const queryText = 'INSERT INTO "user"(name, pass_hash, auth_level, org_id) VALUES ($1, $2, $3, $4) RETURNING id';
   pool.query(queryText, [username, password, 0, org_id])
     .then(() => res.sendStatus(201))
-    .catch(() => res.sendStatus(500));
+    .catch((error) => {
+      console.log(error)
+      res.sendStatus(500)
+    });
 });
 
 // Handles login form authenticate/login POST
