@@ -22,6 +22,11 @@ class RegisterPage extends Component {
                     org_id: this.state.org_id
                 },
             });
+            this.setState({
+                username: '',
+                password: '',
+                org_id: 0,
+            })
         } else {
             this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
         }
@@ -69,6 +74,7 @@ class RegisterPage extends Component {
                         </label>
                     </div>
                     <select required value={this.state.org_id} onChange={event => this.setState({ org_id: event.target.value })}>
+                        <option value={0} disabled selected>SELECT AN ORGANIZATION</option>
                         {this.props.orgs ? this.props.orgs.map(x => <option value={x.id}>{x.name}</option>) : <option>NO ORGANIZATIONS FOUND. PLEASE CONTACT SITE OWNER</option>}
                     </select>
                     <div>
