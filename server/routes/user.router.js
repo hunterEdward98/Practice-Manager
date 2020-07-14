@@ -45,7 +45,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 
 //delete user after authorization check.
 router.delete('/:id/:auth/:org_id', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level || req.user.org_id != req.params.org_id) {
+  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level || (req.user.org_id != req.body.org_id && req.user.auth_level < 6)) {
     res.sendStatus(403)
   }
   else {
