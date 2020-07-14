@@ -11,14 +11,14 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
     res.sendStatus(403)
   }
   else {
-    let queryText = 'SELECT * FROM "users" ORDER BY id'
-    pool.query(queryText).then(result => res.send(result.rows)).catch(() => res.send(500))
+    let queryText = 'SELECT * FROM "users" where org_id=$1 ORDER BY id'
+    pool.query(queryText, [req.user.org_id]).then(result => res.send(result.rows)).catch(() => res.send(500))
   }
 })
 
 //edit user after authorization check
 router.put('/', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth || req.user.auth_level < req.body.old_auth) {
+  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth || req.user.auth_level < req.body.old_auth || req.user.org_id != req.body.org_id) {
     res.sendStatus(403)
   }
   else {
@@ -33,13 +33,13 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 
 //delete user after authorization check.
 router.delete('/:id/:auth', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level) {
+  if (req.user.auth_level < 3 && req.user.auth_level <= req.params.auth_level || req.user.org_id != req.body.org_id) {
     res.sendStatus(403)
   }
   else {
-    let queryText = 'DELETE FROM users WHERE id=$1'
+    let queryText = 'DELETE FROM user WHERE id=$1'
     console.log(req.params.id)
-    pool.query(queryText, [req.params.id])
+    pool.query(queryText, [req.params.id, req.user.org_id])
       .then(() => res.sendStatus(203))
       .catch((error) => res.sendStatus(500));
   }
@@ -56,8 +56,9 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 router.post('/register', (req, res, next) => {
   const username = req.body.username;
   const password = encryptLib.encryptPassword(req.body.password);
-  const queryText = 'INSERT INTO users (name, pass_hash, auth_level) VALUES ($1, $2, $3) RETURNING id';
-  pool.query(queryText, [username, password, 0])
+  const org_id = req.body.org_id
+  const queryText = 'INSERT INTO users (name, pass_hash, auth_level, org_id) VALUES ($1, $2, $3, $4) RETURNING id';
+  pool.query(queryText, [username, password, 0, org_id])
     .then(() => res.sendStatus(201))
     .catch(() => res.sendStatus(500));
 });
