@@ -16,11 +16,11 @@ class AdminTools extends React.Component {
                             this.props.user.auth_level >= 6 ? <div>
                                 <NavLink to='/super-admin/users' className='col-12 col-sm-3 h2 btn adminNav'>Users</NavLink>
                                 <NavLink to='/super-admin/swimmers' className='col-12 col-sm-3 h2 btn adminNav'>Add Swimmers</NavLink>
-                                <NavLink to='/super-admin/sets' className='col-12 col-sm-3 h2 btn adminNav'>Add Sets</NavLink>
-                                <NavLink to='/super-admin/orgs' className='col-12 col-sm-3 h2 btn adminNav'>Add Sets</NavLink></div> : <div>
+                                <NavLink to='/super-admin/sets' className='col-12 col-sm-3 h2 btn adminNav'>Sets</NavLink>
+                                <NavLink to='/super-admin/orgs' className='col-12 col-sm-3 h2 btn adminNav'>Orgs</NavLink></div> : <div>
                                     <NavLink to='/super-admin/users' className='col-12 col-sm-4 h2 btn adminNav'>Users</NavLink>
                                     <NavLink to='/super-admin/swimmers' className='col-12 col-sm-4 h2 btn adminNav'>Add Swimmers</NavLink>
-                                    <NavLink to='/super-admin/sets' className='col-12 col-sm-4 h2 btn adminNav'>Add Sets</NavLink></div>
+                                    <NavLink to='/super-admin/sets' className='col-12 col-sm-4 h2 btn adminNav'>Sets</NavLink></div>
 
                         }
                     </div>

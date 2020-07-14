@@ -10,11 +10,7 @@ class AdminTools extends React.Component {
                 <> Please ask a coach or administrator to approve your request to join the organization</>
                 :
                 //if they aren't signed in, tell them to go to the sign in page
-                <div className='my-3'>
-                    Please
-                    <Link exact to='/sign-in' className='btn btn-info'>
-                        Sign In
-                </Link>
+                <div className='my-3'><Link exact to='/sign-in' className='btn signout'>Sign In</Link>
                 </div>}
         </div >)
 

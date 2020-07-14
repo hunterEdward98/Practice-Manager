@@ -18,25 +18,27 @@
 /* class for when we hover over the sign in button */
 .signin:hover {
   background-color: black;
-  border: 3px solid maroon;
+  border: 3px solid wheat;
   color: wheat;
 }
 
 /* class for clicking sign in button */
 .signin:active {
-  background-color: maroon;
+  background-color: white;
   color: white;
 }
 
 /* class for sign out button(s) */
 .signout {
-  border: 3px solid red;
+  background-color: black;
+  border: 3px solid maroon;
+  color: wheat;
 }
 
 /* hover on sign out... */
 .signout:hover {
-  border: 3px solid Maroon;
-  color: maroon;
+  border: 3px solid wheat;
+  color: wheat;
 }
 
 /* click on sign out... */
