@@ -70,13 +70,13 @@ class Swimmer extends React.Component {
                 <td>
                     {this.props.name}
                 </td>
-                {(this.props.set != 0) &&
+                {(this.props.set !== 0) &&
                     <td>
                         {/* format the swim time from the server, to a visually appealing time */}
                         {this.state.time.swim_time ? Math.floor(this.state.time.swim_time / 60, 10) + ':' + (this.state.time.swim_time % 60 < 10 ? '0' + this.state.time.swim_time % 60 : this.state.time.swim_time % 60) : 0}
                     </td>
                 }
-                {(this.props.set != 0) &&
+                {(this.props.set !== 0) &&
                     <td>
                         {/* Colored based on whether the swimmer's last time was an improvement */}
                         {isNaN(this.state.time.improvement) && <>N/A</>}
@@ -85,7 +85,7 @@ class Swimmer extends React.Component {
                         {this.state.time.improvement < 0 && <div className='btn-danger'>{this.state.time.improvement}</div>}
                     </td>
                 }
-                {(this.props.user.auth_level >= 2 && this.props.set != 0) &&
+                {(this.props.user.auth_level >= 2 && this.props.set !== 0) &&
                     // if auth_level is 2 or higher, and we have a set selected, allow the user to add a time
                     <td>
                         <form onSubmit={(event) => this.addTime(event)}>
@@ -97,14 +97,14 @@ class Swimmer extends React.Component {
                         </form>
                     </td>
                 }
-                {(this.props.user.auth_level >= 2 && this.props.set != 0) &&
+                {(this.props.user.auth_level >= 2 && this.props.set !== 0) &&
 
                     // if auth_level is 2 or higher, and we have a set selected, allow the user track their times added
                     <td>
                         {this.state.submissionCount}
                     </td>
                 }
-                {(this.props.user.auth_level >= 2 && this.props.set != 0) &&
+                {(this.props.user.auth_level >= 2 && this.props.set !== 0) &&
                     // if auth_level is 2 or higher, and we have a set selected, allow the user to track their average time added
                     <td>
                         {Math.floor((this.state.submissionTotal / this.state.submissionCount) / 60) || 0}:{this.state.submissionCount > 0 ? (Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60) >= 10 ? Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60) : '0' + Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60)) : '0'}

@@ -92,28 +92,28 @@ class SetManager extends React.Component {
                     <thead>
                         <tr className=''>
                             <th scope='col' className='text-center' >Name</th>
-                            {(this.state.event != 0) &&
+                            {(this.state.event !== 0) &&
                                 <th className='text-center'>
                                     Last Avg
                             </th>
                             }
 
-                            {(this.state.event != 0) &&
+                            {(this.state.event !== 0) &&
                                 <th className='text-center'>
                                     Improvement
                             </th>
                             }
-                            {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
+                            {(this.props.user.auth_level >= 2 && this.state.event !== 0) &&
                                 <th className='text-center'>
                                     Add Time
                             </th>
                             }
-                            {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
+                            {(this.props.user.auth_level >= 2 && this.state.event !== 0) &&
                                 <th className='text-center'>
                                     Current Count
                             </th>
                             }
-                            {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
+                            {(this.props.user.auth_level >= 2 && this.state.event !== 0) &&
                                 <th className='text-center'>
                                     Avg
                             </th>
