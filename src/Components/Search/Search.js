@@ -59,7 +59,7 @@ class Search extends React.Component {
                             </tr>
                         </thead>
                         {/* the tbody will be out SwimmerInfo object, which will be a table row where the user can edit swimmer info, or delete the swimmer*/}
-                        <SwimmerInfo id={this.state.swimmerid} />
+                        <SwimmerInfo id={this.state.swimmerid} org_id={this.props.user.org_id} />
                     </table>
                     <table className='table table-dark col-12 col-lg-11'>
                         <thead>
@@ -77,7 +77,7 @@ class Search extends React.Component {
                         <tbody>
                             {/* the tbody will be our Time object, which will be a table row where the user can edit or delete the time*/}
                             {this.props.time.map(x =>
-                                <Time eventName={x.event_name} eventId={x.event_id} org_id={x.org_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.state.swimmerid} />)}
+                                <Time eventName={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.state.swimmerid} />)}
                         </tbody>
                     </table>
                 </div >

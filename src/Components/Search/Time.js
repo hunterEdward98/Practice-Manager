@@ -47,10 +47,6 @@ class Time extends React.Component {
                         icon: "success",
                     });
                 } else {
-                    this.setState({
-                        auth: this.props.data.auth_level,
-                        user: this.props.data.user,
-                    })
                     swal("Your time was NOT deleted!");
                 }
             });
@@ -86,10 +82,6 @@ class Time extends React.Component {
                         icon: "success",
                     });
                 } else {
-                    this.setState({
-                        auth: this.props.data.auth_level,
-                        user: this.props.data.user,
-                    })
                     swal("Your time was NOT edited!");
                 }
             });
@@ -109,7 +101,7 @@ class Time extends React.Component {
                         }}>
                             <option hidden>SELECT A SET</option>
                             {console.log(this.props.event)}
-                            {this.props.event.map((x) => <option value={x.id}>{x.event_name}</option>)}
+                            {this.props.event.map((x) => <option value={x.id}>{x.name}</option>)}
                         </select>
                     }
                 </td>

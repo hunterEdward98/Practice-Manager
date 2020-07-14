@@ -72,7 +72,9 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  */
 router.delete('/:id/:org_id', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3 || req.user.org_id != req.params.org_id) {
+    console.log(req.user.org_id, req.params.org_id)
     res.sendStatus(403)
+
   }
   else {
 
@@ -99,7 +101,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   const id = body.id;
   const lane = body.lane;
   const year = body.year;
-  let queryText = 'UPDATE athletes SET active=$1, year=$2 ,lane_number=$3 where id=$4'
+  let queryText = 'UPDATE athlete SET active=$1, year=$2 ,lane_number=$3 where id=$4'
   pool.query(queryText, [active, year, lane, id]).then(result => {
     res.sendStatus(203)
   }).catch(error => {

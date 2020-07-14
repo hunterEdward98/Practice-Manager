@@ -58,7 +58,7 @@ class SetManager extends React.Component {
                             }}>
                                 <option hidden>SELECT A SET</option>
                                 {console.log(this.props.event)}
-                                {this.props.event.map((x) => <option value={x.id}>{x.event_name}</option>)}
+                                {this.props.event.map((x) => <option value={x.id}>{x.name}</option>)}
                             </select>
                         </div>
                         <div className='col-12 col-md-6'>
