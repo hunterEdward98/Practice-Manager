@@ -2,6 +2,7 @@ import React from 'react'
 import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import './SetManager.css'
 class SetManager extends React.Component {
     //edits for submission
     state = {
@@ -81,7 +82,7 @@ class SetManager extends React.Component {
                         </div>
                     </div>
                 </form>
-                <table className='table table-dark table-striped'>
+                <table className='ui very basic collapsing celled table dark'>
                     {/* 
                     if selected set is null, 
                         only display swimmer name column. 
@@ -89,35 +90,32 @@ class SetManager extends React.Component {
                     if auth_level is 2 or higher
                         add columns for adding times*/}
                     <thead>
-                        <tr className='justify-content-center'>
-                            <th scope='col' className='text-center'>
-                                Swimmer Name
+                        <tr className=''>
+                            <th scope='col' className='text-center' >Name</th>
+                            {(this.state.event != 0) &&
+                                <th className='text-center'>
+                                    Last Avg
                             </th>
+                            }
 
                             {(this.state.event != 0) &&
                                 <th className='text-center'>
-                                    Last Set Avg Time
-                            </th>
-                            }
-
-                            {(this.state.event != 0) &&
-                                <th className='text-center'>
-                                    Last Set Improvement
+                                    Improvement
                             </th>
                             }
                             {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
                                 <th className='text-center'>
-                                    ADD TIME TO CURRENT SET
+                                    Add Time
                             </th>
                             }
                             {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
                                 <th className='text-center'>
-                                    CURRENT SET COUNT
+                                    Current Count
                             </th>
                             }
                             {(this.props.user.auth_level >= 2 && this.state.event != 0) &&
                                 <th className='text-center'>
-                                    CURRENT SET AVERAGE
+                                    Avg
                             </th>
                             }
                         </tr>

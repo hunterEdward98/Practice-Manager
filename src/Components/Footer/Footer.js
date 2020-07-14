@@ -33,7 +33,7 @@ class Footer extends React.Component {
     }
     render() {
         return (
-            <footer className='footer blk mt-5 container'>
+            <footer className='footer blk mt-5'>
                 <div className='row justify-content-center'>
                     <div className='h3 col-6'>
                         Report A Bug

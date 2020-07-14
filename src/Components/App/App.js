@@ -22,20 +22,22 @@ class App extends React.Component {
         <div className="App">
           <Header className="App-header">
           </Header>
-          <Route exact path='/sign-in'><LoginPage /></Route>
-          <Route exact path='/register'><Registration /></Route>
-          <Route exact path='/'><Redirect /></Route>
-          {this.props.user.auth_level ?
-            // we only want to allow these routes if the user is signed in, and has an authorization above 0.
-            <div>
-              <Route exact path='/set-manager'><SetManager></SetManager></Route>
-              <Route exact path='/swimmer-search'><Search /></Route>
-              <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
-            </div>
-            :
-            //we still want to tell the user to sign in, or get approval if they aren't authorized.
-            <RejectUnauthorized />
-          }
+          <div className='body overflow-auto'>
+            <Route exact path='/sign-in'><LoginPage /></Route>
+            <Route exact path='/register'><Registration /></Route>
+            <Route exact path='/'><Redirect /></Route>
+            {this.props.user.auth_level ?
+              // we only want to allow these routes if the user is signed in, and has an authorization above 0.
+              <div>
+                <Route exact path='/set-manager'><SetManager></SetManager></Route>
+                <Route exact path='/swimmer-search'><Search /></Route>
+                <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
+              </div>
+              :
+              //we still want to tell the user to sign in, or get approval if they aren't authorized.
+              <RejectUnauthorized />
+            }
+          </div>
           <footer>
             <Footer /></footer>
         </div>
