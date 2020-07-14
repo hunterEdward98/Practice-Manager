@@ -1,6 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import moment from 'moment'
 function* deleteTime(action) {
   try {
     yield axios.delete(`/api/time/${action.payload.id}`);

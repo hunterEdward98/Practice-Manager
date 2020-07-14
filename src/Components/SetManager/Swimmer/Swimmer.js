@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
-import { Table } from 'evergreen-ui'
 class Swimmer extends React.Component {
     //track edits here
     state = {

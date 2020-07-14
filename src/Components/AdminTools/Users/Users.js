@@ -11,10 +11,10 @@ class AdminTools extends React.Component {
             <div className='container my-5'>
                 <h2>
                     {/* tell the user what their authorization level is */}
-                    {this.props.user.auth_level == 3 && <h3> YOU ARE SIGNED IN AS A: Coach</h3>}
-                    {this.props.user.auth_level == 4 && <h3> YOU ARE SIGNED IN AS A: Head Coach</h3>}
-                    {this.props.user.auth_level == 5 && <h3> YOU ARE SIGNED IN AS AN: Administrator</h3>}
-                    {this.props.user.auth_level == 6 && <h3> YOU ARE SIGNED IN AS THE: Site Owner</h3>}
+                    {this.props.user.auth_level === 3 && <h3> YOU ARE SIGNED IN AS A: Coach</h3>}
+                    {this.props.user.auth_level === 4 && <h3> YOU ARE SIGNED IN AS A: Head Coach</h3>}
+                    {this.props.user.auth_level === 5 && <h3> YOU ARE SIGNED IN AS AN: Administrator</h3>}
+                    {this.props.user.auth_level === 6 && <h3> YOU ARE SIGNED IN AS THE: Site Owner</h3>}
                 </h2>
                 {/* display a table. */}
                 <table className='table table-dark mb-5'>

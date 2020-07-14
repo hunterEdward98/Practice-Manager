@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { NavLink, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
 import Axios from 'axios'
 class Footer extends React.Component {
