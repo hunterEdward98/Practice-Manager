@@ -11,7 +11,6 @@ router.get('/', rejectUnauthenticated, (req, res) => {
   pool.query(queryText, [req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
-    console.log(error)
     res.sendStatus(500);
   })
 });
@@ -22,7 +21,6 @@ router.get('/athletesActive', rejectUnauthenticated, (req, res) => {
   pool.query(queryText, [req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
-    console.log(error)
     res.sendStatus(500);
   })
 });
@@ -32,7 +30,6 @@ router.get('/athletesInLane/:lane', rejectUnauthenticated, (req, res) => {
   pool.query(queryText, [req.params.lane, req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
-    console.log(error)
     res.sendStatus(500);
   })
 });
@@ -42,7 +39,6 @@ router.get('/byId/:id', (req, res) => {
   pool.query(queryText, [req.params.id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
-    console.log(error)
     res.sendStatus(500);
   })
 });
@@ -56,14 +52,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   const desc = req.body.name;
   const img = req.body.lane
   const usr = req.body.year
-  console.log(req.body)
   let queryText = 'INSERT INTO athlete (athlete_name, lane_number, year, org_id) VALUES($1,$2,$3,$4)'
   pool.query(queryText, [desc, img, usr, req.user.org_id]).then(result => {
     res.sendStatus(202);
   }).catch(error => {
     res.sendStatus(500)
   })
-
 });
 
 
@@ -72,15 +66,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  */
 router.delete('/:id/:org_id', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3 || req.user.org_id != req.params.org_id) {
-    console.log(req.user.org_id, req.params.org_id)
     res.sendStatus(403)
 
   }
   else {
-    console.log('DELETING Athlete')
     let queryText = 'DELETE FROM athlete WHERE id=$1'
     pool.query(queryText, [req.params.id]).then(result => {
-      console.log('DELETING times')
       pool.query('DELETE FROM time WHERE athlete_id=$1').then(result => {
         res.sendStatus(203)
       }).catch(error => [

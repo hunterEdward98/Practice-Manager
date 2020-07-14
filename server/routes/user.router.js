@@ -11,7 +11,6 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
     res.sendStatus(403)
   }
   else {
-    console.log(req.user.org_id)
     let queryText;
     if (req.user.auth_level >= 6) {
       queryText = 'SELECT * FROM "user"'
@@ -35,7 +34,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   }
   else {
     const body = req.body
-    console.log(body)
     let queryText = 'UPDATE "user" SET name=$1, auth_level=$2 WHERE id=$3'
     pool.query(queryText, [body.user, body.auth, body.id])
       .then(() => res.sendStatus(201))
@@ -72,7 +70,6 @@ router.post('/register', (req, res, next) => {
   pool.query(queryText, [username, password, 0, org_id])
     .then(() => res.sendStatus(201))
     .catch((error) => {
-      console.log(error)
       res.sendStatus(500)
     });
 });

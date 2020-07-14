@@ -18,7 +18,6 @@ router.get('/athletes/:org_id', rejectUnauthenticated, (req, res) => {
     else {
         const queryText = 'SELECT id FROM athlete WHERE org_id=$1'
         pool.query(queryText, [req.params.org_id]).then(result => {
-            console.log(result.rows)
             res.send(result.rows)
         }).catch(error => {
             res.sendStatus(500)
@@ -43,10 +42,8 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
 router.post('/', rejectUnauthenticated, (req, res) => {
     const queryText = 'INSERT INTO organization(name) values($1)'
     pool.query(queryText, [req.body.name]).then(result => {
-        console.log('success adding')
         res.send(result.rows)
     }).catch(error => {
-        console.log('failed to add')
         res.sendStatus(500)
     })
 })

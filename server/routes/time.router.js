@@ -13,7 +13,6 @@ ORDER by date desc LIMIT 1`;
     pool.query(query1, [req.params.id, req.params.eventId]).then(result => {
         res.send(result.rows)
     }).catch(error => {
-        console.log(error)
         res.sendStatus(500)
     })
 });
@@ -28,10 +27,8 @@ router.get('/event/:athlete', (req, res) => {
     ORDER BY athlete.id, times.date DESC
     `
     pool.query(queryText, [athlete]).then(result => {
-        console.log(result.rows)
         res.send(result.rows)
     }).catch(error => {
-        console.log('ERROR:', error)
         res.sendStatus(500);
     })
 });
@@ -48,14 +45,12 @@ ORDER BY times.date DESC
     pool.query(queryText, [athlete]).then(result => {
         res.send(result.rows)
     }).catch(error => {
-        console.log(error)
         res.sendStatus(500);
     })
 });
 //edit time, use body
 router.put('/', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
-        console.log(403)
         res.sendStatus(403);
     }
     const body = req.body;
@@ -63,7 +58,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
     const event_id = Number(body.event);
     const swim_time = body.time;
     const impChange = body.improvementChange
-    console.log(body)
     // const user = req.user  /*LATER*/
     const queryText = `
     UPDATE times
@@ -73,7 +67,6 @@ router.put('/', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [swim_time, event_id, impChange, time_id]).then(result => {
         res.sendStatus(201)
     }).catch(error => {
-        console.log(error)
         res.sendStatus(500);
     })
 })
@@ -81,14 +74,12 @@ router.put('/', rejectUnauthenticated, (req, res) => {
 //add time using body
 router.post('/', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 2) {
-        console.log(403)
         res.sendStatus(403);
     }
     const body = req.body;
     const athlete_id = body.id;
     const event_id = body.event;
     const date = moment(new Date()).format('MM-DD-YYYY LTS')
-    console.log(date)
     const swim_time = body.time;
     const improvement = body.improvement || 0;
     // const user = req.user  /*LATER*/
@@ -99,14 +90,12 @@ router.post('/', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [athlete_id, event_id, date, swim_time, req.user.id, improvement || 0]).then(result => {
         res.sendStatus(201)
     }).catch(error => {
-        console.log(error)
         res.sendStatus(500);
     })
 })
 //delete time
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
     if (req.user.auth_level < 3) {
-        console.log(403)
         res.sendStatus(403);
     }
     // const user = req.user  /*LATER*/
@@ -116,7 +105,6 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [req.params.id]).then(result => {
         res.sendStatus(203)
     }).catch(error => {
-        console.log(error)
         res.sendStatus(500);
     })
 })

@@ -4,7 +4,6 @@ const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 //get all events, order by name
 router.get('/', (req, res) => {
-    console.log(req.user.org_id)
     const queryText = 'SELECT * FROM event WHERE org_id=$1 ORDER BY name'
     pool.query(queryText, [req.user.org_id]).then(result => {
         res.send(result.rows)
@@ -21,7 +20,6 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
     pool.query(queryText, [req.params.id]).then(result => {
         pool.query('DELETE FROM times WHERE event_id=$1', [req.params.id])
             .then(response => {
-                console.log('successfull deletes')
                 res.sendStatus(203)
             })
             .catch(error => {
