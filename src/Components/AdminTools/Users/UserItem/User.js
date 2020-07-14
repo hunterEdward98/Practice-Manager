@@ -115,6 +115,7 @@ class User extends React.Component {
                         {this.props.data.auth_level === 3 && <p>coach</p>}
                         {this.props.data.auth_level === 4 && <p>head coach</p>}
                         {this.props.data.auth_level === 5 && <p>administrator</p>}
+                        {this.props.data.auth_level === 6 && <p>Site Owner</p>}
                     </td> :
                     //display a dropdown based on USER auth level. user can never promote to their own level or higher.
                     <td>
@@ -128,6 +129,9 @@ class User extends React.Component {
                             }
                             {this.props.user.auth_level >= 5 &&
                                 <option value={4}>head coach</option>
+                            }
+                            {this.props.user.auth_level >= 6 &&
+                                <option value={5}>Administrator</option>
                             }
                         </select>
                     </td>

@@ -27,7 +27,6 @@ class SwimmerInfo extends React.Component {
                 lane: response.data[0].lane_number || 0
             })
         }).catch(error => {
-            swal('ERROR GETTING INFO: ', error)
         })
     }
 

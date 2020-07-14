@@ -26,7 +26,7 @@ class Orgs extends React.Component {
                     swal("Your Organization has been deleted!", {
                         icon: "success",
                     });
-                    this.props.dispatch({ type: 'DELETE_ORG', payload: id  })
+                    this.props.dispatch({ type: 'DELETE_ORG', payload: id })
                 } else {
                     swal("Event NOT deleted!");
                 }
