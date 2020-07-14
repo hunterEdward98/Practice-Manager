@@ -65,7 +65,7 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id/:org_id', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 || req.user.org_id != req.params.org_id) {
+  if (req.user.auth_level < 3 || (req.user.org_id != req.body.org_id && req.user.auth_level < 6)) {
     res.sendStatus(403)
 
   }
