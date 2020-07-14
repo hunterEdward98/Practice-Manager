@@ -24,6 +24,7 @@ function* EditUser(action) {
 function* fetchUsers() {
     try {
         const response = yield axios.get('/api/user/all')
+        console.log('fetched users')
         yield put({ type: 'SET_USERS', payload: response.data })
     }
     catch{

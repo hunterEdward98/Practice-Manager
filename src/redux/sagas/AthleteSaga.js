@@ -18,7 +18,6 @@ function* editAthlete(action) {
         console.log('Error with athlete edit:', error);
     }
 }
-// worker Saga: will be fired on FETCH_ATHLETES actions
 function* fetchAthletes(action) {
     try {
         const response = yield axios.get('/api/athlete/');

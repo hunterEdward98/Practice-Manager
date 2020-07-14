@@ -77,9 +77,10 @@ router.delete('/:id/:org_id', rejectUnauthenticated, (req, res) => {
 
   }
   else {
-
+    console.log('DELETING Athlete')
     let queryText = 'DELETE FROM athlete WHERE id=$1'
     pool.query(queryText, [req.params.id]).then(result => {
+      console.log('DELETING times')
       pool.query('DELETE FROM time WHERE athlete_id=$1').then(result => {
         res.sendStatus(203)
       }).catch(error => [

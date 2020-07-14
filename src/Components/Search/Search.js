@@ -22,8 +22,16 @@ class Search extends React.Component {
     getTimesForSwimmer(event) {
         this.props.dispatch({ type: 'FETCH_TIMES', payload: event })
     }
+    resetSwimmer = () => {
+        this.setState({
+            swimmerid: 0
+        })
+    }
     //get all athletes when the component mounts
     componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_ATHLETES' })
+    }
+    componentDidUpdate() {
         this.props.dispatch({ type: 'FETCH_ATHLETES' })
     }
     //clear times when component unmounts
@@ -58,7 +66,7 @@ class Search extends React.Component {
                             </tr>
                         </thead>
                         {/* the tbody will be out SwimmerInfo object, which will be a table row where the user can edit swimmer info, or delete the swimmer*/}
-                        <SwimmerInfo id={this.state.swimmerid} org_id={this.props.user.org_id} />
+                        <SwimmerInfo delFunction={this.resetSwimmer} id={this.state.swimmerid} org_id={this.props.user.org_id} />
                     </table>
                     <small className='mt-5'>Swim History</small>
                     <table className='table dark col-12 col-lg-11'>

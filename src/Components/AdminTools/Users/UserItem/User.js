@@ -64,12 +64,24 @@ class User extends React.Component {
         })
             .then((willSave) => {
                 if (willSave) {
-                    const obj = {
-                        old_auth: this.props.auth_level,
-                        auth: this.state.auth,
-                        user: this.state.user,
-                        id: this.props.data.id,
-                        org_id: this.props.data.org_id
+                    let obj
+                    if (this.props.user.auth_level < 6) {
+                        obj = {
+                            old_auth: this.props.auth_level,
+                            auth: this.state.auth,
+                            user: this.state.user,
+                            id: this.props.data.id,
+                            org_id: this.props.data.org_id
+                        }
+                    }
+                    else {
+                        obj = {
+                            old_auth: this.props.auth_level,
+                            auth: this.state.auth,
+                            user: this.state.user,
+                            id: this.props.data.id,
+                            org_id: this.props.data.org_id
+                        }
                     }
                     this.props.dispatch({ type: 'EDIT_USER', payload: obj })
                     swal("Your user has been saved!", {

@@ -4,18 +4,22 @@
 }
 /* class for our sign in button(s) */
 .signin {
-  border: 3px solid black;
-  background-color: red;
-  color: gold;
+  border: 3px solid white;
+  background-color: black;
+  color: wheat;
 }
 .body {
   height: 60vh;
 }
+.header {
+  background-color: maroon;
+  color: wheat;
+}
 /* class for when we hover over the sign in button */
 .signin:hover {
-  background-color: firebrick;
-  border: 3px solid indigo;
-  color: gold;
+  background-color: black;
+  border: 3px solid maroon;
+  color: wheat;
 }
 
 /* class for clicking sign in button */
@@ -38,7 +42,7 @@
 /* click on sign out... */
 .signin:active {
   background-color: maroon;
-  color: gold;
+  color: wheat;
 }
 
 /* class for our navigation in the header */
@@ -50,17 +54,17 @@ nav {
 /* class for our sub-navigation menu */
 .adminNav {
   background-color: rgb(26, 0, 0);
-  color: gold;
+  color: wheat;
 }
 /* hover for adminNav */
 .adminNav:hover {
   background-color: rgb(26, 0, 0);
-  color: goldenrod;
+  color: wheat;
 }
 /* click on adminNav*/
 .adminNav:active {
   background-color: red(26, 0, 0);
-  color: gold;
+  color: wheat;
 }
 
 /* class for each tab item in a nav menu */
@@ -74,12 +78,12 @@ nav {
 /* a black themed button class */
 .blk {
   background-color: black;
-  color: gold;
+  color: wheat;
 }
 
 /* hover on blk */
 .blk:hover {
-  color: gold;
+  color: wheat;
   background-color: black;
   font-weight: bolder;
 }

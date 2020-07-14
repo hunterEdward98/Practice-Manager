@@ -12,16 +12,25 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
   }
   else {
     console.log(req.user.org_id)
-    let queryText = 'SELECT * FROM "user" where org_id=$1'
-    pool.query(queryText, [req.user.org_id]).then(result => {
-      res.send(result.rows)
-    }).catch(() => res.send(500))
+    let queryText;
+    if (req.user.auth_level >= 6) {
+      queryText = 'SELECT * FROM "user"'
+      pool.query(queryText).then(result => {
+        res.send(result.rows)
+      }).catch(() => res.send(500))
+    }
+    else {
+      queryText = 'SELECT * FROM "user" where org_id=$1'
+      pool.query(queryText, [req.user.org_id]).then(result => {
+        res.send(result.rows)
+      }).catch(() => res.send(500))
+    }
   }
 })
 
 //edit user after authorization check
 router.put('/', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth || req.user.auth_level < req.body.old_auth || req.user.org_id != req.body.org_id) {
+  if (req.user.auth_level < 3 || req.user.auth_level < req.body.auth || req.user.auth_level < req.body.old_auth || (req.user.org_id != req.body.org_id && req.user.auth_level < 6)) {
     res.sendStatus(403)
   }
   else {

@@ -44,6 +44,7 @@ class SwimmerInfo extends React.Component {
                 if (willSave) {
                     //FIX LATER. MOVE TO SAGA. ELIMINATE PAGE REFRESH
                     Axios.delete(`/api/athlete/${this.props.id}/${this.props.org_id}`)
+                    this.props.delFunction()
                     swal("Your swimmer has been deleted!", {
                         icon: "success",
                     });
@@ -53,10 +54,8 @@ class SwimmerInfo extends React.Component {
             });
     }
     //FIX LATER. need a setTimeout or component will lag behind Props.
-    componentWillReceiveProps() {
-        setTimeout(() => {
-            this.getSwimmerInfo()
-        }, 1);
+    componentDidUpdate() {
+        this.getSwimmerInfo()
     }
 
     //save changes to inputs in local state

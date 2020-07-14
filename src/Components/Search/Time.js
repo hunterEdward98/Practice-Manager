@@ -21,17 +21,6 @@ class Time extends React.Component {
         this.props.dispatch({ type: 'FETCH_EVENTS' })
     }
 
-    //needed a setTimeout, CHANGE LATER
-    componentWillReceiveProps() {
-        setTimeout(() => {
-            this.setState({
-                event: this.props.name,
-                eventId: this.props.eventId,
-                swimTime: this.props.swimTime,
-                date: this.props.date
-            })
-        }, 1);
-    }
     //delete a time from the swimmer's history after confirming
     deleteTime = () => {
         swal({

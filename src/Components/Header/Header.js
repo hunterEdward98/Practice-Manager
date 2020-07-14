@@ -4,8 +4,8 @@ import { NavLink, Link } from 'react-router-dom'
 class Header extends React.Component {
     //by default, the user will be assumed to not be logged in
     render() {
-        return (<div>
-            <div className='container'>
+        return (
+            <div className='container header'>
                 <div className='row'>
                     <div className='h1 col-9 col-md-10 text-left'>
                         {/* app title */}
@@ -28,7 +28,6 @@ class Header extends React.Component {
                             <NavLink to='/swimmer-search' className=' blk col-12 tab col-sm-6'>Swimmers</NavLink ></nav>}
                 </div>
             </div>
-        </div >
         )
     }
 }
