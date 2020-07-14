@@ -82,7 +82,7 @@ class AddEvent extends React.Component {
                 <table className='table table-dark table-striped'>
                     <thead><tr><th scope='col' className='text-center'>Event Name</th><th scope='col' className='text-center'>Delete</th></tr></thead>
                     <tbody>
-                        {this.props.event.map(x => <tr> <td>{x.event_name}</td><td><button onClick={() => this.deleteEvent(x.id)} className='btn btn-danger'><span className="glyphicon glyphicon-trash" ></span></button></td></tr>)}
+                        {this.props.event.map(x => <tr> <td>{x.name}</td><td><button onClick={() => this.deleteEvent(x.id)} className='btn btn-danger'><span className="glyphicon glyphicon-trash" ></span></button></td></tr>)}
                     </tbody>
                 </table>
             </div>
