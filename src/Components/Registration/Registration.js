@@ -5,18 +5,21 @@ class RegisterPage extends Component {
     state = {
         username: '',
         password: '',
+        org_id: 0,
     };
-
+    componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_ORGS' })
+    }
     //I have no idea what most of this stuff does. I'll look into it when my project is done
     registerUser = (event) => {
         event.preventDefault();
-
         if (this.state.username && this.state.password) {
             this.props.dispatch({
                 type: 'REGISTER',
                 payload: {
                     username: this.state.username,
                     password: this.state.password,
+                    org: this.state.org_id
                 },
             });
         } else {
@@ -65,6 +68,9 @@ class RegisterPage extends Component {
                             />
                         </label>
                     </div>
+                    <select required value={this.state.org_id} onChange={this.handleInputChangeFor('org_id')}>
+                        {this.props.orgs ? this.props.orgs.map(x => <option value={x.id}>{x.name}</option>) : <option>NO ORGANIZATIONS FOUND. PLEASE CONTACT SITE OWNER</option>}
+                    </select>
                     <div>
                         <input
                             className="register"
@@ -86,6 +92,7 @@ class RegisterPage extends Component {
 // const mapStateToProps = ({errors}) => ({ errors });
 const mapStateToProps = state => ({
     errors: state.errors,
+    orgs: state.orgs
 });
 
 export default connect(mapStateToProps)(RegisterPage);
