@@ -3,13 +3,12 @@ const pool = require('../modules/pool');
 const express = require('express');
 const router = express.Router();
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
-/**
- * Get all of the athletes
+/*
+  Get all of the athletes
  */
-
-router.get('/', (req, res) => {
-  const queryText = `SELECT * FROM athletes`
-  pool.query(queryText).then(result => {
+router.get('/', rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM athlete WHERE org_id=$1`
+  pool.query(queryText, [req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
     console.log(error)
@@ -18,9 +17,9 @@ router.get('/', (req, res) => {
 });
 
 // Get the active athletes
-router.get('/athletesActive', (req, res) => {
-  const queryText = `SELECT * FROM athletes where active=true`
-  pool.query(queryText).then(result => {
+router.get('/athletesActive', rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM athlete where active=true AND org_id=$1`
+  pool.query(queryText, [req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
     console.log(error)
@@ -28,9 +27,9 @@ router.get('/athletesActive', (req, res) => {
   })
 });
 //get the athletes that are active, from the specified lane
-router.get('/athletesInLane/:lane', (req, res) => {
-  const queryText = `SELECT * FROM athletes where active=true AND lane_number=$1`
-  pool.query(queryText, [req.params.lane]).then(result => {
+router.get('/athletesInLane/:lane', rejectUnauthenticated, (req, res) => {
+  const queryText = `SELECT * FROM athlete where active=true AND lane_number=$1 AND org_id=$2`
+  pool.query(queryText, [req.params.lane, req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
     console.log(error)
@@ -39,7 +38,7 @@ router.get('/athletesInLane/:lane', (req, res) => {
 });
 //get athlete by id
 router.get('/byId/:id', (req, res) => {
-  const queryText = `SELECT * FROM athletes where id=$1`
+  const queryText = `SELECT * FROM athlete where id=$1`
   pool.query(queryText, [req.params.id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
@@ -58,8 +57,8 @@ router.post('/', rejectUnauthenticated, (req, res) => {
   const img = req.body.lane
   const usr = req.body.year
   console.log(req.body)
-  let queryText = 'INSERT INTO athletes (athlete_name, lane_number, year) VALUES($1,$2,$3)'
-  pool.query(queryText, [desc, img, usr]).then(result => {
+  let queryText = 'INSERT INTO athlete (athlete_name, lane_number, year, org_id) VALUES($1,$2,$3,$4)'
+  pool.query(queryText, [desc, img, usr, req.user.org_id]).then(result => {
     res.sendStatus(202);
   }).catch(error => {
     res.sendStatus(500)
@@ -73,9 +72,9 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  */
 router.delete('/:id', rejectUnauthenticated, (req, res) => {
   if (req.user.auth_level < 3) { res.sendStatus(403) }
-  let queryText = 'DELETE FROM athletes WHERE id=$1'
+  let queryText = 'DELETE FROM athlete WHERE id=$1'
   pool.query(queryText, [req.params.id]).then(result => {
-    pool.query('DELETE FROM times WHERE athlete_id=$1').then(result => {
+    pool.query('DELETE FROM time WHERE athlete_id=$1').then(result => {
       res.sendStatus(203)
     }).catch(error => [
       res.sendStatus(500)
@@ -95,7 +94,7 @@ router.put('/', rejectUnauthenticated, (req, res) => {
   const id = body.id;
   const lane = body.lane;
   const year = body.year;
-  let queryText = 'UPDATE athletes SET active=$1, year=$2 , lane_number=$3 where id=$4'
+  let queryText = 'UPDATE athletes SET active=$1, year=$2 ,lane_number=$3 where id=$4'
   pool.query(queryText, [active, year, lane, id]).then(result => {
     res.sendStatus(203)
   }).catch(error => {
