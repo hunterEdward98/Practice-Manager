@@ -35,7 +35,8 @@ class App extends React.Component {
               </div>
               :
               //we still want to tell the user to sign in, or get approval if they aren't authorized.
-              <RejectUnauthorized />
+              <Route exact path='/set-manager'>
+                <RejectUnauthorized /></Route>
             }
           </div>
           <footer>

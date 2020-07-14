@@ -87,6 +87,15 @@ nav {
   background-color: black;
   font-weight: bolder;
 }
+input {
+  color: black;
+}
+input:focus {
+  color: black;
+}
+select {
+  color: black;
+}
 
 /* we want our active tabs to appear as tabs, like in a folder or cabinet. 
 the top, right, and left will have borders, but the bottom will not

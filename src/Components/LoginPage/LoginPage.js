@@ -38,7 +38,7 @@ class LoginPage extends Component {
   //I have no idea what most of this stuff does. I'll look into it when my project is done
   render() {
     return (
-      <div className='container justify-content-center'>
+      <div className='container justify-content-center dark'>
         {this.props.errors.loginMessage && (
           <h2
             className="alert"

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom'
 
 class RegisterPage extends Component {
     state = {
@@ -27,6 +28,7 @@ class RegisterPage extends Component {
                 password: '',
                 org_id: 0,
             })
+            this.props.history.push('/set-manager')
         } else {
             this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
         }
@@ -40,7 +42,7 @@ class RegisterPage extends Component {
 
     render() {
         return (
-            <div>
+            <div className='container dark'>
                 {this.props.errors.registrationMessage && (
                     <h2
                         className="alert"
@@ -101,5 +103,5 @@ const mapStateToProps = state => ({
     orgs: state.orgs
 });
 
-export default connect(mapStateToProps)(RegisterPage);
+export default withRouter(connect(mapStateToProps)(RegisterPage));
 
