@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import swal from 'sweetalert'
 class Swimmer extends React.Component {
     //track edits here
     state = {
@@ -17,7 +18,7 @@ class Swimmer extends React.Component {
                 time: response.data[0] || {}
             })
         }).catch(error => {
-            console.log(error)
+            swal('ERROR GETTING RECENT TIME FOR SWIMMER: ', error)
         })
     }
     //when the component mounts, run getRecent
@@ -48,7 +49,6 @@ class Swimmer extends React.Component {
     //submit set to the DB
     addSet = () => {
         const improvement = (this.state.time.swim_time) - Math.floor(this.state.submissionTotal / this.state.submissionCount)
-        console.log(improvement)
         let body = {
             improvement,
             id: this.props.id,

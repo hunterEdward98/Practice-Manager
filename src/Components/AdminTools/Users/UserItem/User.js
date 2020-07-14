@@ -9,7 +9,6 @@ class User extends React.Component {
         user: '',
     }
     componentDidMount() {
-        console.log(this.props.data)
         this.setState({
             data: this.props.data,
             auth: this.props.data.auth_level,

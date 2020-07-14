@@ -39,7 +39,6 @@ class Search extends React.Component {
     }
     //set the athlete to the selected value
     setAthlete(event) {
-        console.log('setting state to:', event)
         this.setState({
             swimmerid: event
         })
@@ -84,7 +83,7 @@ class Search extends React.Component {
                             {/* the tbody will be our Time object, which will be a table row where the user can edit or delete the time*/}
                             {this.props.time.map(x =>
                                 <Time name={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.state.swimmerid} >
-                                    {console.log(x)}</Time>)}
+                                </Time>)}
                         </tbody>
                     </table>
                 </div >

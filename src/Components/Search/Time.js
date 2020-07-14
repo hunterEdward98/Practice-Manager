@@ -65,7 +65,6 @@ class Time extends React.Component {
                         id: this.props.id,
                         athId: this.props.athId
                     }
-                    console.log('sending:', obj)
                     this.props.dispatch({ type: 'EDIT_TIME', payload: obj })
                     swal("Your time has been edited!", {
                         icon: "success",
@@ -86,10 +85,8 @@ class Time extends React.Component {
                         //if not in edit mode, display a dropdown of all event names
                         <select value={this.state.eventId} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                             this.handleChange(event, 'eventId');
-                            console.log(event)
                         }}>
                             <option hidden>SELECT A SET</option>
-                            {console.log(this.props.event)}
                             {this.props.event.map((x) => <option value={x.id}>{x.name}</option>)}
                         </select>
                     }

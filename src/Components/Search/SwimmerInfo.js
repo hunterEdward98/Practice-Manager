@@ -21,19 +21,18 @@ class SwimmerInfo extends React.Component {
     getSwimmerInfo = () => {
         Axios.get(`/api/athlete/byId/${this.props.id}`).then(response => {
             this.setState({
-                id: response.data[0].id,
-                active: response.data[0].active,
-                year: response.data[0].year,
-                lane: response.data[0].lane_number
+                id: response.data[0].id || 0,
+                active: response.data[0].active || false,
+                year: response.data[0].year || 1,
+                lane: response.data[0].lane_number || 0
             })
         }).catch(error => {
-            console.log(error)
+            swal('ERROR GETTING INFO: ', error)
         })
     }
 
     //confirm, then send a 'delete' to the server, refresh the page
     deleteSwimmer = () => {
-        console.log(this.props.org_id)
         swal({
             title: "Are you sure you want to delete this swimmer?",
             icon: "warning",

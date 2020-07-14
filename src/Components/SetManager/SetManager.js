@@ -2,6 +2,7 @@ import React from 'react'
 import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import swal from 'sweetalert'
 import './SetManager.css'
 class SetManager extends React.Component {
     //edits for submission
@@ -39,7 +40,7 @@ class SetManager extends React.Component {
         if (this.state.lane === 0) {
             axios.get(`/api/athlete/athletesActive`).then(response => {
                 this.setState({ athletes: response.data })
-            }).catch(error => console.log(error))
+            }).catch(error => swal('ERROR GETTING EVENTS FROM SERVER', error))
         }
         else { this.getLane() }
     }
@@ -58,7 +59,6 @@ class SetManager extends React.Component {
                                 this.get()
                             }}>
                                 <option hidden>SELECT A SET</option>
-                                {console.log(this.props.event)}
                                 {this.props.event.map((x) => <option value={x.id}>{x.name}</option>)}
                             </select>
                         </div>
