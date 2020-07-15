@@ -114,31 +114,31 @@ the background will be the same as the page background */
 /* for number inputs, we want them to look like normal inputs, so without the arrows. we also want them to match the blk class */
 input[type="number"] {
   background-color: black;
-  color: gold;
+  color: wheat;
   appearance: textfield;
 }
 
 /* for text fields, we need to edit them to match the blk class as well */
 textarea {
   background-color: black;
-  color: gold;
+  color: wheat;
 }
 
 /* form controls should also match the blk class, and look like regular text input fields */
 .form-control {
   background-color: black;
-  color: gold;
+  color: wheat;
   appearance: textfield;
 }
 
 /*we need form-control to KEEP the blk class layout when active.*/
 .form-control:active {
   background-color: black !important;
-  color: gold !important;
+  color: wheat !important;
 }
 
 /*we need form-control to KEEP the blk class layout when focused.*/
 .form-control:focus {
   background-color: black !important;
-  color: gold !important;
+  color: wheat !important;
 }
