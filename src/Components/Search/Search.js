@@ -68,7 +68,7 @@ class Search extends React.Component {
                             </tr>
                         </thead>
                         {/* the tbody will be out SwimmerInfo object, which will be a table row where the user can edit swimmer info, or delete the swimmer*/}
-                        <SwimmerInfo delFunction={this.resetSwimmer} data={this.props.swimmer[this.state.swimmerData] || {}} org_id={this.props.user.org_id} />
+                        <SwimmerInfo delFunction={this.resetSwimmer} data={this.props.swimmer[this.state.swimmerData] || ''} org_id={this.props.user.org_id} />
                     </table>
                     <small className='mt-5'>Swim History</small>
                     <table className='table dark col-12 col-lg-11'>

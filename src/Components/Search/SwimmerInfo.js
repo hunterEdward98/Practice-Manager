@@ -73,7 +73,7 @@ class SwimmerInfo extends React.Component {
     render() {
         return (
             <tbody>
-                {(this.props.data !== '' && this.props.id !== 0) &&
+                {(this.props.data !== '') &&
                     <tr>
                         <td>
                             {this.state.editMode === false ?
