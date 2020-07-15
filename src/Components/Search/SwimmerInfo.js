@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import Axios from 'axios'
 import swal from 'sweetalert'
+import { ThumbsDownIcon } from 'evergreen-ui'
 class SwimmerInfo extends React.Component {
     //save edits in local state temporarily
     state = {
@@ -16,20 +17,6 @@ class SwimmerInfo extends React.Component {
     componentWillUnmount() {
         this.props.dispatch({ type: 'FETCH_TIMES', payload: 0 })
     }
-
-    //get the swimmer info from the server. set state to it
-    getSwimmerInfo = () => {
-        Axios.get(`/api/athlete/byId/${this.props.id}`).then(response => {
-            this.setState({
-                id: response.data[0].id || 0,
-                active: response.data[0].active || false,
-                year: response.data[0].year || 1,
-                lane: response.data[0].lane_number || 0
-            })
-        }).catch(error => {
-        })
-    }
-
     //confirm, then send a 'delete' to the server, refresh the page
     deleteSwimmer = () => {
         swal({
@@ -51,11 +38,6 @@ class SwimmerInfo extends React.Component {
                 }
             });
     }
-    //FIX LATER. need a setTimeout or component will lag behind Props.
-    componentDidUpdate() {
-        this.getSwimmerInfo()
-    }
-
     //save changes to inputs in local state
     handleChange = (event, value) => {
         this.setState({
@@ -77,7 +59,7 @@ class SwimmerInfo extends React.Component {
                         active: this.state.active,
                         year: this.state.year,
                         lane: this.state.lane,
-                        id: this.props.id
+                        id: this.props.data.id
                     }
                     this.props.dispatch({ type: 'EDIT_ATHLETE', payload: obj })
                     swal("Your edits were sent to the server!", {
@@ -88,6 +70,7 @@ class SwimmerInfo extends React.Component {
                 }
             });
     }
+    componentDidUpdate() { }
     render() {
         return (
             <tbody>
@@ -96,7 +79,7 @@ class SwimmerInfo extends React.Component {
                         <td>
                             {this.state.editMode === false ?
                                 //if not in editMode, display the swimmers 'active' status
-                                String(this.state.active) :
+                                String(this.props.data.active) :
                                 //if in edit mode, give a dropdown with 'true' or 'false' as the options
                                 <select value={this.state.active} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                     this.handleChange(event, 'active');
@@ -110,7 +93,7 @@ class SwimmerInfo extends React.Component {
 
                             {this.state.editMode === false ?
                                 //if edit mode is false, display the year of the swimmer
-                                String(this.state.year) :
+                                String(this.props.data.year) :
                                 //if in edit mode, give a dropdown of years for the swimmer
                                 <select value={this.state.year} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                     this.handleChange(event, 'year');
@@ -127,7 +110,7 @@ class SwimmerInfo extends React.Component {
                         <td>
                             {this.state.editMode === false ?
                                 //if not in edit mode, display the lane of the swimmer
-                                String(this.state.lane) :
+                                String(this.props.data.lane_number) :
                                 //if in edit mode, display a dropdown of lanes 1 through 8
                                 <select value={this.state.lane} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                                     this.handleChange(event, 'lane');
@@ -148,9 +131,16 @@ class SwimmerInfo extends React.Component {
                                 //if user has auth_level of 3 or higher, they get edit access. otherwise, no
                                 this.state.editMode === false ?
                                     // if not in edit mode, display an edit button to these users
-                                    <button className='btn btn-warning' onClick={() => this.setState({ editMode: true })} > Edit</button> :
+                                    <button className='btn btn-warning'
+                                        onClick={() => this.setState({
+                                            editMode: true,
+                                            lane: this.props.data.lane_number,
+                                            year: this.props.data.year,
+                                            active: this.props.data.active
+
+                                        })} > Edit</button> :
                                     //if in edit mode, display a save button to these users
-                                    <button className='btn btn-info' onClick={() => { this.saveEdits(); this.handleChange({ target: { value: false } }, 'editMode') }} > Save
+                                    <button className='btn btn-info' onClick={() => { this.saveEdits(); this.setState({ editMode: false }) }} > Save
                                     </button>}
                             </th>
                         }
