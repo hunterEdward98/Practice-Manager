@@ -15,7 +15,7 @@ class Search extends React.Component {
     state = {
         description: '',
         image_url: '',
-        swimmerid: {}
+        swimmerData: {}
     }
     //fetch the times for a specific swimmer. default: 0
     getTimesForSwimmer(event) {
@@ -23,7 +23,7 @@ class Search extends React.Component {
     }
     resetSwimmer = () => {
         this.setState({
-            swimmerid: {}
+            swimmerData: {}
         })
     }
     //get all athletes when the component mounts
@@ -37,7 +37,7 @@ class Search extends React.Component {
     //set the athlete to the selected value
     setAthlete(event) {
         this.setState({
-            swimmerid: event
+            swimmerData: event
         })
     }
     render() {
@@ -47,13 +47,13 @@ class Search extends React.Component {
                 <div className='row justify-content-center'>
                     {/* A searchbar reducing dropdown menu, listing all athletes */}
                     <Select placeholder='SELECT SWIMMER...' className='col-12 col-lg-3' defaultValue={0}
-                        options={this.props.swimmer ? this.props.swimmer.map((x) => {
-                            return ({ label: x.athlete_name, value: x, key: x.id, data: x.athlete_id })
+                        options={this.props.swimmer ? this.props.swimmer.map((x, i) => {
+                            return ({ label: x.athlete_name, value: i, key: x.id, data: x.athlete_id })
                         }) : {}}
                         onChange={(event) => {
                             console.log(event.value)
                             this.setAthlete(event.value);
-                            this.getTimesForSwimmer(event.value, event.data)
+                            this.getTimesForSwimmer(this.props.swimmer[event.value].id)
                         }}>
                     </Select> </div><div className='row d-flex justify-content-center'>
                     <small className='mt-5'>Swimmer Info</small>
@@ -68,7 +68,7 @@ class Search extends React.Component {
                             </tr>
                         </thead>
                         {/* the tbody will be out SwimmerInfo object, which will be a table row where the user can edit swimmer info, or delete the swimmer*/}
-                        <SwimmerInfo delFunction={this.resetSwimmer} data={this.state.swimmerid} org_id={this.props.user.org_id} />
+                        <SwimmerInfo delFunction={this.resetSwimmer} data={this.props.swimmer[this.state.swimmerData] || {}} org_id={this.props.user.org_id} />
                     </table>
                     <small className='mt-5'>Swim History</small>
                     <table className='table dark col-12 col-lg-11'>
@@ -85,8 +85,9 @@ class Search extends React.Component {
                         </thead>
                         <tbody>
                             {/* the tbody will be our Time object, which will be a table row where the user can edit or delete the time*/}
+                            {console.log(this.props.time)}
                             {this.props.time.map(x =>
-                                <Time name={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.state.swimmerid} >
+                                <Time name={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.props.swimmer[this.state.swimmerData].id} >
                                 </Time>)}
                         </tbody>
                     </table>

@@ -7,7 +7,7 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
   Get all of the athletes
  */
 router.get('/', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM athlete WHERE org_id=$1`
+  const queryText = `SELECT * FROM athlete WHERE org_id=$1 ORDER BY athlete_name`
   pool.query(queryText, [req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
@@ -17,7 +17,7 @@ router.get('/', rejectUnauthenticated, (req, res) => {
 
 // Get the active athletes
 router.get('/athletesActive', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM athlete where active=true AND org_id=$1`
+  const queryText = `SELECT * FROM athlete where active=true AND org_id=$1 ORDER BY athlete_name`
   pool.query(queryText, [req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
@@ -26,7 +26,7 @@ router.get('/athletesActive', rejectUnauthenticated, (req, res) => {
 });
 //get the athletes that are active, from the specified lane
 router.get('/athletesInLane/:lane', rejectUnauthenticated, (req, res) => {
-  const queryText = `SELECT * FROM athlete where active=true AND lane_number=$1 AND org_id=$2`
+  const queryText = `SELECT * FROM athlete where active=true AND lane_number=$1 AND org_id=$2 ORDER BY athlete_name`
   pool.query(queryText, [req.params.lane, req.user.org_id]).then(result => {
     res.send(result.rows)
   }).catch(error => {
@@ -35,7 +35,7 @@ router.get('/athletesInLane/:lane', rejectUnauthenticated, (req, res) => {
 });
 //get athlete by id
 router.get('/byId/:id', (req, res) => {
-  const queryText = `SELECT * FROM athlete where id=$1`
+  const queryText = `SELECT * FROM athlete where id=$1 ORDER BY athlete_name`
   pool.query(queryText, [req.params.id]).then(result => {
     res.send(result.rows)
   }).catch(error => {

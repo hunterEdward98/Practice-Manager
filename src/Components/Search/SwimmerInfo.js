@@ -3,7 +3,6 @@ import { withRouter } from 'react-router'
 import { connect } from 'react-redux'
 import Axios from 'axios'
 import swal from 'sweetalert'
-import { ThumbsDownIcon } from 'evergreen-ui'
 class SwimmerInfo extends React.Component {
     //save edits in local state temporarily
     state = {

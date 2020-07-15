@@ -7,7 +7,7 @@ function* addAthlete(action) {
         yield axios.post(`/api/athlete/`, action.payload);
         yield put({ type: 'FETCH_ATHLETES' });
     } catch (error) {
-        swal('Error with athlete edit:', error);
+        console.log('Error with athlete addition:', error);
     }
 }
 // when EDIT_ATHLETE is called, edit the athlete in the DB, then get an updated list of athletes.
@@ -15,16 +15,19 @@ function* editAthlete(action) {
     try {
         yield axios.put(`/api/athlete/`, action.payload);
         yield put({ type: 'FETCH_ATHLETES' });
+        console.log('successful fetch')
     } catch (error) {
-        swal('Error with athlete edit:', error);
+        console.log('Error with athlete edit:', error);
     }
 }
 function* fetchAthletes(action) {
     try {
         const response = yield axios.get('/api/athlete/');
+        console.log('FETCHED DATA: ', response)
         yield put({ type: 'SET_ATHLETES', payload: response.data });
     } catch (error) {
-        swal('Error with athletes:', error);
+
+        console.log('Error with athletes:', error);
     }
 }
 function* AthleteSaga() {

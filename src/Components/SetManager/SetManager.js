@@ -40,7 +40,7 @@ class SetManager extends React.Component {
         if (this.state.lane === 0) {
             axios.get(`/api/athlete/athletesActive`).then(response => {
                 this.setState({ athletes: response.data })
-            }).catch(error => swal('ERROR GETTING EVENTS FROM SERVER', error))
+            }).catch(error => console.log('ERROR GETTING EVENTS FROM SERVER', error))
         }
         else { this.getLane() }
     }

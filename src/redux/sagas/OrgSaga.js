@@ -31,7 +31,7 @@ function* deleteOrg(action) {
         yield axios.delete(`/api/org/${action.payload}`);
         yield put({ type: 'FETCH_ORGS' });
     } catch (error) {
-        swal('Error with deletion:', error);
+        console.log('Error with deletion:', error);
     }
 }
 function* EventsSaga() {
