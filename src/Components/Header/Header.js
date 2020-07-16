@@ -5,7 +5,7 @@ class Header extends React.Component {
     //by default, the user will be assumed to not be logged in
     render() {
         return (
-            <div className='container header'>
+            <div className='header'>
                 <div className='row'>
                     <div className='h1 col-9 col-md-10 text-left'>
                         {/* app title */}

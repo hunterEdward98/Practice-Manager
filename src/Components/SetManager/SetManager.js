@@ -48,7 +48,7 @@ class SetManager extends React.Component {
 
     render() {
         return (
-            <div className='container'>
+            <div>
                 <form>
                     <div className="row my-5">
                         <div className="col-12 col-md-6">

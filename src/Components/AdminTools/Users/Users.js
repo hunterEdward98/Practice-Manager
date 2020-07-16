@@ -8,7 +8,7 @@ class AdminTools extends React.Component {
     }
     render() {
         return (
-            <div className='container my-5'>
+            <div className=' my-5'>
                 <h2>
                     {/* tell the user what their authorization level is */}
                     {this.props.user.auth_level === 3 && <h3> YOU ARE SIGNED IN AS A: Coach</h3>}

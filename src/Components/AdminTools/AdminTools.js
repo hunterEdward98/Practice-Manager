@@ -8,7 +8,7 @@ import Orgs from './Orgs/Orgs'
 class AdminTools extends React.Component {
     render() {
         return (
-            <div className='container my-5'>
+            <div className=' my-5'>
                 <div className='row justify-content-center'>
                     <div className='col-12 col-md-8'>
                         {/* this page has 3 sub-routes. we need a navbar to suggest that. */}

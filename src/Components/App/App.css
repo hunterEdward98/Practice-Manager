@@ -1,6 +1,10 @@
 /* default app class CSS */
 .App {
   text-align: center;
+  background-color: white;
+}
+.bg {
+  background-color: teal;
 }
 /* class for our sign in button(s) */
 .signin {
@@ -8,8 +12,9 @@
   background-color: black;
   color: wheat;
 }
-.body {
-  height: 60vh;
+::before {
+  margin: 0;
+  padding: 0;
 }
 .header {
   background-color: maroon;
@@ -46,7 +51,9 @@
   background-color: maroon;
   color: wheat;
 }
-
+.padded {
+  padding: 10px;
+}
 /* class for our navigation in the header */
 nav {
   background-color: 505050;

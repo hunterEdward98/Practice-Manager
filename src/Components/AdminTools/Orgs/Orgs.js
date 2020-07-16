@@ -69,7 +69,7 @@ class Orgs extends React.Component {
 
     render() {
         return (
-            <div className='container'>
+            <div >
                 {/* form should automatically check for empty/invalid form elements, given the element is required */}
                 <form className='my-4 justify-content-center row' onSubmit={(event) => this.submitNewOrg(event)}>
                     <div className='row'>
