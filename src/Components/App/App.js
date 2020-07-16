@@ -21,14 +21,14 @@ class App extends React.Component {
       <div className='bg'>
         <div className='container body'>
           <Router>
-            <div className="App">
+            <div className="App overflow-auto">
               <Header />
               <Route exact path='/sign-in'><LoginPage /></Route>
               <Route exact path='/register'><Registration /></Route>
               <Route exact path='/'><Redirect /></Route>
               {this.props.user.auth_level ?
                 // we only want to allow these routes if the user is signed in, and has an authorization above 0.
-                <div>
+                <div className=''>
                   <Route exact path='/set-manager'><SetManager></SetManager></Route>
                   <Route exact path='/swimmer-search'><Search /></Route>
                   <Route path='/super-admin'>{this.props.user.auth_level >= 3 ? <AdminTools /> : <RejectUnauthorized />}</Route>
@@ -42,10 +42,10 @@ class App extends React.Component {
                   <Route path='/super-admin'><RejectUnauthorized /></Route>
                 </div>
               }
-              <footer>
-                <Footer />
-              </footer>
             </div>
+            <footer>
+              <Footer />
+            </footer>
           </Router>
         </div>
       </div >

@@ -42,7 +42,7 @@ class Search extends React.Component {
     }
     render() {
         return (
-            <div className=' mt-5'>
+            <div className='mt-5'>
                 <h2>SELECT A SWIMMER</h2>
                 <div className='row justify-content-center'>
                     {/* A searchbar reducing dropdown menu, listing all athletes */}
@@ -59,7 +59,7 @@ class Search extends React.Component {
                 </div>
                 <div className='container row justify-content-center'>
                     <small className='mt-5'>Swimmer Info</small>
-                    <table className='table dark col-12 col-lg-11'>
+                    <table className='table dark'>
                         <thead>
                             <tr>
                                 <th scope='col'>Active?</th>

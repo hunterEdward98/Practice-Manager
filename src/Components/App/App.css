@@ -2,9 +2,17 @@
 .App {
   text-align: center;
   background-color: white;
+  height: 90%;
+}
+.body {
+  height: 95%;
 }
 .bg {
   background-color: teal;
+  height: 100%;
+}
+footer {
+  height: 100%;
 }
 /* class for our sign in button(s) */
 .signin {
@@ -12,11 +20,8 @@
   background-color: black;
   color: wheat;
 }
-::before {
-  margin: 0;
-  padding: 0;
-}
 .header {
+  padding-left: 10px;
   background-color: maroon;
   color: wheat;
 }
@@ -26,7 +31,6 @@
   border: 3px solid wheat;
   color: wheat;
 }
-
 /* class for clicking sign in button */
 .signin:active {
   background-color: white;
@@ -117,7 +121,6 @@ the background will be the same as the page background */
   color: maroon !important;
   background-color: white !important;
 }
-
 /* for number inputs, we want them to look like normal inputs, so without the arrows. we also want them to match the blk class */
 input[type="number"] {
   background-color: black;
@@ -130,7 +133,10 @@ textarea {
   background-color: black;
   color: wheat;
 }
-
+.addScroll {
+  overflow-x: auto;
+  overflow-y: none;
+}
 /* form controls should also match the blk class, and look like regular text input fields */
 .form-control {
   background-color: black;

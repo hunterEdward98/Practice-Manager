@@ -33,11 +33,11 @@ class Footer extends React.Component {
     }
     render() {
         return (
-            <footer className='footer blk mt-5'>
+            <footer className='footer blk'>
                 <div className='row justify-content-center'>
-                    <div className='h3 col-6'>
+                    <div className='small col-6'>
                         Report A Bug
-                        <textarea className='p form-control' placeholder='Please Provide a description of the bug' onChange={(event) => this.setState({ bugData: event.target.value })} value={this.state.bugData} />
+                        <input className='p form-control' placeholder='Please Provide a description of the bug' onChange={(event) => this.setState({ bugData: event.target.value })} value={this.state.bugData} />
                         {this.props.user.name ?
                             //if they are signed in, they will have access to report a bug
                             <button onClick={() => this.submitBug()} className='btn btn-secondary'>
@@ -56,9 +56,9 @@ class Footer extends React.Component {
                                 </button>
                             </Link>}
                     </div>
-                    <div className='h3 col-6'>
+                    <div className='small col-6'>
                         Request A Feature
-                        <textarea className='p form-control' placeholder={`Please Provide a description of the feature you'd like to see`} onChange={(event) => this.setState({ reqFeatureData: event.target.value })} value={this.state.reqFeatureData} />
+                        <input className='p form-control' placeholder={`Please Provide a description of the feature you'd like to see`} onChange={(event) => this.setState({ reqFeatureData: event.target.value })} value={this.state.reqFeatureData} />
                         {this.props.user.name ?
                             //if they are signed in, they will have access to request a feature
                             <button onClick={() => this.submitFeature()} className='btn btn-secondary'>
@@ -76,15 +76,7 @@ class Footer extends React.Component {
                                 </button>
                             </Link>}
                     </div>
-                    <div className='col-12 h3 row'>
-                        <div className='col-12'>CONTACT ME:</div>
-                        <div className='h5 col-6'>
-                            <a href='https://www.linkedin.com/in/hunter-e-scheel'> LinkedIn </a>
-                        </div>
-                        <div className='h5 col-6'>
-                            <a href='https://hunteredward98.github.io'>Website</a>
-                        </div>
-                    </div>
+                    <small>© Hunter Scheel</small>
                 </div>
             </footer >
         )
