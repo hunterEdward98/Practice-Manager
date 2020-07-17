@@ -157,14 +157,14 @@ class User extends React.Component {
                     <td colSpan={2}>
                         <span class="glyphicon glyphicon-lock" ></span></td>
                 }
-                <td>
-                    {(this.props.user.auth_level > this.state.auth) &&
+                {(this.props.user.auth_level > this.state.auth) &&
+                    <td>
                         //if your auth is higher than the component's you get access to the 'delete' button
                         <button className='btn btn-danger' onClick={() => this.deleteUser()}>
                             Delete
                     </button>
-                    }
-                </td>
+                    </td>
+                }
             </tr >
         )
     }
