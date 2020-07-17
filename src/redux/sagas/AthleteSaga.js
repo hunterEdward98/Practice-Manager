@@ -20,6 +20,15 @@ function* editAthlete(action) {
         console.log('Error with athlete edit:', error);
     }
 }
+function* deleteAthlete(action) {
+    try {
+        yield axios.delete(`/api/athlete/${action.payload.id}/${action.payload.org_id}`);
+        yield put({ type: 'FETCH_ATHLETES' });
+        yield put({ type: 'FETCH_TIMES', payload: 0 })
+    } catch (error) {
+        console.log('Error with athlete addition:', error);
+    }
+}
 function* fetchAthletes(action) {
     try {
         const response = yield axios.get('/api/athlete/');
@@ -34,6 +43,7 @@ function* AthleteSaga() {
     yield takeLatest('FETCH_ATHLETES', fetchAthletes);
     yield takeLatest('EDIT_ATHLETE', editAthlete);
     yield takeLatest('ADD_ATHLETE', addAthlete);
+    yield takeLatest('DELETE_ATHLETE', deleteAthlete)
 }
 
 export default AthleteSaga;
