@@ -34,50 +34,33 @@ class Footer extends React.Component {
     render() {
         return (
             <footer className='footer blk'>
-                <div className='row justify-content-center'>
-                    <div className='small col-6'>
-                        Report A Bug
+                <div className='row  justify-content-center'>
+                    {this.props.user.name &&
+                        <>
+                            <div className='small col-6'>
+                                Report A Bug
                         <input className='p form-control' placeholder='Please Provide a description of the bug' onChange={(event) => this.setState({ bugData: event.target.value })} value={this.state.bugData} />
-                        {this.props.user.name ?
-                            //if they are signed in, they will have access to report a bug
-                            <button onClick={() => this.submitBug()} className='btn btn-secondary'>
-                                Send Bug Report
+
+                                <button onClick={() => this.submitBug()} className='btn btn-secondary'>
+                                    Send Bug Report
                                 <span className='glyphicon glyphicon-cog'>
-                                </span>
-                            </button>
-                            :
-                            // if they aren't signed in, they can't report a bug, because we use the username for the report
-                            // so we want to give them a link to the sign in page
-                            <Link to='/sign-in'>
-                                <button className='btn signin'>
-                                    Sign In
-                                    <span className='glyphicon glyphicon-cog'>
                                     </span>
                                 </button>
-                            </Link>}
-                    </div>
-                    <div className='small col-6'>
-                        Request A Feature
+                            </div>
+                            <div className='small col-6'>
+                                Request A Feature
                         <input className='p form-control' placeholder={`Please Provide a description of the feature you'd like to see`} onChange={(event) => this.setState({ reqFeatureData: event.target.value })} value={this.state.reqFeatureData} />
-                        {this.props.user.name ?
-                            //if they are signed in, they will have access to request a feature
-                            <button onClick={() => this.submitFeature()} className='btn btn-secondary'>
-                                Request Feature <span className='glyphicon glyphicon-cog'>
-                                </span>
-                            </button>
-                            :
-                            // if they aren't signed in, they can't request a feature, because we use the username for the request
-                            // so we want to give them a link to the sign in page
-                            <Link to='/sign-in'>
-                                <button className='btn signin'>
-                                    Sign In
-                                    <span className='glyphicon glyphicon-cog'>
+
+                                <button onClick={() => this.submitFeature()} className='btn btn-secondary'>
+                                    Request Feature <span className='glyphicon glyphicon-cog'>
                                     </span>
                                 </button>
-                            </Link>}
-                    </div>
+                            </div>
+                        </>
+                    }
                     <footer>
-                        <small>© Practice Manager 2020</small></footer>
+                        <small>© Practice Manager 2020</small>
+                    </footer>
                 </div>
             </footer >
         )
