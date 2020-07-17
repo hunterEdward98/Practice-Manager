@@ -159,9 +159,9 @@ class User extends React.Component {
                 }
                 {(this.props.user.auth_level > this.state.auth) &&
                     <td>
-                        //if your auth is higher than the component's you get access to the 'delete' button
-                        <button className='btn btn-danger' onClick={() => this.deleteUser()}>
-                            Delete
+                        {//if your auth is higher than the component's you get access to the 'delete' button}
+                            <button className='btn btn-danger' onClick={() => this.deleteUser()}>
+                                Delete
                     </button>
                     </td>
                 }
