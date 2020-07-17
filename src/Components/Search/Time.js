@@ -94,7 +94,7 @@ class Time extends React.Component {
                 <td>
                     {this.state.editMode === false ?
                         //if not in edit mode, display the swim's time
-                        String(this.props.swimTime) || '' :
+                        (Math.floor(this.props.swimTime / 60) + ':' + Math.floor(this.props.swimTime % 60)) || '' :
                         //if in edit mode, display an input field for a number
                         <input value={this.state.swimTime} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
                             this.handleChange(event, 'swimTime');

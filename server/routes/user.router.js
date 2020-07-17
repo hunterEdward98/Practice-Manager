@@ -13,13 +13,13 @@ router.get('/all', rejectUnauthenticated, (req, res) => {
   else {
     let queryText;
     if (req.user.auth_level >= 6) {
-      queryText = 'SELECT * FROM "user"'
+      queryText = 'SELECT * FROM "user" order by name'
       pool.query(queryText).then(result => {
         res.send(result.rows)
       }).catch(() => res.send(500))
     }
     else {
-      queryText = 'SELECT * FROM "user" where org_id=$1'
+      queryText = 'SELECT * FROM "user" where org_id=$1 order by name'
       pool.query(queryText, [req.user.org_id]).then(result => {
         res.send(result.rows)
       }).catch(() => res.send(500))

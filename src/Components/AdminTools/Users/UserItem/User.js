@@ -104,7 +104,7 @@ class User extends React.Component {
                     :
                     //when editmode is true, display and input field with the value in local state. when it changes, update local state
                     <td>
-                        <input value={this.state.user} className='form-control blk' onChange={(event) => this.handleChange(event, 'user')} /></td>
+                        <input value={this.state.user} required className='form-control blk' onChange={(event) => this.handleChange(event, 'user')} /></td>
                 }
                 {this.state.editMode === false ?
                     //display text based on the component auth_level
@@ -119,9 +119,10 @@ class User extends React.Component {
                     </td> :
                     //display a dropdown based on USER auth level. user can never promote to their own level or higher.
                     <td>
-                        <select className="form-control btn blk" id="exampleFormControlSelect1" value={this.state.auth} onChange={(event) => {
+                        <select required className="form-control btn blk" id="exampleFormControlSelect1" value={this.state.auth} onChange={(event) => {
                             this.handleChange(event, 'auth')
                         }}>
+                            <option value={0} selected disabled> SELECT AN AUTH LEVEL</option>
                             <option value={1}>athlete</option>
                             <option value={2}>manager</option>
                             {this.props.user.auth_level >= 4 &&
@@ -136,7 +137,7 @@ class User extends React.Component {
                         </select>
                     </td>
                 }
-                {this.props.user.auth_level > this.state.auth ?
+                {this.props.user.auth_level > this.props.data.auth_level ?
                     //if your auth_level is higher than the component's, you can edit the component
                     <td>
                         {this.state.editMode === false ?
@@ -148,7 +149,7 @@ class User extends React.Component {
                             <button className='btn btn-info' onClick={() => {
                                 this.submitChanges()
                                 this.setState({ editMode: false })
-                            }}>
+                            }}>>
                                 Save
                         </button>}</td>
                     :
