@@ -26,8 +26,9 @@ class SwimmerInfo extends React.Component {
         })
             .then((willSave) => {
                 if (willSave) {
+                    console.log(this.props.id)
                     //FIX LATER. MOVE TO SAGA. ELIMINATE PAGE REFRESH
-                    Axios.delete(`/api/athlete/${this.props.id}/${this.props.org_id}`)
+                    Axios.delete(`/api/athlete/${this.props.data.id}/${this.props.data.org_id}`)
                     this.props.delFunction()
                     swal("Your swimmer has been deleted!", {
                         icon: "success",

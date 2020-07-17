@@ -65,18 +65,21 @@ router.post('/', rejectUnauthenticated, (req, res) => {
  * Delete an item if it's something the logged in user added
  */
 router.delete('/:id/:org_id', rejectUnauthenticated, (req, res) => {
-  if (req.user.auth_level < 3 || (req.user.org_id != req.body.org_id && req.user.auth_level < 6)) {
+  if (req.user.auth_level < 3 || ((req.user.org_id != req.params.org_id) && req.user.auth_level < 6)) {
+    console.log(req.user.org_id, req.params.org_id)
     res.sendStatus(403)
 
   }
   else {
+    console.log(req.params.id)
     let queryText = 'DELETE FROM athlete WHERE id=$1'
     pool.query(queryText, [req.params.id]).then(result => {
-      pool.query('DELETE FROM time WHERE athlete_id=$1').then(result => {
+      pool.query('DELETE FROM times WHERE athlete_id=$1', [req.params.id]).then(result => {
         res.sendStatus(203)
-      }).catch(error => [
+      }).catch(error => {
+        console.log('error deleting times');
         res.sendStatus(500)
-      ])
+      })
     }).catch(error => {
       res.sendStatus(500)
     })

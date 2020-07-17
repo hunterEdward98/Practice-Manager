@@ -89,7 +89,7 @@ class Search extends React.Component {
                             {/* the tbody will be our Time object, which will be a table row where the user can edit or delete the time*/}
                             {console.log(this.props.time)}
                             {this.props.time.map(x =>
-                                <Time name={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.props.swimmer[this.state.swimmerData].id} >
+                                <Time name={x.event_name} eventId={x.event_id} swimTime={x.swim_time} date={moment(x.date).format('MMMM do YYYY LTS')} id={x.id} athId={this.props.swimmer[this.state.swimmerData] ? this.props.swimmer[this.state.swimmerData].id : 0} >
                                 </Time>)}
                         </tbody>
                     </table>
