@@ -22,7 +22,7 @@ class SetManager extends React.Component {
     componentDidMount() {
         this.get()
         if (this.props.user.auth_level === 6) {
-            this.props.history.push('/super-admin')
+            this.props.history.push('/super-admin/users')
         }
     }
 
