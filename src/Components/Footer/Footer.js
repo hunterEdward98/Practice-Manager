@@ -62,7 +62,7 @@ class Footer extends React.Component {
                         {this.props.user.name ?
                             //if they are signed in, they will have access to request a feature
                             <button onClick={() => this.submitFeature()} className='btn btn-secondary'>
-                                Send Bug Report <span className='glyphicon glyphicon-cog'>
+                                Request Feature <span className='glyphicon glyphicon-cog'>
                                 </span>
                             </button>
                             :
