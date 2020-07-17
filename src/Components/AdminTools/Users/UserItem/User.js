@@ -157,7 +157,7 @@ class User extends React.Component {
                     <td colSpan={2}>
                         <span class="glyphicon glyphicon-lock" ></span></td>
                 }
-                {(this.props.user.auth_level > this.state.auth) &&
+                {(this.props.user.auth_level > this.state.auth && this.state.auth < 6) &&
                     <td>
                         {//if your auth is higher than the component's you get access to the 'delete' button
                         }
