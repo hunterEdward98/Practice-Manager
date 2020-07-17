@@ -9,7 +9,7 @@ class Header extends React.Component {
                 <div className='row'>
                     <div className='h1 col-9 col-md-10 text-left'>
                         {/* app title */}
-                        Practice Manager
+                        Practice Manager 2020
                     </div>
                     {this.props.user.name ?
                         // if the user is logged in, display a log out button

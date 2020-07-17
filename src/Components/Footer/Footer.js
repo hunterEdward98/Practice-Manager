@@ -76,7 +76,8 @@ class Footer extends React.Component {
                                 </button>
                             </Link>}
                     </div>
-                    <small>© Hunter Scheel</small>
+                    <footer>
+                        <small>© Practice Manager 2020</small></footer>
                 </div>
             </footer >
         )
