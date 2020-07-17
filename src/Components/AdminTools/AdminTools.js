@@ -14,8 +14,8 @@ class AdminTools extends React.Component {
                         {/* this page has 3 sub-routes. we need a navbar to suggest that. */}
                         {
                             this.props.user.auth_level >= 6 ? <div>
-                                <NavLink to='/super-admin/users' className='col-12 col-sm-3 h2 btn adminNav'>Users</NavLink>
-                                <NavLink to='/super-admin/orgs' className='col-12 col-sm-3 h2 btn adminNav'>Orgs</NavLink></div> : <div>
+                                <NavLink to='/super-admin/users' className='col-12 col-sm-6 h2 btn adminNav'>Users</NavLink>
+                                <NavLink to='/super-admin/orgs' className='col-12 col-sm-6 h2 btn adminNav'>Orgs</NavLink></div> : <div>
                                     <NavLink to='/super-admin/users' className='col-12 col-sm-4 h2 btn adminNav'>Users</NavLink>
                                     <NavLink to='/super-admin/swimmers' className='col-12 col-sm-4 h2 btn adminNav'>Add Swimmers</NavLink>
                                     <NavLink to='/super-admin/sets' className='col-12 col-sm-4 h2 btn adminNav'>Sets</NavLink></div>
