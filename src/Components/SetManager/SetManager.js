@@ -2,6 +2,7 @@ import React from 'react'
 import Swimmer from './Swimmer/Swimmer'
 import axios from 'axios'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert'
 import './SetManager.css'
 class SetManager extends React.Component {
@@ -18,7 +19,12 @@ class SetManager extends React.Component {
             [value]: event.target.value
         })
     }
-    componentDidMount() { this.get() }
+    componentDidMount() {
+        this.get()
+        if (this.props.user.auth_level === 6) {
+            this.props.history.push('/super-admin')
+        }
+    }
 
     //get athletes in local state's 'lane'
     getLane = () => {
@@ -139,4 +145,4 @@ const mapStateToProps = (state) => {
         swimmer: state.athlete
     }
 }
-export default connect(mapStateToProps)(SetManager)
+export default withRouter(connect(mapStateToProps)(SetManager))
