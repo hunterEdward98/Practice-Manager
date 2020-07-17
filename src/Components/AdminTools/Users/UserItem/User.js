@@ -149,7 +149,7 @@ class User extends React.Component {
                             <button className='btn btn-info' onClick={() => {
                                 this.submitChanges()
                                 this.setState({ editMode: false })
-                            }}>>
+                            }}>
                                 Save
                         </button>}</td>
                     :
