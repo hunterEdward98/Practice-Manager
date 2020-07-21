@@ -52,7 +52,7 @@ Athletes and Managers have access to view, but not to edit any information in th
 
 Coaches and Above have access to edit or delete an athlete, or any time that athlete has in their history
 
-![Coach+ Search](/assets/Search-coaches.png)
+![Coach+ Search Page](/assets/Search-coaches.png)
 
 ### Active Status
 
@@ -76,10 +76,13 @@ The set manager is where a coach or manager will go to add times to an athlete's
 
 You need to select a set to use this feature
 
+![Coach+ Search Page](/assets/set-manager-athlete.png)
+
 ### Add Time
 
 Only users with an access level of Manager or above have access to this feature
 
+![Coach+ Search Page](/assets/set-manager.png)
 To add a time to the set for the current athlete, put the minutes, then seconds into the input fields, then press add time. empty input fields will be assumed to be 0
 
 - After Adding a Time, the current count will go up, Indicating how many times you have submitted this set, and the average will be calculated automatically and displayed.
