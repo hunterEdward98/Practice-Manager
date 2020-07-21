@@ -39,9 +39,20 @@ class Swimmer extends React.Component {
     //add a time to the set
     addTime = (event) => {
         event.preventDefault();
+        if (Number(this.state.minutes) < 0 || Number(this.state.seconds) < 0) {
+            swal(`Can't process negative values. sorry`)
+            this.setState({
+                minutes: '',
+                seconds: '',
+            })
+            return undefined;
+        }
+        console.log(this.convertTimeToInt(this.state.minutes, this.state.seconds))
+        const newNum = this.state.submissionTotal + Number(this.convertTimeToInt(this.state.minutes, this.state.seconds))
+        console.log(newNum)
         this.setState({
             submissionCount: this.state.submissionCount + 1,
-            submissionTotal: Math.floor((Number(this.state.submissionTotal) + (Number(this.state.minutes) * 60) + Number(this.state.seconds))),
+            submissionTotal: newNum,
             minutes: '',
             seconds: '',
         })
@@ -63,7 +74,30 @@ class Swimmer extends React.Component {
             this.getRecent()
         })
     }
-
+    convertTimeToInt = (min, sec) => {
+        min = Number(min)
+        sec = Number(sec)
+        if ((typeof (min) !== typeof (5) || typeof (sec) !== typeof (5)) || min < 0 || sec < 0) {
+            return NaN
+        }
+        console.log((Number(min * 60) + Number(sec)))
+        return Math.floor(Number(min * 60) + Number(sec))
+    }
+    convertIntToTime = (int) => {
+        if (typeof (int) !== typeof (5) || int < 0 || isNaN(int)) {
+            swal('Not A Number.')
+            return NaN
+        }
+        let outNum = Math.floor(Number(int / 60)) + ': ';
+        if (
+            Math.floor(Number(int % 60)) < 10
+        ) {
+            outNum += 0
+        }
+        outNum +=
+            Math.floor(Number(int % 60))
+        return outNum
+    }
     render() {
         return (
             <tr>
@@ -73,7 +107,7 @@ class Swimmer extends React.Component {
                 {(this.props.set !== 0) &&
                     <td>
                         {/* format the swim time from the server, to a visually appealing time */}
-                        {this.state.time.swim_time ? Math.floor(this.state.time.swim_time / 60, 10) + ':' + (this.state.time.swim_time % 60 < 10 ? '0' + this.state.time.swim_time % 60 : this.state.time.swim_time % 60) : 0}
+                        {this.state.time.swim_time ? this.convertIntToTime(this.state.time.swim_time) : 0}
                     </td>
                 }
                 {(this.props.set !== 0) &&
@@ -90,8 +124,8 @@ class Swimmer extends React.Component {
                     <td>
                         <form onSubmit={(event) => this.addTime(event)}>
                             <div className='justify-content-center row'>
-                                <input required className='form-control col-6 col-sm-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /><div className='col-12 col-sm-1 text-center'>:</div>
-                                <input required className='form-control col-6 col-sm-4' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
+                                <input className='form-control col-6 col-sm-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /><div className='col-12 col-sm-1 text-center'>:</div>
+                                <input className='form-control col-6 col-sm-4' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
                             </div>
                             <button type='submit' className='btn btn-success'>Add Time</button>
                         </form>
@@ -107,7 +141,8 @@ class Swimmer extends React.Component {
                 {(this.props.user.auth_level >= 2 && this.props.set !== 0) &&
                     // if auth_level is 2 or higher, and we have a set selected, allow the user to track their average time added
                     <td>
-                        {Math.floor((this.state.submissionTotal / this.state.submissionCount) / 60) || 0}:{this.state.submissionCount > 0 ? (Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60) >= 10 ? Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60) : '0' + Math.floor((this.state.submissionTotal / this.state.submissionCount) % 60)) : '0'}
+                        {this.state.submissionTotal ?
+                            this.convertIntToTime(this.state.submissionTotal / this.state.submissionCount) : 0}
                     </td>
                 }
                 {this.state.submissionCount > 0 &&

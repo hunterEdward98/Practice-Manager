@@ -40,6 +40,12 @@ class Time extends React.Component {
                 }
             });
     }
+    handleTimeChange = (event, value) => {
+        this.setState({
+            ...this.state,
+            [value]: this.convertTimeToInt(event.target.value)
+        })
+    }
     //save changes to local state
     handleChange = (event, value) => {
         this.setState({
@@ -75,6 +81,31 @@ class Time extends React.Component {
             });
     }
 
+    convertTimeToInt = (time) => {
+        let SplitTime = time.replace(" ", '').split(':')
+        let min = Number(SplitTime[0])
+        let sec = Number(SplitTime[1])
+        if ((typeof (min) !== typeof (5) || typeof (sec) !== typeof (5)) || min < 0 || sec < 0) {
+            return NaN
+        }
+        console.log((Number(min * 60) + Number(sec)))
+        return Math.floor(Number(min * 60) + Number(sec))
+    }
+    convertIntToTime = (int) => {
+        if (typeof (int) !== typeof (5) || int < 0 || isNaN(int)) {
+            swal('Not A Number.')
+            return NaN
+        }
+        let outNum = Math.floor(Number(int / 60)) + ': ';
+        if (
+            Math.floor(Number(int % 60)) < 10
+        ) {
+            outNum += 0
+        }
+        outNum +=
+            Math.floor(Number(int % 60))
+        return outNum
+    }
     render() {
         return (
             <tr>
@@ -94,13 +125,14 @@ class Time extends React.Component {
                 <td>
                     {this.state.editMode === false ?
                         //if not in edit mode, display the swim's time
-                        (Math.floor(this.props.swimTime / 60) + ':' + Math.floor(this.props.swimTime % 60)) || '' :
+                        this.convertIntToTime(this.props.swimTime) :
                         //if in edit mode, display an input field for a number
-                        <input value={this.state.swimTime} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
-                            this.handleChange(event, 'swimTime');
+                        <input value={this.convertIntToTime(this.state.swimTime)} className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
+                            this.handleTimeChange(event, 'swimTime');
                         }}>
                         </input>
                     }
+
                 </td>
                 <td>
                     {String(this.props.date) || ''}

@@ -9,11 +9,9 @@
     "body-parser": "^1.19.0",
     "cookie-session": "^2.0.0-beta.3",
     "dotenv": "^4.0.0",
-    "evergreen-ui": "^4.28.0",
     "express": "^4.16.4",
     "moment": "^2.27.0",
     "nodejs-nodemailer-outlook": "^1.2.3",
-    "nodemailer": "^6.4.10",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
     "pg": "^8.2.1",
@@ -32,16 +30,14 @@
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-saga": "^1.0.2",
-    "semantic": "0.0.1",
-    "sweetalert": "^2.1.2",
-    "tailwindcss": "^1.4.6"
+    "sweetalert": "^2.1.2"
   },
   "scripts": {
     "start": "react-scripts build && node server/server.js",
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,5 +54,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
   }
 }
