@@ -46,9 +46,13 @@ To Approve a user, simply change their access level from nothing to your desired
 
 Anyone with an access level of Athlete or above can search for an athlete. The result of typing is a dropdown that shrinks to only include results that match your text
 
-Athletes and Managers have access to view, but to edit any information on this page.
+Athletes and Managers have access to view, but not to edit any information in the results.
+
+![Users Page](/assets/Search-athlete.png)
 
 Coaches and Above have access to edit or delete an athlete, or any time that athlete has in their history
+
+![Users Page](/assets/Seaarch-coaches.png)
 
 ### Active Status
 
