@@ -48,11 +48,11 @@ Anyone with an access level of Athlete or above can search for an athlete. The r
 
 Athletes and Managers have access to view, but not to edit any information in the results.
 
-![Users Page](/assets/Search-athlete.png)
+![Athlete+ Search](/assets/Search-athlete.png)
 
 Coaches and Above have access to edit or delete an athlete, or any time that athlete has in their history
 
-![Users Page](/assets/Seaarch-coaches.png)
+![Coach+ Search](/assets/Search-coaches.png)
 
 ### Active Status
 
