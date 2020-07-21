@@ -15,9 +15,12 @@ The Site Owner Will have High Level Access, being able to add and remove organiz
 To Add An Organization, the Site Owner can just put a name into the input field.
 To remove, Just click the trash can next to the organization name. it will ask you to confirm this decision, as the organization is non-recoverable
 
+![Orgs Page](/assets/Site-Owner-orgs.png)
+
 ### Editing/Removing Users
 
 The Site Owner, after adding an organization, will need to promote a user to Administrator. They should not need to do anything with users in the organization after that, unless there is a change in administrators
+
 ![Users Page](/assets/Site-Owner-user.png)
 
 ## Administrator / Head Coach / Coach
