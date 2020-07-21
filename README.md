@@ -1,68 +1,88 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Practice Manager 2020
 
-## Available Scripts
+Practice Manager is an app created to make managing your swim practices easier, so you can focus on the important things, rather than worry about the calculations.
 
-In the project directory, you can run:
+## Login Safe
 
-### `npm start`
+Other teams cannot access your team's data until you promote them to athlete or higher within your organization
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Site Owner
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The Site Owner Will have High Level Access, being able to add and remove organizations and edit their users
 
-### `npm test`
+### Adding/Removing Organizations
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+To Add An Organization, the Site Owner can just put a name into the input field.
+To remove, Just click the trash can next to the organization name. it will ask you to confirm this decision, as the organization is non-recoverable
 
-### `npm run build`
+### Editing/Removing Users
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Users Page]()
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The Site Owner, after adding an organization, will need to promote a user to Administrator. They should not need to do anything with users in the organization after that, unless there is a change in administrators
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Administrator / Head Coach / Coach
 
-### `npm run eject`
+### Editing/Removing Users
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Users in these roles have permissions to edit users in their organization from any clearence below their own. The permission levels, from Highest to Lowest, are listed below
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+(1. Site Owner)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Administrator
+3. Head Coach
+4. Coach
+5. Manager
+6. Athlete
+7. Unapproved
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Approving Users
 
-## Learn More
+To Approve a user, simply change their access level from nothing to your desired role for that user.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Athlete History
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Anyone with an access level of Athlete or above can search for an athlete. The result of typing is a dropdown that shrinks to only include results that match your text
 
-### Code Splitting
+Athletes and Managers have access to view, but to edit any information on this page.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Coaches and Above have access to edit or delete an athlete, or any time that athlete has in their history
 
-### Analyzing the Bundle Size
+### Active Status
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Active Status indicates whether that athlete is on your active roster.
 
-### Making a Progressive Web App
+if set to false, you will no longer be able to see that athlete when adding times.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+if set to true, you will be able to see them when adding times
 
-### Advanced Configuration
+### Year
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+Year indicates what year the athlete is in. This is useful information to high school coaches and managers so they know whether to change someone to inactive at the end of the season
 
-### Deployment
+### Lane
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+Lane indicates what lane the athlete is swimming in. This is useful for the 'sort by lane feature'
 
-### `npm run build` fails to minify
+## Set Manager
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+The set manager is where a coach or manager will go to add times to an athlete's record.
+
+You need to select a set to use this feature
+
+### Add Time
+
+Only users with an access level of Manager or above have access to this feature
+
+To add a time to the set for the current athlete, put the minutes, then seconds into the input fields, then press add time. empty input fields will be assumed to be 0
+
+- After Adding a Time, the current count will go up, Indicating how many times you have submitted this set, and the average will be calculated automatically and displayed.
+
+### Submit Set
+
+The option to submit a set will appear after the first time has been added to it.
+
+- After submitting a set, the previous time will refresh to the time you just submitted, and improvement will be automatically calculated.
+- If the Athlete improved, the improvement will be negative, and in green
+- If the Athlete did worse, the improvement will be positive, and in red.
+- If the Athlete did the same, the improvement will be 0, and in yellow.
