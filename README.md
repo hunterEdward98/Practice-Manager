@@ -42,6 +42,12 @@ Users in these roles have permissions to edit users in their organization from a
 
 To Approve a user, simply change their access level from nothing to your desired role for that user.
 
+### Athletes And Events
+
+At access coach and higher, you also get the ability to add sets and swimmers.
+
+Sets will be an event that you want to record times and improvements for
+
 ## Athlete History
 
 Anyone with an access level of Athlete or above can search for an athlete. The result of typing is a dropdown that shrinks to only include results that match your text
