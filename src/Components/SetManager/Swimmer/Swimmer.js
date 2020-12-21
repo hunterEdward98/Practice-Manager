@@ -12,28 +12,26 @@ class Swimmer extends React.Component {
         time: {}
     }
     //get the swimmer's most recent time from the database
-    getRecent = () => {
+    getRecent = async() => {
         axios.get(`/api/time/recent/${this.props.id}/${this.props.set}`).then(response => {
-            this.setState({
-                time: response.data[0] || {}
-            })
+            console.log(response.data)
+            this.handleChange(response.data[0] || 0, "time")
         }).catch(error => {
-            swal('ERROR GETTING RECENT TIME FOR SWIMMER: ', error)
+            swal('ERROR GETTING RECENT TIME FOR SWIMMER: ', `${error}`)
         })
     }
     //when the component mounts, run getRecent
     componentDidMount() {
         this.getRecent()
     }
-    //whenever the component updates, we get the thing
-    componentDidUpdate() {
+    componentDidUpdate(){
         this.getRecent()
     }
     //save edits to local state
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
-            [value]: event.target.value
+            [value]: event
         })
     }
     //add a time to the set
@@ -124,8 +122,8 @@ class Swimmer extends React.Component {
                     <td>
                         <form onSubmit={(event) => this.addTime(event)}>
                             <div className='justify-content-center row'>
-                                <input className='form-control col-6 col-sm-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event, 'minutes')} /><div className='col-12 col-sm-1 text-center'>:</div>
-                                <input className='form-control col-6 col-sm-4' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event, 'seconds')} />
+                                <input className='form-control col-6 col-sm-4' placeholder='min' type='number' value={this.state.minutes} onChange={(event) => this.handleChange(event.target.value, 'minutes')} /><div className='col-12 col-sm-1 text-center'>:</div>
+                                <input className='form-control col-6 col-sm-4' placeholder='sec' type='number' value={this.state.seconds} onChange={(event) => this.handleChange(event.target.value, 'seconds')} />
                             </div>
                             <button type='submit' className='btn btn-success'>Add Time</button>
                         </form>

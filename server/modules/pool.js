@@ -28,7 +28,7 @@ if (process.env.DATABASE_URL) {
   };
 } else {
   config = {
-    user: 'hunter',
+    user: 'postgres',
     password: 'hunter',
     host: 'localhost', // Server hosting the postgres database
     port: 5432, // env var: PGPORT

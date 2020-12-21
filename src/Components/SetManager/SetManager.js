@@ -16,7 +16,7 @@ class SetManager extends React.Component {
     handleChange = (event, value) => {
         this.setState({
             ...this.state,
-            [value]: event.target.value
+            [value]: event
         })
     }
     componentDidMount() {
@@ -25,18 +25,21 @@ class SetManager extends React.Component {
             this.props.history.push('/super-admin/users')
         }
     }
-
+    sortAthletes = (athletes) => {
+        athletes = athletes.sort(ath=>ath.athlete_name)
+        this.handleChange(athletes, "athletes")
+    }
     //get athletes in local state's 'lane'
     getLane = () => {
         axios.get(`/api/athlete/athletesInLane/${this.state.lane}`).then(response => {
-            this.setState({ athletes: response.data })
+            this.sortAthletes(response.data)
         })
     }
 
     //get athletes in selected 'lane'
     getLaneByNum = (value) => {
         axios.get(`/api/athlete/athletesInLane/${value}`).then(response => {
-            this.setState({ athletes: response.data })
+            this.sortAthletes(response.data)
         })
     }
 
@@ -45,7 +48,7 @@ class SetManager extends React.Component {
         this.props.dispatch({ type: 'FETCH_EVENTS' })
         if (this.state.lane === 0) {
             axios.get(`/api/athlete/athletesActive`).then(response => {
-                this.setState({ athletes: response.data })
+                this.sortAthletes(response.data)
             }).catch(error => console.log('ERROR GETTING EVENTS FROM SERVER', error))
         }
         else { this.getLane() }
@@ -61,7 +64,7 @@ class SetManager extends React.Component {
                             <h2>Select A Test Set</h2>
                             {/* dropdown of all events */}
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
-                                this.handleChange(event, 'event');
+                                this.handleChange(event.target.value, 'event');
                                 this.get()
                             }}>
                                 <option hidden>SELECT A SET</option>
@@ -72,7 +75,7 @@ class SetManager extends React.Component {
                             <h2>Select A Lane (Optional)</h2>
                             {/* dropdown of all lanes (optional) */}
                             <select className="form-control btn blk" id="exampleFormControlSelect1" onChange={(event) => {
-                                this.handleChange(event, 'lane')
+                                this.handleChange(event.target.value, 'lane')
                                 this.getLaneByNum(event.target.value)
                             }}>
                                 <option value={0} hidden >SELECT A LANE.</option>
